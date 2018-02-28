@@ -13,9 +13,9 @@ Team Four consists of five MIT undergraduates, who are individually described in
 <br>
 <br>
 
-<span class="image right about">![](assets/images/about/Wadhwania.jpg)</span>
+<span class="image right about">![](assets/images/about/Shannon.jpg)</span>
 
-**Samir Wadhwania** is from San Antonio, Texas. He is a current junior in MIT's AeroAstro Department, but has varying interests outside of engineering such as international development and public policy. Academically, Samir's interests lie in controls and autonomous systems. Outside of class, Samir likes to spend his time reading up on current events, longboarding, and bowling.
+**Shannon Hwang '20** is from Cupertino, California. She is currently studying course 6-2, and is also interested in mechanical engineering and energy/environmental issues. Outside of class, she can be found singing or UROPing in the EAPS department. 
 
 <br>
 
