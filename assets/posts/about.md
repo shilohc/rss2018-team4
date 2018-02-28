@@ -2,11 +2,11 @@
 
 <span class="image main">![](assets/images/about/team_pic.jpg)</span>
 
-First Team Best Team (a.k.a. Team 1) is comprised of six MIT undergraduates from MIT's AeroAstro department, which are individually described in the page below. The team varies in experience, but overall shares a genuine interest in topics around autonomy, such as path planning, computer vision, and control systems. These interests in autonomy, along with graduation requirements, drove them all indivdually to take 6.141 and will drive the team towards a succesful race by the end of the semester.
+Team Four consists of five MIT undergraduates, who are individually described in the page below. The team varies in experience, but overall shares a genuine interest in topics around autonomy, such as path planning, computer vision, and control systems. These interests in autonomous systems drove them all individually to take 6.141 and will drive the team towards a succesful race by the end of the semester.
 
-<span class="image left about">![](assets/images/about/Gomez.jpg)</span>
+<span class="image left about">![](assets/images/about/Shiloh.jpg)</span>
 
-**Jose Gomez** is a senior in MIT's AeroAstro Department and originally from Mcallen, Texas. He focuses on working on controls and autonomous systems, but has varying experince in other topics. After graduation, Jose plans to work for General Motors in the Milford, MI proving grounds as a controls engineer.
+**Shiloh Curtis '20** is a sophomore in MIT's Electrical Engineering and Computer Science department (course 6-2), originally from Sunnyvale, California.  Their academic focus is in robotics; outside of class they can be found painting (digitally and with acrylics) and working on personal robotics projects.  
 
 <br>
 <br>
