@@ -21,7 +21,7 @@ Team Four consists of five MIT undergraduates, who are individually described in
 
 <span class="image left about">![](assets/images/about/Clementine.jpg)</span>
 
-**Clementine Mitchell** is from Glasgow, Scotland. She is currently a junior studying Aerospace Engineering with particular interests in controls and human factors relating to spaceflight. Outside of class, Clementine spends her time working on her research project in MIT’s Man Vehicle Lab and running on MIT’s Track and Field team.
+**Akhilan Boopathy '20** is from Seattle, Washington. He is a sophomore in course 6-2 interested in machine learning related areas. Outside of class, he can be found working on UROPs in the Center for Brains, Minds and Machines.
 
 <br>
 <br>
