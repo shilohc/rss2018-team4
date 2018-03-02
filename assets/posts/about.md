@@ -10,19 +10,20 @@ Team Four consists of five MIT undergraduates, who are individually described in
 
 <br>
 <br>
-<br>
-<br>
 
 <span class="image right about">![](assets/images/about/Shannon.jpg)</span>
 
 **Shannon Hwang '20** is from Cupertino, California. She is currently studying course 6-2, and is also interested in mechanical engineering and energy/environmental issues. Outside of class, she can be found singing or UROPing in the EAPS department. 
 
 <br>
+<br>
 
 <span class="image left about">![](assets/images/about/Clementine.jpg)</span>
 
 **Akhilan Boopathy '20** is from Seattle, Washington. He is a sophomore in course 6-2 interested in machine learning related areas. Outside of class, he can be found working on UROPs in the Center for Brains, Minds and Machines.
 
+<br>
+<br>
 <br>
 <br>
 
