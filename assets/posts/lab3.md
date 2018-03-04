@@ -23,6 +23,7 @@ The wall follower uses laser scan data from the car to estimate the position and
 Since the safety controller is supposed to prevent crashes, it only considers the "forward" section of the laser scan data (a 120-degree swath centered on the front of the robot). To prevent abrupt stops, the safety controller acts in two distance "ranges". If the robot is within .35 m of an obstacle (slightly more than the robot's width), it stops completely, and the safety controller prevents any future command telling the robot to move forward. To ensure that the robot stops at a reasonable speed, if the robot is within .7 m of an obstacle (2 times the stopping distance) its speed is proportional to its remaining distance from the stopping threshhold.
 
 <center>![Simulated robot approaching wall and stopping](assets/images/safety_controller_sim.gif)</center>
+*Simulated robot approaching wall and stopping*
 
 ### ROS Implementation - Shannon Hwang
 
