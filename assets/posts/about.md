@@ -18,7 +18,7 @@ Team Four consists of five MIT undergraduates, who are individually described in
 <br>
 <br>
 
-<span class="image left about">![](assets/images/about/Clementine.jpg)</span>
+<span class="image left about">![](assets/images/about/Akhilan.jpg)</span>
 
 **Akhilan Boopathy '20** is from Seattle, Washington. He is a sophomore in course 6-2 interested in machine learning related areas. Outside of class, he can be found working on UROPs in the Center for Brains, Minds and Machines.
 
