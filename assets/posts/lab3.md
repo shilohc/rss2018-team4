@@ -5,7 +5,7 @@ Lab 3
 
 Lab 3 marked the start of working with our actual, physical robot. As such, it entailed familiarizing ourselves with the necessary processes for interacting with it, such as powering the robot on and off, connecting its sensors, networking into it to save programs, and visualizing what it "saw" on our own laptops. As a culmination of all this, we had to make sure the robot could properly follow the "wall follower" code written in the previous lab. Finally, we wrote a safety controller to prevent high-speed crashes into obstacles and protect the car's expensive hardware against future crashes. 
 
-## Proposed Approach - Shannon Hwang
+## Proposed Approach - Shannon Hwang, Akhilan Boopathy, Shiloh Curtis
 
 ### Initial Setup - Shannon Hwang
 
@@ -24,7 +24,7 @@ Since the safety controller is supposed to prevent crashes, it only considers th
 
 <center>![Simulated robot approaching wall and stopping](assets/images/safety_controller_sim.gif)</center>
 
-### ROS Implementation - Shannon Hwang
+### ROS Implementation - Shannon Hwang, Shiloh Curtis
 
 #### Wall follower:
 TODO
@@ -51,30 +51,23 @@ Using the wall follower code directly from lab 2 resulted in the car moving eith
 
 TODO: finish this section after testing on real robot
 
-Duis vel nunc sit amet risus consectetur dictum. Nulla mollis varius erat, vitae gravida est elementum a. Curabitur velit sapien, placerat ac scelerisque quis, ultricies at sem. Maecenas ut elit congue, condimentum lacus eu, scelerisque nunc. Curabitur mattis velit vitae sem placerat varius vel euismod leo. Cras quis elit quam. Proin scelerisque lobortis erat, eu euismod ex mattis ac. Curabitur non felis mauris. Integer mauris nisi, rutrum id finibus vel, ornare quis diam. Cras lectus nisi, pharetra ut elit at, porta auctor ex. Cras lobortis nisl leo, varius aliquet arcu sollicitudin vel. Aliquam quis nulla sapien. Donec porttitor, tortor vel iaculis vehicula, ipsum eros dictum eros, sit amet tempor orci felis vitae magna. Sed velit lacus, tincidunt sit amet quam sed, aliquam porttitor ex.
+## Lessons Learned - Shannon Hwang
 
-Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, suscipit lacus. Mauris vitae pretium libero, at dapibus massa. Curabitur eleifend bibendum pharetra. Nullam gravida viverra lacus eu blandit. Praesent nec odio ut magna scelerisque vulputate. Sed in libero porta, imperdiet magna maximus, efficitur urna.
+From a technical standpoint, an important lesson we learned was how to properly interface with the robot as a whole, and with the Velodyne LIDAR in particular. We also learned how to think about preventing the robot from crashing into obstacles, and determine estimations related to that goal (for example, estimating how far away a reasonable stopping distance for the robot was.)
 
-## Lessons Learned - [Insert Author]
+From a teamwork and collaborative standpoint, we learned that it was somewhat infeasible to have multiple people working on creating a single piece of code (for example, the safety controller) or physically interacting with the robot at the same time, so team effort was spent most efficiently completing the tasks we had to do in parallel. We also learned about the challenges of coordinating five people, and realized that we need to coordinate team time much more in advance than the margins we left for this lab. 
 
-TODO
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligula. Aliquam erat volutpat. Cras iaculis diam vitae nunc ultricies, et egestas lorem eleifend. Ut sit amet leo vitae libero maximus molestie non ac nunc. Ut ac mi ante. Vivamus convallis convallis neque, sit amet sollicitudin arcu bibendum sit amet. Phasellus finibus dolor vitae leo cursus, eu lobortis nisl blandit. Quisque tincidunt et nisi a hendrerit. Sed et nunc quis neque egestas sollicitudin. Curabitur auctor bibendum odio. Proin aliquam cursus metus, at fermentum tellus luctus vel. Morbi ut mi id augue lacinia faucibus.
+### Technical Conclusions - Shannon Hwang
 
-> Duis vel nunc sit amet risus consectetur dictum. Nulla mollis varius erat, vitae gravida est elementum a. Curabitur velit sapien, placerat ac scelerisque quis, ultricies at sem. Maecenas ut elit congue, condimentum lacus eu, scelerisque nunc. Curabitur mattis velit vitae sem placerat varius vel euismod leo. Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, suscipit lacus. Mauris vitae pretium libero, at dapibus massa. Curabitur eleifend bibendum pharetra. Nullam gravida viverra lacus eu blandit. Praesent nec odio ut magna scelerisque vulputate. Sed in libero porta, imperdiet magna maximus, efficitur urna.
+In this lab, we learned standard procedures for interacting with the robot (as mentioned above). Most critically, we learned about how to properly process the data from one particular part of the robot: the Velodyne LIDAR sensor. Originally, we did not know that the Velodyne sensor published laser scan data that was offset from the standard orientation of the car, or that published laser scan data in fragmented chunks; this caused the car to behave strangely with our team members' wall followers. Thus, we learned that multiple laser scan messages had to be merged to provide complete information about the car's orientation, and that the laser scan data had to be offset in order to work with our previously visualized coordinate frames. 
 
-### Technical Conclusions - [Insert Author]
+When discussing and implementing the safety controller, we also learned how to think about how to account for our robot's physical presence; for example, we eventually decided that the minimum "safe" distance to a wall would probably be better calculated based on the robot's width, rather than length, as that mattered more when it turned. 
 
-TODO
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligula. Aliquam erat volutpat. Cras iaculis diam vitae nunc ultricies, et egestas lorem eleifend. Ut sit amet leo vitae libero maximus molestie non ac nunc. Ut ac mi ante. Vivamus convallis convallis neque, sit amet sollicitudin arcu bibendum sit amet. Phasellus finibus dolor vitae leo cursus, eu lobortis nisl blandit. Quisque tincidunt et nisi a hendrerit. Sed et nunc quis neque egestas sollicitudin. Curabitur auctor bibendum odio. Proin aliquam cursus metus, at fermentum tellus luctus vel. Morbi ut mi id augue lacinia faucibus.
+### CI Conclusions - Shannon Hwang,
 
-Duis vel nunc sit amet risus consectetur dictum. Nulla mollis varius erat, vitae gravida est elementum a. Curabitur velit sapien, placerat ac scelerisque quis, ultricies at sem. Maecenas ut elit congue, condimentum lacus eu, scelerisque nunc. Curabitur mattis velit vitae sem placerat varius vel euismod leo. Cras quis elit quam. Proin scelerisque lobortis erat, eu euismod ex mattis ac. Curabitur non felis mauris. Integer mauris nisi, rutrum id finibus vel, ornare quis diam. Cras lectus nisi, pharetra ut elit at, porta auctor ex. Cras lobortis nisl leo, varius aliquet arcu sollicitudin vel. Aliquam quis nulla sapien. Donec porttitor, tortor vel iaculis vehicula, ipsum eros dictum eros, sit amet tempor orci felis vitae magna. Sed velit lacus, tincidunt sit amet quam sed, aliquam porttitor ex.
+1. We learned that it was more efficient to parallelize the completion of coding or testing on the robot. Though multiple people could discuss and debate code at high-level, once we actually started writing it, it became clear that it was very difficult to have multiple people simultaneously writing the same piece of code – especially shorter pieces like the safety controller. Additionally, since we only had one robot, we relied on using the simulated racecar to develop and "test" most of the safety controller while another part of the team worked on debugging the wall follower on the physical robot. 
 
-### CI Conclusions - [Insert Author]
-
-TODO
-
-1. Student 1
 2. Student 2
 3. Student 3
