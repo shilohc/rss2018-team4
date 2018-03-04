@@ -17,7 +17,7 @@ All team members were involved in initially setting up the robot and making sure
 The safety controller is designed to stop the robot at a reasonable speed when it violates a minimum "safe" distance from an obstacle, and to prevent any further forward motion at that distance. 
 
 #### Wall follower:
-The wall follower uses laser scan data from the car to estimate the position and angle of the wall. Once these parameters are estimated, the car changes its angle so as to move more parallel with the wall as well as to achieve the desired distance from the wall. The car's speed is set to be equal to a desired constant speed.
+The wall follower uses laser scan data from the car to estimate the position and angle of the wall. The wall follower considers only the points from the laser scan on the side of the car the wall is expected to be on. Linear regression is used on these points to estimate the angle and distance from the wall. Once the wall angle and distance are estimated, the car changes its angle so as to move more parallel with the wall as well as to achieve the desired distance from the wall. This corresponds to a PD controller. The car's speed is set to be equal to a desired constant speed.
 
 #### Safety controller:
 Since the safety controller is supposed to prevent crashes, it only considers the "forward" section of the laser scan data (a 120-degree swath centered on the front of the robot). To prevent abrupt stops, the safety controller acts in two distance "ranges". If the robot is within .35 m of an obstacle (slightly more than the robot's width), it stops completely, and the safety controller prevents any future command telling the robot to move forward. To ensure that the robot stops at a reasonable speed, if the robot is within .7 m of an obstacle (2 times the stopping distance) its speed is proportional to its remaining distance from the stopping threshhold.
@@ -47,7 +47,7 @@ TODO: finish this section after testing on real robot
 ### Results - Akhilan Boopathy
 
 #### Wall follower: 
-Using the wall follower code directly from lab 2 resulted in the car moving either into the wall or away from the wall instead of moving parallel to the wall as intended. The laser scan data contained invalid values that the original code did not properly account for.
+Using the wall follower code directly from lab 2 resulted in the car moving either into the wall or away from the wall instead of moving parallel to the wall as intended. The laser scan data was returned in multiple messages with each message containing only a portion of the laser scan data. As a result, each laser scan message contained missing values that the original code did not properly account for. This issue was resolved by merging together multiple messages. The laser scan data also was offset by an angle corresponding to the orientation of the lidar on the car. The wall follower was adjusted to correct for the offset.
 
 TODO: finish this section after testing on real robot
 
