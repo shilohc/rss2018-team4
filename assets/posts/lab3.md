@@ -26,7 +26,7 @@ Since the safety controller is supposed to prevent crashes, it only considers th
 <center>![Simulated robot approaching wall and stopping](assets/images/safety_controller_sim.gif)</center>
 <center>*Figure 1: Simulated robot approaching wall and stopping*</center>
 
-### ROS Implementation - Shannon Hwang, Shiloh Curtis
+### ROS Implementation - Akhilan Boopathy, Shiloh Curtis, Shannon Hwang
 
 #### Wall follower:
 The wall follower subscribes to the `/scan` topic and publishes to `/vesc/ackermann_cmd_mux/input/navigation`. Depending on the side the wall follower is commanded to follow, the laser scan data is sliced into the range pi/3 to 2pi/3 or -pi/3 to -2pi/3. Points from these ranges are converted to Cartesian coordinates, and numpy is used to perform a linear regression on the data points. The output from the regression is converted to estimates of the angle of the wall and distance from the wall. These estimates are then used in a PD controller to control the angle of the car.
@@ -62,7 +62,7 @@ From a teamwork and collaborative standpoint, we learned that it was somewhat in
 
 ### Technical Conclusions - Shannon Hwang
 
-In this lab, we learned standard procedures for interacting with the robot (as mentioned above). Most critically, we learned about how to properly process the data from one particular part of the robot: the Velodyne LIDAR sensor. Originally, we did not know that the Velodyne sensor published laser scan data that was offset from the standard orientation of the car, or that published laser scan data in fragmented chunks; this caused the car to behave strangely with our team members' wall followers. Thus, we learned that multiple laser scan messages had to be merged to provide complete information about the car's orientation, and that the laser scan data had to be offset in order to work with our previously visualized coordinate frames. 
+In this lab, we learned standard procedures for interacting with the robot as mentioned above. Most critically, we learned about how to properly process the data from one particular part of the robot: the Velodyne LIDAR sensor. Originally, we did not know that the Velodyne sensor published laser scan data that was offset from the standard orientation of the car, or that published laser scan data in fragmented chunks; this caused the car to behave strangely with our team members' wall followers. Thus, we learned that multiple laser scan messages had to be merged to provide complete information about the car's orientation, and that the laser scan data had to be offset in order to work with our previously visualized coordinate frames. 
 
 When discussing and implementing the safety controller, we also learned how to think about how to account for our robot's physical presence; for example, we eventually decided that the minimum "safe" distance to a wall would probably be better calculated based on the robot's width, rather than length, as that mattered more when it turned. 
 
