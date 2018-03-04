@@ -22,12 +22,14 @@ The wall follower uses laser scan data from the car to estimate the position and
 #### Safety controller:
 Since the safety controller is supposed to prevent crashes, it only considers the "forward" section of the laser scan data (a 120-degree swath centered on the front of the robot). To prevent abrupt stops, the safety controller acts in two distance "ranges". If the robot is within .35 m of an obstacle (slightly more than the robot's width), it stops completely, and the safety controller prevents any future command telling the robot to move forward. To ensure that the robot stops at a reasonable speed, if the robot is within .7 m of an obstacle (2 times the stopping distance) its speed is proportional to its remaining distance from the stopping threshhold.
 
-<center>![Simulated robot approaching wall and stopping](assets/images/safety_controller_sim.gif)</center>
+##### Safety Controller Simulation
+<center>![Simulated robot approaching wall and stopping](assets/images/safety_controller_sim.gif)
+*Figure 1: Simulated robot approaching wall and stopping*</center>
 
 ### ROS Implementation - Shannon Hwang, Shiloh Curtis
 
 #### Wall follower:
-TODO
+The wall follower subscribes to the `/scan` topic and publishes to `/vesc/ackermann_cmd_mux/input/navigation`. Depending on the side the wall follower is commanded to follow, the laser scan data is sliced into the range pi/3 to 2pi/3 or -pi/3 to -2pi/3. Points from these ranges are converted to Cartesian coordinates, and numpy is used to perform a linear regression on the data points. The output from the regression is converted to estimates of the angle of the wall and distance from the wall. These estimates are then used in a PD controller to control the angle of the car.
 
 #### Safety controller: 
 The safety controller subscribes to the `/scan` and `/vesc/high_level/ackermann_cmd_mux/output` topics, and publishes to `/vesc/low_level/ackermann_cmd_mux/input/safety`. It slices the laser scan data into the range -pi/3 and pi/3, then compares the minimum distance from that range to the threshhold safety distance. If the navigation program is trying to drive the car forward (as determined from incoming messages on `/vesc/high_level/ackermann_cmd_mux/output`) and the car is within .7 m or .35 m of an obstacle, the car publishes a command of either a reduced or 0 velocity, respectively. 
