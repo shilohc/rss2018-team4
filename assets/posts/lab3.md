@@ -9,12 +9,10 @@ Lab 3 marked the start of working with our actual, physical robot. As such, it e
 
 ### Initial Setup - Shannon Hwang
 
-As none of the team members had interacted with the car before and we all have to interact with the robot in the future, all of the team familiarized ourselves with the robot. Then, we split up to work on the wall follower and safety controller.
+As none of the team members had interacted with the robot before, all of the team familiarized ourselves with the robot by setting up the robot's various connections and making sure we could see the robot's "world" through rviz on our individual laptops. We discussed and decided to use the wall follower code with the highest score in Lab 2 on the robot. Then, half of the team worked on importing Lab 2's wall follower code into the robot, and half discussed the safety controller, which a team member wrote up. 
 
-All team members were involved in initially setting up the robot and making sure we could see the robot's "world" through rviz on our individual laptops. We discussed and decided to use the wall follower code with the highest score in Lab 2 on the robot. Then, half of the team worked on importing Lab 2's wall follower code into the robot, and half discussed the safety controller, which a team member wrote up. 
-
-### Technical Approach - Shannon Hwang, Akhilan Boopathy
-The safety controller is designed to stop the robot at a reasonable speed when it violates a minimum "safe" distance from an obstacle, and to prevent any further forward motion at that distance. 
+### Technical Approach - Akhilan Boopathy, Shannon Hwang, Shiloh Curtis
+The wall follower, as specified in lab 2, commands to robot to move along (parallel to) a wall on the robot's left or right side at a given distance away from the wall. The safety controller stops the robot at a reasonable speed when it violates a minimum "safe" distance from an obstacle, and to prevent any further forward motion at that distance. 
 
 #### Wall follower:
 The wall follower uses laser scan data from the car to estimate the position and angle of the wall. The wall follower considers only the points from the laser scan on the side of the car the wall is expected to be on. Linear regression is used on these points to estimate the angle and distance from the wall. Once the wall angle and distance are estimated, the car changes its angle so as to move more parallel with the wall as well as to achieve the desired distance from the wall. This corresponds to a PD controller. The car's speed is set to be equal to a desired constant speed.
@@ -27,12 +25,13 @@ Since the safety controller is supposed to prevent crashes, it only considers th
 <center>*Figure 1: Simulated robot approaching wall and stopping*</center>
 
 ### ROS Implementation - Akhilan Boopathy, Shiloh Curtis, Shannon Hwang
+Both the wall follower and safety controller subscribe to laser scan data from the onboard LIDAR in order to determine where the robot can safely go, and publish to some sort of navigation topic in order to tell the robot where to go. However, the safety controller also listens to what the current navigation program is telling the robot to do and publishes to a higher priority navigation topic than the navigation program so that it can stop the robot in case the navigation program tells it to drive into an obstacle.
 
 #### Wall follower:
 The wall follower subscribes to the `/scan` topic and publishes to `/vesc/ackermann_cmd_mux/input/navigation`. Depending on the side the wall follower is commanded to follow, the laser scan data is sliced into the range pi/3 to 2pi/3 or -pi/3 to -2pi/3. Points from these ranges are converted to Cartesian coordinates, and numpy is used to perform a linear regression on the data points. The output from the regression is converted to estimates of the angle of the wall and distance from the wall. These estimates are then used in a PD controller to control the angle of the car.
 
 #### Safety controller: 
-The safety controller subscribes to the `/scan` and `/vesc/high_level/ackermann_cmd_mux/output` topics, and publishes to `/vesc/low_level/ackermann_cmd_mux/input/safety`. It slices the laser scan data into the range -pi/3 and pi/3, then compares the minimum distance from that range to the threshhold safety distance. If the navigation program is trying to drive the car forward (as determined from incoming messages on `/vesc/high_level/ackermann_cmd_mux/output`) and the car is within .7 m or .35 m of an obstacle, the car publishes a command of either a reduced or 0 velocity, respectively. 
+The safety controller subscribes to the `/scan` and `/vesc/high_level/ackermann_cmd_mux/output` topics, and publishes to `/vesc/low_level/ackermann_cmd_mux/input/safety`. It slices the laser scan data into the range -pi/3 and pi/3 (corresponding to the "front" section of the robot), then compares the minimum distance from that range to the threshhold safety distance. If the navigation program is trying to drive the car forward (as determined from incoming messages on `/vesc/high_level/ackermann_cmd_mux/output`) and the car is within .7 m or .35 m of an obstacle, the car publishes a command of either a reduced or 0 velocity, respectively. 
 
 <center>[TODO: Pictures]</center>
 
