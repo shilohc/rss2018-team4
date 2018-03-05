@@ -43,7 +43,9 @@ The safety controller was tested first in simulation and then on the robot.  Add
 The wall follower was tested in a long hallway with a straight, nonreflective wall with a few shallow doorways. A number of initial positions and angles of the robot were tried, including the robot pointing towards and away from the wall at a moderately steep angle. The wall follower was successful if it eventually reached the desired distance away from the wall while driving parallel to the wall.
 
 #### Safety controller:
-Since teleop commands would override the safety controller, a test script was written that continuously published commands to drive forward on `/vesc/ackermann_cmd_mux/input/navigation`.  This script was used to drive the robot towards a wall.  If the robot stopped before reaching the wall, the safety controller was deemed successful.  Once the safety controller passed this test when the simulated robot was driven head-on towards a wall, it was moved to the real robot.  
+Since teleop commands would override the safety controller, a test script was written that continuously published commands to drive forward on `/vesc/ackermann_cmd_mux/input/navigation`.  This script was used to drive the robot towards a wall in simulation.  If the robot stopped before reaching the wall, the safety controller was deemed successful.  Once the safety controller passed this test when the simulated robot was driven head-on towards a wall, it was moved to the real robot.  
+
+The safety controller was tested on the real robot by using the same test script to drive the robot towards a person.  Again, if the robot consistently stopped before reaching the person, the safety controller was deemed successful.  
 
 ### Results - Akhilan Boopathy
 
@@ -61,7 +63,7 @@ The parameters for the wall follower's PD controller also were suboptimal initia
 <center>*Figure 3: Robot turning to follow wall at desired distance.*</center>
 
 #### Safety controller:
-The initial implementation of the safety controller did not work as intended since laser scan points closer than approximately 0.5 meters were not accurately measured. As a result, once objects were closer than this radius to the car, the car would not consistently be able to detect these objects. In order to correct for this issue, the safety controller was modified to stop further away from objects. After this change, the safety controller worked as intended. 
+The initial implementation of the safety controller did not work as intended since laser scan points closer than 0.4 meters were not returned. As a result, once objects were closer than this radius to the car, the car would not consistently be able to detect these objects. In order to correct for this issue, the safety controller was modified to stop 0.45 meters away from objects. After this change, the safety controller worked as intended. 
 
 ##### Safety Controller Test
 <center><img src="assets/images/safety_controller.gif" width="400" ></center>
