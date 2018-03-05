@@ -27,9 +27,9 @@ Team Four consists of five MIT undergraduates, who are individually described in
 <br>
 <br>
 
-<span class="image right about">![](assets/images/about/Nick.JPG)</span>
+<span class="image right about">![](assets/images/about/Eleanor.JPG)</span>
 
-**Nick Villanueva** is currently a senior in MIT’s AeroAstro Department. He is originally from Lafayette California. Upon graduation he plans to commission into the U.S. Air Force.
+**Eleanor Pence '19** is from Plymouth, Michigan. She is a junior in course 6-3 interested in artificial intelligence. Outside of class, she can be found doing digital painting and rock climbing. 
 
 <br>
 <br>
@@ -46,6 +46,4 @@ Team Four consists of five MIT undergraduates, who are individually described in
 <br>
 <br>
 
-<span class="image right about">![](assets/images/about/Jake.png)</span>
 
-**Jake Ligouri** is a fourth year undergraduate at MIT pursuing a degree in Aerospace Engineering. He will be taking his talents to New York following graduation to begin a career in Commodities Trading. Jake currently spends his free time rowing on the Charles River and developing an app with his fraternity brothers.
