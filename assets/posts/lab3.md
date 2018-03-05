@@ -33,8 +33,6 @@ The wall follower subscribes to the `/scan` topic to recieve laser scan data and
 #### Safety controller: 
 The safety controller subscribes to the `/scan` and `/vesc/high_level/ackermann_cmd_mux/output` topics, and publishes to `/vesc/low_level/ackermann_cmd_mux/input/safety`. It slices the laser scan data into the range -pi/3 and pi/3 (corresponding to the "front" section of the robot), then compares the minimum distance from that range to the threshhold safety distance. If the navigation program is trying to drive the car forward (as determined from incoming messages on `/vesc/high_level/ackermann_cmd_mux/output`) and the car is within .7 m or .35 m of an obstacle, the car publishes a command of either a reduced or 0 velocity, respectively. 
 
-<center>[TODO: Pictures]</center>
-
 ## Experimental Evaluation - Shiloh Curtis
 
 The safety controller was tested first in simulation and then on the robot.  Additionally, all testing was done at a low speed.  These precautions aimed to avoid collision damage to the robot during testing.  
@@ -62,6 +60,10 @@ The parameters for the wall follower's PD controller also were suboptimal initia
 
 #### Safety controller:
 The initial implementation of the safety controller did not work as intended since laser scan points closer than approximately 0.5 meters were not accurately measured. As a result, once objects were closer than this radius to the car, the car would not consistently be able to detect these objects. In order to correct for this issue, the safety controller was modified to stop further away from objects. After this change, the safety controller worked as intended. 
+
+##### Safety Controller Test
+<center><img src="assets/images/safety_controller.gif" width="400" ></center>
+<center>*Figure 4: Robot slowing down and stopping after spotting an obstacle.*</center>
 
 ## Lessons Learned - Shannon Hwang
 
