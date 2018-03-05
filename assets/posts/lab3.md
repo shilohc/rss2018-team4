@@ -51,7 +51,7 @@ TODO: finish this section after testing on real robot
 Using the wall follower code directly from lab 2 resulted in the car moving either into the wall or away from the wall instead of moving parallel to the wall as intended. The laser scan data was returned in multiple messages with each message containing only a portion of the laser scan data. As a result, each laser scan message contained missing values that the original code did not properly account for. The laser scan data also was offset by an angle corresponding to the orientation of the lidar on the car. In order to resolve these two issues, another node was created to process the laser scan data. This node merging together multiple messages into a single message with complete data. It also corrected for the angular offset in the laser scan data. The new messages, published to a new `/processed_scan` topic, was used in the wall follower. 
 
 ##### Processed Scan Data
-<center>![Processed Scan](assets/images/Hallway_scan.JPG)</center>
+<center><img src="assets/images/Hallway_scan.JPG" width="100" ></center>
 <center>*Figure 2: Rviz screenshot of processed scan data while the robot is in a hallway. All laser scan points are in each message, and the orientation is correct.*</center>
 
 The parameters for the wall follower's PD controller also were suboptimal initially since they were optimised for the simulation instead of the actual robot. After the parameters were tuned, the wall follower was able to follow the wall at the expected distance as intended.
