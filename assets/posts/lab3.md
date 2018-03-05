@@ -56,6 +56,10 @@ Using the wall follower code directly from lab 2 resulted in the car moving eith
 
 The parameters for the wall follower's PD controller also were suboptimal initially since they were optimised for the simulation instead of the actual robot. After the parameters were tuned, the wall follower was able to follow the wall at the expected distance as intended.
 
+##### Wall Follower Test
+<center><img src="assets/images/wall_follower.gif" width="400" ></center>
+<center>*Figure 3: Robot turning to follow wall at desired distance.*</center>
+
 #### Safety controller:
 The initial implementation of the safety controller did not work as intended since laser scan points closer than approximately 0.5 meters were not accurately measured. As a result, once objects were closer than this radius to the car, the car would not consistently be able to detect these objects. In order to correct for this issue, the safety controller was modified to stop further away from objects. After this change, the safety controller worked as intended. 
 
