@@ -29,7 +29,7 @@ Team Four consists of five MIT undergraduates, who are individually described in
 
 <span class="image right about">![](assets/images/about/Nick.JPG)</span>
 
-**Nick Villanueva** is currently a senior in MIT’s AeroAstro Department. He is originally from Lafayette California. Upon graduation he plans to commission into the U.S. Air Force.
+**Chenxing(Tony) Zhang** is currently a junior in EECS. He is originally from Hangzhou, China. He is interested in Machine Learning and robotics, and plan to go into automative industry after he graduates.
 
 <br>
 <br>
