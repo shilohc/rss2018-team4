@@ -48,9 +48,10 @@ TODO: finish this section after testing on real robot
 ### Results - Akhilan Boopathy
 
 #### Wall follower: 
-Using the wall follower code directly from lab 2 resulted in the car moving either into the wall or away from the wall instead of moving parallel to the wall as intended. The laser scan data was returned in multiple messages with each message containing only a portion of the laser scan data. As a result, each laser scan message contained missing values that the original code did not properly account for. This issue was resolved by merging together multiple messages. The laser scan data also was offset by an angle corresponding to the orientation of the lidar on the car. The wall follower was adjusted to correct for the offset.
+Using the wall follower code directly from lab 2 resulted in the car moving either into the wall or away from the wall instead of moving parallel to the wall as intended. The laser scan data was returned in multiple messages with each message containing only a portion of the laser scan data. As a result, each laser scan message contained missing values that the original code did not properly account for. The laser scan data also was offset by an angle corresponding to the orientation of the lidar on the car. In order to resolve these two issues, another node was created to process the laser scan data. This node merging together multiple messages into a single message with complete data. It also corrected for the angular offset in the laser scan data. The new messages, published to a new `/processed_scan` topic, was used in the wall follower. The parameters for the wall follower's PD controller also were suboptimal initially since they were optimised for the simulation instead of the actual robot. After the parameters were tuned, the wall follower was able to follow the wall at the expected distance as intended.
 
-TODO: finish this section after testing on real robot
+#### Safety controller:
+The initial implementation of the safety controller did not work as intended since laser scan points closer than approximately 0.5 meters were not accurately measured. As a result, once objects were closer than this radius to the car, the car would not consistently be able to detect these objects. In order to correct for this issue, the safety controller was modified to stop further away from objects. After this change, the safety controller worked as intended. 
 
 ## Lessons Learned - Shannon Hwang
 
