@@ -40,7 +40,7 @@ Team Four consists of five MIT undergraduates, who are individually described in
 
 <span class="image left about">![](assets/images/about/Martina.JPG)</span>
 
-**Martina Stadler** is a junior in Course 16 with a focus on autonomous systems. She is a Co-President of the MIT Student Chapter of AIAA, and is the Payload Subteam Lead and the Social Chair for the MIT Rocket Team. When she has a spare moment, she plays IM hockey with AeroAstro and bakes cakes for her floor.
+**Chenxing(Tony) Zhang** is currently a junior in EECS. He is originally from Hangzhou, China. He is interested in Machine Learning and robotics, and plan to go into automative industry after he graduates.
 
 <br>
 <br>
