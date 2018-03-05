@@ -40,7 +40,7 @@ The safety controller was tested first in simulation and then on the robot.  Add
 ### Testing Procedure - Shiloh Curtis, Akhilan Boopathy
 
 #### Wall follower:
-The wall follower was tested in a long hallway with a straight, nonreflective wall. A number of initial positions and angles of the robot were tried, including the robot pointing towards and away from the wall at a moderately steep angle. The wall follower was successful if it eventually reached the desired distance away from the wall while driving parallel to the wall.
+The wall follower was tested in a long hallway with a straight, nonreflective wall with a few shallow doorways. A number of initial positions and angles of the robot were tried, including the robot pointing towards and away from the wall at a moderately steep angle. The wall follower was successful if it eventually reached the desired distance away from the wall while driving parallel to the wall.
 
 #### Safety controller:
 Since teleop commands would override the safety controller, a test script was written that continuously published commands to drive forward on `/vesc/ackermann_cmd_mux/input/navigation`.  This script was used to drive the robot towards a wall.  If the robot stopped before reaching the wall, the safety controller was deemed successful.  Once the safety controller passed this test when the simulated robot was driven head-on towards a wall, it was moved to the real robot.  
