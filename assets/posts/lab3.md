@@ -67,9 +67,10 @@ In this lab, we learned standard procedures for interacting with the robot as me
 When discussing and implementing the safety controller, we also learned how to think about how to account for our robot's physical presence; for example, we eventually decided that the minimum "safe" distance to a wall would probably be better calculated based on the robot's width, rather than length, as that mattered more when it turned. 
 
 
-### CI Conclusions - Shannon Hwang,
+### CI Conclusions - Shannon Hwang, Akhilan Boopathy
 
 1. We learned that it was more efficient to parallelize the completion of coding or testing on the robot. Though multiple people could discuss and debate code at high-level, once we actually started writing it, it became clear that it was very difficult to have multiple people simultaneously writing the same piece of code – especially shorter pieces like the safety controller. Additionally, since we only had one robot, we relied on using the simulated racecar to develop and "test" most of the safety controller while another part of the team worked on debugging the wall follower on the physical robot. 
 
-2. Student 2
+2. We also learned that splitting up our code into multiple pieces was helpful to make more efficient progress. For example, we initially had a procedure to process laser scan data in our code for out wall follower. By shifting the scan processing code to a seperate ROS node, some team members were able to work on the scan processing while others were able to work on the wall follower. We also found that even when one team member was working on multiple components, modularizing our code helped us evaluate each component seperately.
+
 3. Student 3
