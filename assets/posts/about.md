@@ -1,7 +1,5 @@
 # About
 
-<span class="image main">![](assets/images/about/team_pic.jpg)</span>
-
 Team Four consists of five MIT undergraduates, who are individually described in the page below. The team varies in experience, but overall shares a genuine interest in topics around autonomy, such as path planning, computer vision, and control systems. These interests in autonomous systems drove them all individually to take 6.141 and will drive the team towards a succesful race by the end of the semester.
 
 <span class="image left about">![](assets/images/about/Shiloh.jpg)</span>
