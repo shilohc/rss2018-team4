@@ -92,9 +92,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligul
 
 Duis vel nunc sit amet risus consectetur dictum. Nulla mollis varius erat, vitae gravida est elementum a. Curabitur velit sapien, placerat ac scelerisque quis, ultricies at sem. Maecenas ut elit congue, condimentum lacus eu, scelerisque nunc. Curabitur mattis velit vitae sem placerat varius vel euismod leo. Cras quis elit quam. Proin scelerisque lobortis erat, eu euismod ex mattis ac. Curabitur non felis mauris. Integer mauris nisi, rutrum id finibus vel, ornare quis diam. Cras lectus nisi, pharetra ut elit at, porta auctor ex. Cras lobortis nisl leo, varius aliquet arcu sollicitudin vel. Aliquam quis nulla sapien. Donec porttitor, tortor vel iaculis vehicula, ipsum eros dictum eros, sit amet tempor orci felis vitae magna. Sed velit lacus, tincidunt sit amet quam sed, aliquam porttitor ex.
 
-### CI Conclusions - [Insert Author]
+### CI Conclusions - Akhilan Boopathy
 
-1. Student 1
+1. We learned that creating a ROS framework to place our individual code contributions into was useful to ensure that the components of the lab all fit together. In particular, ensuring that different components of the lab published and subscribed messages with the same format was useful when putting components of the lab together. In general, planning out how each of our contributions would fit together before starting work was useful.
 2. Student 2
 3. Student 3
 
