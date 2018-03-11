@@ -9,7 +9,7 @@ Before lab 4, we had primarily worked with the LIDAR sensor to detect the robot'
 
 ### Initial Setup - Akhilan Boopathy
 
-For this lab, we were not provided with a ROS framework, so our team had to create our own. One team member worked on creating the framework. The code was split into two ROS packages: one for tracking the cone, and one for driving the robot. Each package contained relevant ROS nodes which communicated using various ROS topics. The other team members split up to work on each of the other components of the lab: cone detection, locating and visualizing the cone, parking the robot and following the line.
+For this lab, we were not provided with a ROS framework, so our team had to create our own. One team member worked on creating the ROS framework. The other team members split up to work on each of the other components of the lab: cone detection, locating and visualizing the cone, parking the robot and following the line.
 
 ### Technical Approach - Akhilan Boopathy
 
@@ -43,6 +43,7 @@ The speed of the robot is controlled proportionally to the remaining arc distanc
 
 
 ### ROS Implementation - Akhilan Boopathy
+The code was split into two ROS packages: one for tracking the cone, and one for driving the robot. Each package contained relevant ROS nodes which communicated using various ROS topics.
 
 #### Cone Detecting
 
