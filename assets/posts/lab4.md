@@ -1,9 +1,9 @@
 Lab 4
 =====
 
-## Overview and Motivations - [Insert Author]
+## Overview and Motivations - Akhilan Boopathy
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligula. Aliquam erat volutpat. Cras iaculis diam vitae nunc ultricies, et egestas lorem eleifend. Ut sit amet leo vitae libero maximus molestie non ac nunc. Ut ac mi ante. Vivamus convallis convallis neque, sit amet sollicitudin arcu bibendum sit amet. Phasellus finibus dolor vitae leo cursus, eu lobortis nisl blandit. Quisque tincidunt et nisi a hendrerit. Sed et nunc quis neque egestas sollicitudin. Curabitur auctor bibendum odio. Proin aliquam cursus metus, at fermentum tellus luctus vel. Morbi ut mi id augue lacinia faucibus.
+Before lab 4, we had primarily worked with the LIDAR sensor to detect the robot's environment. With this lab 4, we tried to use the robot's onboard forward pointing camera to detect objects in the environment. The camera allows for detection of objects when the LIDAR is either unusable for some reason or unable to detect the relevant objects. For instance, the LIDAR is unable to detect differences in color, while proper processing of data from a camera would allow for this. We had to implement methods to locate objects in the environment such as color space image segmentation. We also had to implement a way to locate an object found in the camera in the reference frame of the physical robot. As tests of our ability to detect and find the location of objects, we had to make sure the robot could park in front of an orange cone at a desired distance using just the camera. In addition, we had to make sure the robot could follow a curved red line on the floor.
 
 ## Proposed Approach - [Insert Author]
 
