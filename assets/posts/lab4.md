@@ -29,7 +29,7 @@ Under a bicycle model for the robot with wheel distance L, given the distance an
 $$R = \frac{distance^2-desired^2}{2\,distance\,\sin(angle)}$$
 $$steering\,angle = tan^{-1}(L/R)$$
 
-Given the steering radius R, the distance to the goal point along the circular arc is given by:
+The distance to the goal point along the circular arc is given by:
 
 $$arc\,distance = |R|cos^{-1}(\frac{2R^2+desired^2-distance^2}{2R\sqrt{desired^2+R^2}})-Rtan^{-1}(\frac{desired}{R})$$
 
