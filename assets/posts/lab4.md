@@ -29,7 +29,7 @@ Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, s
 The goal for the parking controller was to have the robot's final state be at specified distance from the cone while being oriented towards the cone. This specifies a circle of possible final locations for the robot. A constant steering radius is chosen such that the robot ends up on one of these locations. Given a constant cone location, the robot moves in a circular arc to the goal location.
 
 ##### Parking Geometry
-<center>![Parking Geometry](assets/images/ParkingDiagram.gif)</center>
+<center>![Parking Geometry](assets/images/ParkingDiagram.jpg)</center>
 <center>*Figure 1: Diagram of the robot's calculated circulat arc trajectory to reach the desired distance from the cone.*</center>
 
 Under a bicycle model for the robot with wheel distance L, given the distance and angle to the cone and the desired distance to the cone, the steering angle is given by:
