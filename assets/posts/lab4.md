@@ -25,18 +25,18 @@ Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, s
 
 #### Locating the Cone
 
-#### Parking - Akhilan
+#### Parking - Akhilan Boopathy
 The goal for the parking controller was to have the robot's final state be at specified distance from the cone while being oriented towards the cone. This specifies a circle of possible final locations for the robot. A constant steering radius is chosen such that the robot ends up on one of these locations. Given a constant cone location, the robot moves in a circular arc to the goal location.
 
 ##### Parking Geometry
-<center>![Parking Geometry](assets/images/ParkingDiagram.jpg)</center>
+<center>![Parking Geometry](assets/images/ParkingDiagram.JPG)</center>
 <center>*Figure 1: Diagram of the robot's calculated circulat arc trajectory to reach the desired distance from the cone.*</center>
 
 Under a bicycle model for the robot with wheel distance L, given the distance and angle to the cone and the desired distance to the cone, the steering angle is given by:
 
 $$steering\,angle = tan^{-1}(\frac{2\,L\,distance\,\sin(angle)}{distance^2-desired^2})$$
 
-Given the steering radius, the distance to the goal point along the circular arc is given by:
+Given the steering radius R, the distance to the goal point along the circular arc is given by:
 
 $$arc\,distance = |R|cos^{-1}(\frac{2R^2+desired^2-distance^2}{2R\sqrt{desired^2+R^2}})-Rtan^{-1}(\frac{desired}{R})$$
 
@@ -57,7 +57,17 @@ Curabitur auctor bibendum odio. Proin aliquam cursus metus, at fermentum tellus 
 
 [Pictures]
 
-### ROS Implementation - [Insert Author]
+### ROS Implementation - Akhilan Boopathy
+
+#### Cone Detecting
+
+#### Locating the Cone
+
+#### Parking - Akhilan Boopathy
+The parking controller subscribes to `/cone_topic`, a topic that has ConeLocation messages that specify the cone's location. After computing the desired steering angle and velocity of the robot, the parking controller publishes to `/vesc/ackermann_cmd_mux/input/navigation`. Because `/cone_topic` may output cone locations with respect to a different reference frame than expected, such as from the camera's reference frame. The calculations for the steering angle are done assuming that the cone locations are with respect to the center of the robot's back axle, so cone locations are adjusted to correct for any offset. When computing the steering angle and arc distance using the formula from the technical approach section, there are some computational issues that arise when the angle to the cone is too small or the robot is very close to the desired distance from the cone. In the case where the robot is sufficiently close to the desired distance, the robot is commanded to stop. In the case where the angle to the cone is small, corresponding to when the cone is directly ahead, the steering angle is set to zero and the remaining arc distance is set to the difference between the actual distance and desired distance to the robot. This corresponds to an approximation of the previous formulas in the case of small angles.
+
+
+#### Line Following
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligula. Aliquam erat volutpat. Cras iaculis diam vitae nunc ultricies, et egestas lorem eleifend. Ut sit amet leo vitae libero maximus molestie non ac nunc. Ut ac mi ante. Vivamus convallis convallis neque, sit amet sollicitudin arcu bibendum sit amet. Phasellus finibus dolor vitae leo cursus, eu lobortis nisl blandit. Quisque tincidunt et nisi a hendrerit. Sed et nunc quis neque egestas sollicitudin. Curabitur auctor bibendum odio. Proin aliquam cursus metus, at fermentum tellus luctus vel. Morbi ut mi id augue lacinia faucibus.
 
