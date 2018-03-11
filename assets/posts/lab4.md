@@ -19,7 +19,29 @@ Duis vel nunc sit amet risus consectetur dictum. Nulla mollis varius erat, vitae
 
 Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, suscipit lacus. Mauris vitae pretium libero, at dapibus massa. Curabitur eleifend bibendum pharetra. Nullam gravida viverra lacus eu blandit. Praesent nec odio ut magna scelerisque vulputate. Sed in libero porta, imperdiet magna maximus, efficitur urna.
 
-### Technical Approach - [Insert Author]
+### Technical Approach - Akhilan Boopathy
+
+#### Cone Detecting
+
+#### Locating the Cone
+
+#### Parking - Akhilan
+The goal for the parking controller was to have the robot's final state be at specified distance from the cone while being oriented towards the cone. This specifies a circle of possible final locations for the robot. A constant steering radius is chosen such that the robot ends up on one of these locations. Given a constant cone location, the robot moves in a circular arc to the goal location. Under a bicycle model for the robot with wheel distance L, given the distance and angle to the cone and the desired distance to the cone, the steering angle is given by:
+
+$$steering angle = tan^{-1}(\frac{2 L distance \sin(angle)}{distance^2-desired^2})$$
+
+Given the steering radius, the distance to the goal point along the circular arc is given by:
+
+$$arc distance = \abs(R)cos^{-1}(\frac{2R^2+desired^2-distance^2}{2R\sqrt(desired^2+R^2))}-Rtan^{-1}(\frac{desired}{R})$$
+
+The speed of the robot is controlled proportionally to the remaining arc distance.
+
+##### Parking Simulation
+<center>![Simulated robot parking in front of cone](assets/images/ParkerSim.gif)</center>
+<center>*Figure 1: Simulated robot parking in front of cone*</center>
+
+#### Line Following
+
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligula. Aliquam erat volutpat. Cras iaculis diam vitae nunc ultricies, et egestas lorem eleifend. Ut sit amet leo vitae libero maximus molestie non ac nunc. Ut ac mi ante. Vivamus convallis convallis neque, sit amet sollicitudin arcu bibendum sit amet. Phasellus finibus dolor vitae leo cursus, eu lobortis nisl blandit. Quisque tincidunt et nisi a hendrerit. Sed et nunc quis neque egestas sollicitudin. Curabitur auctor bibendum odio. Proin aliquam cursus metus, at fermentum tellus luctus vel. Morbi ut mi id augue lacinia faucibus.
 
