@@ -40,7 +40,7 @@ Given the steering radius, the distance to the goal point along the circular arc
 
 $$arc\,distance = |R|cos^{-1}(\frac{2R^2+desired^2-distance^2}{2R\sqrt{desired^2+R^2}})-Rtan^{-1}(\frac{desired}{R})$$
 
-The speed of the robot is controlled proportionally to the remaining arc distance.
+The speed of the robot is controlled proportionally to the remaining arc distance. This approach also works when the robot is too close to the cone and needs to move backwards.
 
 ##### Parking Simulation
 <center>![Simulated robot parking in front of cone](assets/images/ParkerSim.gif)</center>
