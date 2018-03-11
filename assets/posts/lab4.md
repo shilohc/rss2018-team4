@@ -27,7 +27,7 @@ The goal for the parking controller was to have the robot's final state be at sp
 Under a bicycle model for the robot with wheel distance L, given the distance and angle to the cone and the desired distance to the cone, the steering radius and steering angle are given by:
 
 $$R = \frac{distance^2-desired^2}{2\,distance\,\sin(angle)}$$
-$$steering\,angle = tan^{-1}(L/R)$$
+$$steering\,angle = tan^{-1}(\frac{L}{R})$$
 
 The distance to the goal point along the circular arc is given by:
 
