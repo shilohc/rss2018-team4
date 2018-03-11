@@ -24,9 +24,10 @@ The goal for the parking controller was to have the robot's final state be at sp
 <center><img src="assets/images/ParkingDiagram.JPG" width="300" ></center>
 <center>*Figure 1: Diagram of the robot's calculated circulat arc trajectory to reach the desired distance from the cone.*</center>
 
-Under a bicycle model for the robot with wheel distance L, given the distance and angle to the cone and the desired distance to the cone, the steering angle is given by:
+Under a bicycle model for the robot with wheel distance L, given the distance and angle to the cone and the desired distance to the cone, the steering radius and steering angle are given by:
 
-$$steering\,angle = tan^{-1}(\frac{2\,L\,distance\,\sin(angle)}{distance^2-desired^2})$$
+$$R = \frac{distance^2-desired^2}{2\,distance\,\sin(angle)}$$
+$$steering\,angle = tan^{-1}(L/R)$$
 
 Given the steering radius R, the distance to the goal point along the circular arc is given by:
 
@@ -50,7 +51,7 @@ The code was split into two ROS packages: one for tracking the cone, and one for
 #### Locating the Cone
 
 #### Parking - Akhilan Boopathy
-The parking controller subscribes to `/cone_topic`, a topic that has ConeLocation messages that specify the cone's location. After computing the desired steering angle and velocity of the robot, the parking controller publishes to `/vesc/ackermann_cmd_mux/input/navigation`. The topic `/cone_topic` may output cone locations with respect to a different reference frame than expected, such as from the camera's reference frame. The calculations for the steering angle are done assuming that the cone locations are with respect to the center of the robot's back axle, so cone locations are adjusted to correct for any offset. When computing the steering angle and arc distance using the formula from the technical approach section, there are some computational issues that arise when the angle to the cone is too small or the robot is very close to the desired distance from the cone. In the case where the robot is sufficiently close to the desired distance, the robot is commanded to stop. In the case where the angle to the cone is small, corresponding to when the cone is directly ahead, the steering angle is set to zero and the remaining arc distance is set to the difference between the actual distance and desired distance to the robot. This corresponds to an approximation of the previous formulas in the case of small angles.
+The parking controller subscribes to `/cone_topic`, a topic that has ConeLocation messages that specify the cone's location. After computing the desired steering angle and velocity of the robot, the parking controller publishes to `/vesc/ackermann_cmd_mux/input/navigation`. The topic `/cone_topic` may output cone locations with respect to a different reference frame than expected, such as from the camera's reference frame. The calculations for the steering angle are done assuming that the cone locations are with respect to the center of the robot's back axle, so cone locations are adjusted to correct for any offset. When computing the steering angle and arc distance using the formula from the technical approach section, there are some computational issues that arise when the angle to the cone is too small or the robot is very close to the desired distance from the cone. For example, when the angle to the cone is too small, the steering radius becomes very large or is undefined, leading to potentially inaccurate or undefined results for arc distance. In the case where the robot is sufficiently close to the desired distance, the robot is commanded to stop. In the case where the angle to the cone is small, corresponding to when the cone is directly ahead, the steering angle is set to zero and the remaining arc distance is set to the difference between the actual distance and desired distance to the robot. This corresponds to an approximation of the previous formulas in the case of small angles.
 
 
 #### Line Following
