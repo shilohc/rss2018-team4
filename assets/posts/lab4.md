@@ -19,16 +19,14 @@ Parking and line-following controllers were written under the assumption that th
 #### Cone Detection
 Computer Vision – tony?
 
-#### Cone Localization 
-
-##### Image and Cooordinate Transformations - Shannon Hwang
+#### Cone Localization - Shannon Hwang
 Given the ability to return the bounding box for an object from an image containing that object, we needed access images returned by the robot's ZED camera and relate them to real-world coordinates for the robot to navigate accordingly.
 
 Since the camera publishes ROS Image messages, to access and extract meaningful data from the camera we had to convert its publisehd Images to a numpy array using OpenCV bridge. The images in array form were then properly translated from 2D image coordinates to their "real-world" locations in 3D space with respect to the midpoint of the robot's front wheels. We did so through by measuring the camera's rotation and translation (extrinsic parameters), and finding the pre-calibrated intrinsic camera matrix on the robot. We then used the matrices representing the intrinsic and extrinsic parameters in the following equation: 
 
 <center><img src="assets/images/coordinate_transform.jpg" width="300" ></center>
 
-We then combined the bounding box returned by the color space image segmentation algorithm and and the coordinate transformations mentioned above in order to properly localize a cone in a given image in 3D space with respect to the midpoint of the car's front wheels. As proof that we could do so, we published an RVIZ Marker representing the cone and published Images visualizing the cone detection algorithm, and published the distance and angle of the cone with respect to the car to be used in the parking and line following controllers.
+We then combined the bounding box returned by the color space image segmentation algorithm and and the coordinate transformations mentioned above in order to properly localize a cone in a given image in 3D space with respect to the midpoint of the car's front wheels. As proof that we could do so, we published an RVIZ Marker representing the cone and published ROS Images visualizing the cone detection algorithm, and published the distance and angle of the cone with respect to the car to be used in the parking and line following controllers.
 
 #### Parking - Akhilan Boopathy
 The goal for the parking controller was to have the robot's final state be at a specified distance from the cone while being oriented towards the cone. This specifies a circle of possible final locations for the robot. A constant steering radius is chosen such that the robot ends up on one of these locations. Given a constant cone location, the robot moves in a circular arc to the goal location. Note that this is different from pure pursuit of the goal: under pure pursuit the robot does not necessarily have the correct orientation when it reaches the goal. In this approach, the goal point and steering angle are chosen simultaneously so the robot always points towards the cone.
