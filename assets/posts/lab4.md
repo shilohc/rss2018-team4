@@ -112,9 +112,10 @@ TODO: tony?
 #### Locating the Cone – Shannon Hwang
 The cone could be successfully located in real life. The robot could publish a bounding box bounding the cone (or any orange object, as shown in the picture) and rviz marker representing the cone in real life. 
 
-<right>Fig. 3 <img src="assets/images/bounding_box.jpg" width="300" ></right>
-<left>Fig. 4 <img src="assets/images/marker_video.gif" width="300" ></left>
-<right>Fig. 5 <img src="assets/images/marker.jpg" width="300" ></right>
+<left><img src="assets/images/bounding_box.jpg" width="300" ></left>
+<center><img src="assets/images/marker_video.gif" width="300" ></center>
+<right><img src="assets/images/marker.jpg" width="300" ></right>
+<left>Fig. 3</left> <center>Fig. 4></center> <right>Fig. 5</right>
 
 <center>*Figure 3: The bounding box as calculated by color segmentation bounds any orange object*</center>
 
