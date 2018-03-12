@@ -22,11 +22,11 @@ TODO: Computer Vision – tony?
 #### Cone Localization - Shannon Hwang
 Given the ability to return the bounding box for an object from an image containing that object, we needed access images returned by the robot's ZED camera and relate them to real-world coordinates for the robot to navigate accordingly.
 
-Since the camera publishes ROS Image messages, to access and extract meaningful data from the camera we had to convert its publisehd Images to a numpy array using OpenCV bridge. The images in array form were then properly translated from 2D image coordinates to their "real-world" locations in 3D space with respect to the midpoint of the robot's front wheels. We did so through by measuring the camera's rotation and translation (extrinsic parameters), and finding the pre-calibrated intrinsic camera matrix on the robot. We then used the matrices representing the intrinsic and extrinsic parameters in the following equation: 
+Since the camera publishes ROS Image messages, to access and extract meaningful data from the camera we had to convert its publisehd Images to a numpy array using OpenCV bridge. The images in array form were then properly translated from 2D image coordinates to their "real-world" locations in 3D space with respect to the midpoint of the robot's front wheels. We did so through by measuring 12 points in real and pixel space to compute the robot's homography matrix in the equation
 
-<center><img src="assets/images/coordinate_transform.jpg" width="300" ></center>
+$$s = \begin{bmatrix} x \\ y\\ 1 \end{bmatrix} = \begin{bmatrix}  h\_11 & h\_12 & h\_13 \\ h\_21 & h\_22 & h\_23 \\ h\_31 & h\_32 & h\_33 \\ \end{bmatrix} = \begin{bmatrix} u \\ v\\ 1 \end{bmatrix}$$
 
-We then combined the bounding box returned by the color space image segmentation algorithm and and the coordinate transformations mentioned above in order to properly localize a cone in a given image in 3D space with respect to the midpoint of the car's front wheels. As proof that we could do so, we published an RVIZ Marker representing the cone and published ROS Images visualizing the cone detection algorithm, and published the distance and angle of the cone with respect to the car to be used in the parking and line following controllers.
+We then combined the bounding box returned by the color space image segmentation algorithm and and the coordinate transformations mentioned above in order to properly localize a cone in a given image in 3D space with respect to the midpoint of the car's front wheels. 
 
 #### Parking - Akhilan Boopathy
 The goal for the parking controller was to have the robot's final state be at a specified distance from the cone while being oriented towards the cone. This specifies a circle of possible final locations for the robot. A constant steering radius is chosen such that the robot ends up on one of these locations. Given a constant cone location, the robot moves in a circular arc to the goal location. Note that this is different from pure pursuit of the goal: under pure pursuit the robot does not necessarily have the correct orientation when it reaches the goal. In this approach, the goal point and steering angle are chosen simultaneously so the robot always points towards the cone.
@@ -61,7 +61,7 @@ The code was split into two ROS packages: one for tracking the cone, and one for
 The cone detection code was not itself in the form of ROS nodes, but was imported and used by the cone tracker node, as described below.  
 
 #### Cone Localization – Shannon Hwang
-The node subscribes to `/ZED/rgb/image_rect_color`, which publishes ROS images from the onboard ZED camera input. The ROS images were then transformed to numpy arrays using the imgmsg_to_cv2 function in the OpenCV bridge package; the numpy arrays were then fed into cd_color_segmentation() from cone_detection.py, which returned a bounding box around an object of the color of interest. That bounding box was transformed into a list of 3D points using the measured and pre-determined camera matrices, from which a distance and angle of the object of interest with respect to the car published as a ConeLocation message to `/cone_topic`.
+The homography matrix was computed using the OpenCV function findHomography. The node subscribes to `/ZED/rgb/image_rect_color`, which publishes ROS images from the onboard ZED camera input. The ROS images were then transformed to numpy arrays using the imgmsg_to_cv2 function in the OpenCV bridge package; the numpy arrays were then fed into cd_color_segmentation() from cone_detection.py, which returned a bounding box around an object of the color of interest. That bounding box was transformed into a list of 3D points using the measured and pre-determined camera matrices, from which a distance and angle of the object of interest with respect to the car published as a ConeLocation message to `/cone_topic`.
 
 #### Parking - Akhilan Boopathy
 The parking controller subscribes to `/cone_topic`, a topic that has ConeLocation messages that specify the cone's location. After computing the desired steering angle and velocity of the robot, the parking controller publishes to `/vesc/ackermann_cmd_mux/input/navigation`. The topic `/cone_topic` may output cone locations with respect to a different reference frame than expected, such as the camera's reference frame. The calculations for the steering angle are done assuming that the cone locations are with respect to the center of the robot's back axle, so cone locations are adjusted to correct for any offset. When computing the steering angle and arc distance using the formula from the technical approach section, there are some computational issues that arise when the angle to the cone is too small or the robot is very close to the desired distance from the cone. For example, when the angle to the cone is too small, the steering radius becomes very large or is undefined, leading to potentially inaccurate or undefined results for arc distance. In the case where the robot is sufficiently close to the desired distance, the robot is commanded to stop. In the case where the angle to the cone is small, corresponding to when the cone is directly ahead, the steering angle is set to zero and the remaining arc distance is set to the difference between the actual distance and desired distance to the robot. This corresponds to an approximation of the previous formulas in the case of small angles.
@@ -91,13 +91,13 @@ The parking controller was first tested in simulation before testing on the real
 #### Line Following
 TODO: eleanor?
 
-### Results - [Insert Author]
+### Results - Akhilan Boopathy
 
 #### Cone Detecting
 TODO: tony?
 
-#### Locating the Cone
-TODO: RVIZ Marker, Cone detection visualization images
+#### Locating the Cone – Shannon Hwang
+The cone could be successfully located in real life. The parking controller consistently pointed the car towards the cone (or given bright orange object) and moved towards it. However, if the cone was situated in a dark area, the detection algorithm often had trouble determining the distance between car and cone. We compensated for the lighting we expected in Stata and normal operation by illuminating the cone.
 
 #### Parking - Akhilan Boopathy
 Once the cone was properly located, we ran the parking controller on the real robot, setting the desired distance to 0.5 meters. With the set of parameters used in simulation, the robot moved too slowly, especially when backing away from the cone when it was too close. In particular, when the speed was small but still significantly away from zero, the robot would not move. The proportion factor for the proportional controller used to control the robot's speed was increased to make the robot move as desired, while not producing oscillations in the robot's movement. Other parameters were also tweaked to match the geometry of the real robot, such as the offset between the center of the rear axle and the reference frame of cone messages.
@@ -108,7 +108,7 @@ The main new technical challenges in this lab were implementing the computer vis
 The CI lessons in this lab stemmed from the fact that this lab had significantly more moving parts than the previous lab, and really tested our team's time management capabilities; we learned how to improve the processes of discussing our approach to the lab, assigning tasks, and checking in about and merging the results of various team members' work.
 
 ### Technical Conclusions - Shiloh Curtis
-This lab built on the last lab's understanding of control systems and added new challenges in the form of computer vision and camera coordinate conversions.  Of these, our main sticking point was in finding the correct homography matrix for the camera.  We learned that this does not work well with too many point correspondences (4 point correspondences worked much better than 12).  
+This lab built on the last lab's understanding of control systems and added new challenges in the form of computer vision and camera coordinate conversions.  Of these, our main sticking point was in finding the correct homography matrix for the camera.  We learned that this does not work well with too few point correspondences (12 point correspondences worked much better than 4).  
 
 ### CI Conclusions - Akhilan Boopathy, Shannon Hwang, Shiloh Curtis
 
