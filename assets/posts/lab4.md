@@ -105,8 +105,8 @@ The main new technical challenges in this lab were implementing the computer vis
 
 The CI lessons in this lab stemmed from the fact that this lab had significantly more moving parts than the previous lab, and really tested our team's time management capabilities; we learned how to improve the processes of discussing our approach to the lab, assigning tasks, and checking in about and merging the results of various team members' work.
 
-### Technical Conclusions - [Insert Author]
-
+### Technical Conclusions - Shiloh Curtis
+This lab built on the last lab's understanding of control systems and added new challenges in the form of computer vision and camera coordinate conversions.  Of these, our main sticking point was in finding the correct homography matrix for the camera.  We learned that this does not work well with too many point correspondences (4 point correspondences worked much better than 12).  
 
 ### CI Conclusions - Akhilan Boopathy, Shannon Hwang, Shiloh Curtis
 
