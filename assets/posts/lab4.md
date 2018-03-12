@@ -70,16 +70,19 @@ The parking controller subscribes to `/cone_topic`, a topic that has ConeLocatio
 The line-following code builds upon the existing ConeTracker node. In the callback for the camera topic, after the image has been converted into a numpy-array-like form, it simply checks the parameter `cone_tracker/cone_or_line`. If the value is `line`, then the numpy array should be cropped to contain just the part of the camera image from 2/10 of the image height, to 4/10 of the image height. As discussed above, this crop is enough to produce the line-following effect we are going for. 
 
 
-## Experimental Evaluation - Akhilan Boopathy
+## Experimental Evaluation - Akhilan Boopathy, Shiloh Curtis
 
-Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, suscipit lacus. Mauris vitae pretium libero, at dapibus massa. Curabitur eleifend bibendum pharetra. Nullam gravida viverra lacus eu blandit. Praesent nec odio ut magna scelerisque vulputate. Sed in libero porta, imperdiet magna maximus, efficitur urna.
+Since not all components of this lab could easily be tested in simulation, experimental evaluation was more difficult to coordinate.  
 
 ### Testing Procedure - Akhilan Boopathy
 
 #### Cone Detecting
+TODO: tony?
 
+#### Locating the Cone - Shiloh Curtis
+The cone tracker was not tested in simulation, as the main point of difficulty was in real-world calibration of the homography matrix.  
 
-#### Locating the Cone
+The cone tracker was tested by placing the cone at various distances and angles from the robot and checking that the output coordinates and distance/angle data were correct.  Since the parking controller was already tested and working in simulation and in real life with fake cone data (artificial distance/angle values), the cone tracker was then tested by checking whether it produced the desired behavior when combined with the parking controller.  
 
 #### Parking - Akhilan Boopathy
 The parking controller was first tested in simulation before testing on the real robot. The simulation test cases were similar to the test cases on the physical robot desribed here. With the real robot, the cone was placed at a number of distances and angles from the camera. When the cone was placed away from the robot at an angle, the desired behavior was to have the robot turn in the direction of the cone. To test whether the robot could handle when the angle to the cone was small, the cone was placed directly in front of the robot, in which case the desired behavior was to have the robot point its wheels directly forward. Test cases where the cone was closer than intended to the robot was also tested, in which case the desired behavior was to have the robot move away from the robot while turning so as to point towards the cone. In addition, test cases where the cone moved were also tried. The desired behavior in this case was to have the robot continue following the cone as it was moved.
@@ -89,7 +92,7 @@ The parking controller was first tested in simulation before testing on the real
 ### Results - [Insert Author]
 
 #### Cone Detecting
-
+TODO: tony?
 
 #### Locating the Cone
 TODO: RVIZ Marker, Cone detection visualization images
@@ -98,11 +101,9 @@ TODO: RVIZ Marker, Cone detection visualization images
 
 
 ## Lessons Learned - Akhilan Boopathy, Shannon Hwang, Shiloh Curtis
-Technical conclusions?
-importing python packages into ROS Framework
+The main new technical challenges in this lab were implementing the computer vision algorithms required for finding a cone or line and calibrating the camera to correctly convert bounding boxes into points in the real world.  
 
 The CI lessons in this lab stemmed from the fact that this lab had significantly more moving parts than the previous lab, and really tested our team's time management capabilities; we learned how to improve the processes of discussing our approach to the lab, assigning tasks, and checking in about and merging the results of various team members' work.
-
 
 ### Technical Conclusions - [Insert Author]
 
