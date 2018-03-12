@@ -24,9 +24,15 @@ Given the ability to return the bounding box for an object from an image contain
 
 Since the camera publishes ROS Image messages, to access and extract meaningful data from the camera we had to convert its publisehd Images to a numpy array using OpenCV bridge. The images in array form were then properly translated from 2D image coordinates to their "real-world" locations in 3D space with respect to the midpoint of the robot's front wheels. We did so through by measuring 12 points in real and pixel space to compute the robot's homography matrix in the equation
 
-$$s = \begin{bmatrix} x \\ y \\ 1 \end{bmatrix} = \begin{bmatrix}  h\_11 & h\_12 & h\_13 \\ h\_21 & h\_22 & h\_23 \\ h\_31 & h\_32 & h\_33 \\ \end{bmatrix} = \begin{bmatrix} u \\ v \\ 1 \end{bmatrix}$$
+$$s = \begin{bmatrix} x \\ 
+y \\ 
+1 \end{bmatrix} = \begin{bmatrix}  h\_11 & h\_12 & h\_13 \\ 
+h\_21 & h\_22 & h\_23 \\ 
+h\_31 & h\_32 & h\_33 \\ \end{bmatrix} = \begin{bmatrix} u \\ 
+v \\ 
+1 \end{bmatrix}$$
 
-We then combined the bounding box returned by the color space image segmentation algorithm and and the coordinate transformations mentioned above in order to properly localize a cone in a given image in 3D space with respect to the midpoint of the car's front wheels. 
+We then combined the bounding box returned by the color space image segmentation algorithm and and the coordinate transformations mentioned above in order to properly localize a cone in a given image in 3D space with respect to the midpoint of the car's front edge. 
 
 #### Parking - Akhilan Boopathy
 The goal for the parking controller was to have the robot's final state be at a specified distance from the cone while being oriented towards the cone. This specifies a circle of possible final locations for the robot. A constant steering radius is chosen such that the robot ends up on one of these locations. Given a constant cone location, the robot moves in a circular arc to the goal location. Note that this is different from pure pursuit of the goal: under pure pursuit the robot does not necessarily have the correct orientation when it reaches the goal. In this approach, the goal point and steering angle are chosen simultaneously so the robot always points towards the cone.
