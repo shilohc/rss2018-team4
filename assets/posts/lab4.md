@@ -26,28 +26,7 @@ Given the ability to return the bounding box for an object from an image contain
 
 Since the camera publishes ROS Image messages, to access and extract meaningful data from the camera we had to convert its publisehd Images to a numpy array using OpenCV bridge. The images in array form were then properly translated from 2D image coordinates to their "real-world" locations in 3D space with respect to the midpoint of the robot's front wheels. We did so through by measuring the camera's rotation and translation (extrinsic parameters), and finding the pre-calibrated intrinsic camera matrix on the robot. We then used the matrices representing the intrinsic and extrinsic parameters in the following equation: 
 
-$$s\begin{bmatrix}
-    u \\
-    v \\
-    1 \\
-\end{bmatrix}  = 
-\begin{bmatrix}
-    f_x 0 c_x \\
-    0 f_y c_y \\
-    0 0 1 \\
-\end{bmatrix}
-\begin{bmatrix}
-    r_{11} r_{12} r_{13} t_1\\
-    r_{21} r_{22} r_{23} t_2\\
-    r_{31} r_{32} r_{33} t_3\\
-\end{bmatrix}
-\begin{bmatrix}
-    X\\
-    Y\\
-    Z\\
-    1\\
-\end{bmatrix}
-$$
+<center><img src="assets/images/coordinate_transform.jpg" width="300" ></center>
 
 We then combined the bounding box returned by the color space image segmentation algorithm and and the coordinate transformations mentioned above in order to properly localize a cone in a given image in 3D space with respect to the midpoint of the car's front wheels. As proof that we could do so, we published an RVIZ Marker representing the cone and published Images visualizing the cone detection algorithm, and published the distance and angle of the cone with respect to the car to be used in the parking and line following controllers.
 
@@ -83,7 +62,7 @@ The code was split into two ROS packages: one for tracking the cone, and one for
 #### Cone Detection
 
 #### Cone Localization – Shannon Hwang
-The node subscribes to `ZED/rgb/image_rect_color`, which publishes ROS images from the onboard ZED camera input. The ROS images were then transformed to numpy arrays using the imgmsg_to_cv2 function in the OpenCV bridge package; the numpy arrays were then fed into cd_color_segmentation() from cone_detection.py, which returned a bounding box around an object of the color of interest. That bounding box was transformed into a list of 3D points using the measured and pre-determined camera matrices, from which a distance and angle of the object of interest with respect to the car published as a ConeLocation message to `/cone_topic`.
+The node subscribes to `/ZED/rgb/image_rect_color`, which publishes ROS images from the onboard ZED camera input. The ROS images were then transformed to numpy arrays using the imgmsg_to_cv2 function in the OpenCV bridge package; the numpy arrays were then fed into cd_color_segmentation() from cone_detection.py, which returned a bounding box around an object of the color of interest. That bounding box was transformed into a list of 3D points using the measured and pre-determined camera matrices, from which a distance and angle of the object of interest with respect to the car published as a ConeLocation message to `/cone_topic`.
 
 #### Parking - Akhilan Boopathy
 The parking controller subscribes to `/cone_topic`, a topic that has ConeLocation messages that specify the cone's location. After computing the desired steering angle and velocity of the robot, the parking controller publishes to `/vesc/ackermann_cmd_mux/input/navigation`. The topic `/cone_topic` may output cone locations with respect to a different reference frame than expected, such as the camera's reference frame. The calculations for the steering angle are done assuming that the cone locations are with respect to the center of the robot's back axle, so cone locations are adjusted to correct for any offset. When computing the steering angle and arc distance using the formula from the technical approach section, there are some computational issues that arise when the angle to the cone is too small or the robot is very close to the desired distance from the cone. For example, when the angle to the cone is too small, the steering radius becomes very large or is undefined, leading to potentially inaccurate or undefined results for arc distance. In the case where the robot is sufficiently close to the desired distance, the robot is commanded to stop. In the case where the angle to the cone is small, corresponding to when the cone is directly ahead, the steering angle is set to zero and the remaining arc distance is set to the difference between the actual distance and desired distance to the robot. This corresponds to an approximation of the previous formulas in the case of small angles.
