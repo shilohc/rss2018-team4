@@ -67,7 +67,6 @@ The parking controller subscribes to `/cone_topic`, a topic that has ConeLocatio
 
 
 #### Line Following - Eleanor Pence
-
 The line-following code builds upon the existing ConeTracker node. In the callback for the camera topic, after the image has been converted into a numpy-array-like form, it simply checks the parameter `cone_tracker/cone_or_line`. If the value is `line`, then the numpy array should be cropped to contain just the part of the camera image from 2/10 of the image height, to 4/10 of the image height. As discussed above, this crop is enough to produce the line-following effect we are going for. 
 
 
@@ -79,7 +78,6 @@ Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, s
 
 #### Cone Detecting
 
-TODO: RVIZ Marker, Cone detection visualization images
 
 #### Locating the Cone
 
@@ -90,24 +88,28 @@ The parking controller was first tested in simulation before testing on the real
 
 ### Results - [Insert Author]
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligula. Aliquam erat volutpat. Cras iaculis diam vitae nunc ultricies, et egestas lorem eleifend. Ut sit amet leo vitae libero maximus molestie non ac nunc. Ut ac mi ante. Vivamus convallis convallis neque, sit amet sollicitudin arcu bibendum sit amet. Phasellus finibus dolor vitae leo cursus, eu lobortis nisl blandit. Quisque tincidunt et nisi a hendrerit. Sed et nunc quis neque egestas sollicitudin. Curabitur auctor bibendum odio. Proin aliquam cursus metus, at fermentum tellus luctus vel. Morbi ut mi id augue lacinia faucibus.
+#### Cone Detecting
 
 
-Duis vel nunc sit amet risus consectetur dictum. Nulla mollis varius erat, vitae gravida est elementum a. Curabitur velit sapien, placerat ac scelerisque quis, ultricies at sem. Maecenas ut elit congue, condimentum lacus eu, scelerisque nunc. Curabitur mattis velit vitae sem placerat varius vel euismod leo. Cras quis elit quam. Proin scelerisque lobortis erat, eu euismod ex mattis ac. Curabitur non felis mauris. Integer mauris nisi, rutrum id finibus vel, ornare quis diam. Cras lectus nisi, pharetra ut elit at, porta auctor ex. Cras lobortis nisl leo, varius aliquet arcu sollicitudin vel. Aliquam quis nulla sapien. Donec porttitor, tortor vel iaculis vehicula, ipsum eros dictum eros, sit amet tempor orci felis vitae magna. Sed velit lacus, tincidunt sit amet quam sed, aliquam porttitor ex.
+#### Locating the Cone
+TODO: RVIZ Marker, Cone detection visualization images
 
-Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, suscipit lacus. Mauris vitae pretium libero, at dapibus massa. Curabitur eleifend bibendum pharetra. Nullam gravida viverra lacus eu blandit. Praesent nec odio ut magna scelerisque vulputate. Sed in libero porta, imperdiet magna maximus, efficitur urna.
+#### Parking - Akhilan Boopathy
 
-## Lessons Learned - [Insert Author]
 
-Importing python packages into ROS Framework
+## Lessons Learned - Akhilan Boopathy, Shannon Hwang, Shiloh Curtis
+Technical conclusions?
+importing python packages into ROS Framework
+
+The CI lessons in this lab stemmed from the fact that this lab had significantly more moving parts than the previous lab, and really tested our team's time management capabilities; we learned how to improve the processes of discussing our approach to the lab, assigning tasks, and checking in about and merging the results of various team members' work.
 
 
 ### Technical Conclusions - [Insert Author]
 
 
-### CI Conclusions - Akhilan Boopathy, Shannon Hwang
+### CI Conclusions - Akhilan Boopathy, Shannon Hwang, Shiloh Curtis
 
 1. We learned that creating a ROS framework to place our individual code contributions into was useful to ensure that the components of the lab all fit together. In particular, ensuring that different components of the lab published and subscribed messages with the same format was useful when putting components of the lab together. In general, planning out how each of our contributions would fit together before starting work was useful.
-2. We also learned that having each member fully understand the entire scope of the lab was essential, even though each member would not touch every component of the lab. This became evident when we tried to merge different pieces of code for different nodes together, and there were several misunderstandings and code conflicts. 
-3. Student 3
+2. We also learned that having each member fully understand the entire scope of the lab was essential, even though each member would not touch every component of the lab. This became evident when we tried to merge different pieces of code for different nodes together, and there were several misunderstandings about what each piece of code built off of. 
+3. Learning from the last lab, we split up the lab into various components, and assigned various components to team members. However, we neglected to set deadlines for check-ins or finishing parts of labs, which became problematic when nodes reached testing readiness before other nodes that they relied on. 
 
