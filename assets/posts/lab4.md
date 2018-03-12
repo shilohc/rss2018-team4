@@ -17,7 +17,7 @@ We attempted to pipeline as much of the lab as possible. Team members were intia
 Parking and line-following controllers were written under the assumption that they would receive accurate coordinates for what to follow. Once the image transformations worked and computer vision algorithms worked passably, they were combined to create a cone detection and localization ndoe. That node was then used to implement the parking and line-following nodes on the real robot. 
 
 #### Cone Detection
-Computer Vision – tony?
+TODO: Computer Vision – tony?
 
 #### Cone Localization - Shannon Hwang
 Given the ability to return the bounding box for an object from an image containing that object, we needed access images returned by the robot's ZED camera and relate them to real-world coordinates for the robot to navigate accordingly.
@@ -57,7 +57,8 @@ It turns out that it is possible to use an extremely similar algorithm for line-
 ### ROS Implementation - Akhilan Boopathy
 The code was split into two ROS packages: one for tracking the cone, and one for driving the robot. Each package contained relevant ROS nodes which communicated using various ROS topics.
 
-#### Cone Detection
+#### Cone Detection - Shiloh Curtis
+The cone detection code was not itself in the form of ROS nodes, but was imported and used by the cone tracker node, as described below.  
 
 #### Cone Localization – Shannon Hwang
 The node subscribes to `/ZED/rgb/image_rect_color`, which publishes ROS images from the onboard ZED camera input. The ROS images were then transformed to numpy arrays using the imgmsg_to_cv2 function in the OpenCV bridge package; the numpy arrays were then fed into cd_color_segmentation() from cone_detection.py, which returned a bounding box around an object of the color of interest. That bounding box was transformed into a list of 3D points using the measured and pre-determined camera matrices, from which a distance and angle of the object of interest with respect to the car published as a ConeLocation message to `/cone_topic`.
@@ -74,7 +75,7 @@ The line-following code builds upon the existing ConeTracker node. In the callba
 
 Since not all components of this lab could easily be tested in simulation, experimental evaluation was more difficult to coordinate.  
 
-### Testing Procedure - Akhilan Boopathy
+### Testing Procedure - Akhilan Boopathy, Shiloh Curtis
 
 #### Cone Detecting
 TODO: tony?
@@ -88,6 +89,7 @@ The cone tracker was tested by placing the cone at various distances and angles 
 The parking controller was first tested in simulation before testing on the real robot. The simulation test cases were similar to the test cases on the physical robot desribed here. With the real robot, the cone was placed at a number of distances and angles from the camera. When the cone was placed away from the robot at an angle, the desired behavior was to have the robot turn in the direction of the cone. To test whether the robot could handle when the angle to the cone was small, the cone was placed directly in front of the robot, in which case the desired behavior was to have the robot point its wheels directly forward. Test cases where the cone was closer than intended to the robot was also tested, in which case the desired behavior was to have the robot move away from the robot while turning so as to point towards the cone. In addition, test cases where the cone moved were also tried. The desired behavior in this case was to have the robot continue following the cone as it was moved.
 
 #### Line Following
+TODO: eleanor?
 
 ### Results - [Insert Author]
 
@@ -98,7 +100,7 @@ TODO: tony?
 TODO: RVIZ Marker, Cone detection visualization images
 
 #### Parking - Akhilan Boopathy
-
+TODO
 
 ## Lessons Learned - Akhilan Boopathy, Shannon Hwang, Shiloh Curtis
 The main new technical challenges in this lab were implementing the computer vision algorithms required for finding a cone or line and calibrating the camera to correctly convert bounding boxes into points in the real world.  
