@@ -112,31 +112,25 @@ TODO: tony?
 #### Locating the Cone – Shannon Hwang
 The cone could be successfully located in real life. The robot could publish a bounding box bounding the cone (or any orange object, as shown in the picture) and rviz marker representing the cone in real life. 
 
-<table width = "100%" border = "0">  
+<table width = "100%">  
 <tr valign = "top">
 <td width = "33%">
    <img src="assets/images/bounding_box.jpg" width="300" >
-   Fig. 3
+   <center>*Figure 3: The bounding box as calculated by color segmentation bounds any orange object*</center>
 </td>
 	
 <td width = "33">
    <img src="assets/images/marker_video.gif" width="300" >
-   Fig. 4
+   <center>*Figure 4: The robot can track the cone as an rviz marker*</center>
 </td>
 	
 <td width = "33%">
    <img src="assets/images/marker.jpg" width="300" >
-   Fig. 5
+   <center>*Figure 5: The robot can visualize the rviz marker along with LaserScan data*</center>
 </td>
 </tr>
 </table>
 
-
-<center>*Figure 3: The bounding box as calculated by color segmentation bounds any orange object*</center>
-
-<center>*Figure 4: The robot can track the cone as an rviz marker*</center>
-
-<center>*Figure 5: The robot can visualize the rviz marker along with LaserScan data*</center>
 
 This was further shown as parking controller consistently pointed the car towards the cone (or given bright orange object) and moved towards it. However, if the cone was situated in a dark area, the detection algorithm often had trouble determining the distance between car and cone. We compensated for the lighting we expected during normal operation by illuminating cones in darker areas with mobile lighting. 
 
