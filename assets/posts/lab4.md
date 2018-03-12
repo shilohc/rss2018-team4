@@ -24,7 +24,7 @@ Given the ability to return the bounding box for an object from an image contain
 
 Since the camera publishes ROS Image messages, to access and extract meaningful data from the camera we had to convert its publisehd Images to a numpy array using OpenCV bridge. The images in array form were then properly translated from 2D image coordinates to their "real-world" locations in 3D space with respect to the midpoint of the robot's front wheels. We did so through by measuring 12 points in real and pixel space to compute the robot's homography matrix in the equation
 
-$$s = \begin{bmatrix} x \\ y\\ 1 \end{bmatrix} = \begin{bmatrix}  h\_11 & h\_12 & h\_13 \\ h\_21 & h\_22 & h\_23 \\ h\_31 & h\_32 & h\_33 \\ \end{bmatrix} = \begin{bmatrix} u \\ v\\ 1 \end{bmatrix}$$
+$$s = \begin{bmatrix} x \\ y \\ 1 \end{bmatrix} = \begin{bmatrix}  h\_11 & h\_12 & h\_13 \\ h\_21 & h\_22 & h\_23 \\ h\_31 & h\_32 & h\_33 \\ \end{bmatrix} = \begin{bmatrix} u \\ v \\ 1 \end{bmatrix}$$
 
 We then combined the bounding box returned by the color space image segmentation algorithm and and the coordinate transformations mentioned above in order to properly localize a cone in a given image in 3D space with respect to the midpoint of the car's front wheels. 
 
