@@ -11,7 +11,7 @@ Before lab 4, we had primarily worked with the LIDAR sensor to detect the robot'
 
 For this lab, we were not provided with a ROS framework, so our team had to create our own. One team member worked on creating the ROS framework. The other team members split up to work on each of the other components of the lab: cone detection, locating and visualizing the cone, parking the robot and following the line.
 
-### Technical Approach - Akhilan Boopathy, Shannon Hwang
+### Technical Approach - Akhilan Boopathy, Shannon Hwang, Eleanor Pence
 We attempted to pipeline as much of the lab as possible. Team members were intially assigned independent nodes such as creating the lab's ROS framework, completing and testing various computer vision algorithms, writing nodes for image and coordinate transformations, and writing nodes for parking and line-following, with the understanding that some tasks would take longer than others and that teammates could be reassigned. 
 
 Parking and line-following controllers were written under the assumption that they would receive accurate coordinates for what to follow. Once the image transformations worked and computer vision algorithms worked passably, they were combined to create a cone detection and localization ndoe. That node was then used to implement the parking and line-following nodes on the real robot. 
@@ -23,6 +23,16 @@ TODO: Computer Vision – tony?
 Given the ability to return the bounding box for an object from an image containing that object, we needed access images returned by the robot's ZED camera and relate them to real-world coordinates for the robot to navigate accordingly.
 
 Since the camera publishes ROS Image messages, to access and extract meaningful data from the camera we had to convert its publisehd Images to a numpy array using OpenCV bridge. The images in array form were then properly translated from 2D image coordinates to their "real-world" locations in 3D space with respect to the midpoint of the robot's front wheels. We did so through by measuring 12 points in real and pixel space to compute the robot's homography matrix in the equation
+
+$$s = \begin{bmatrix} x \\\
+y \\\
+1 \end{bmatrix} = \begin{bmatrix}  h\_{11} & h\_{12} & h\_{13} \\\
+h\_{21} & h\_{22} & h\_{23} \\\
+h\_{31} & h\_{32} & h\_{33} \\\
+\end{bmatrix} = \begin{bmatrix} u \\\
+v \\\
+1 \end{bmatrix}$$
+
 
 <center><img src="assets/images/coordinate_transform.jpg" width="300" ></center>
 
@@ -54,7 +64,7 @@ The speed of the robot is controlled proportionally to the remaining arc distanc
 It turns out that it is possible to use an extremely similar algorithm for line-following as for cone-parking. The main difference is that, before any coordinate transforms occur but after the image is converted from a ROS Image message to a numpy-like array format, the input image should be cropped to only a small horizontal slice of the full image. This creates a situation where, whenever the line is visible to the camera within that slice, the robot perceives that there is always an orange patch at a certain fixed distance away. Using the parking algorithm, the robot will orient itself correctly and move towards that perceived orange patch, but since the patch is actually a line, the robot continues this process so long as there is line to follow. All that is needed, then, is a single parameter to determine if the robot should find a cone and park there, or if it should follow a line visible to it. 
 
 
-### ROS Implementation - Akhilan Boopathy
+### ROS Implementation - Akhilan Boopathy, Shiloh Curtis, Shannon Hwang, Eleanor Pence
 The code was split into two ROS packages: one for tracking the cone, and one for driving the robot. Each package contained relevant ROS nodes which communicated using various ROS topics.
 
 #### Cone Detection - Shiloh Curtis
@@ -88,16 +98,26 @@ The cone tracker was tested by placing the cone at various distances and angles 
 #### Parking - Akhilan Boopathy
 The parking controller was first tested in simulation before testing on the real robot. The simulation test cases were similar to the test cases on the physical robot desribed here. With the real robot, the cone was placed at a number of distances and angles from the camera. When the cone was placed away from the robot at an angle, the desired behavior was to have the robot turn in the direction of the cone. To test whether the robot could handle when the angle to the cone was small, the cone was placed directly in front of the robot, in which case the desired behavior was to have the robot point its wheels directly forward. Test cases where the cone was closer than intended to the robot was also tested, in which case the desired behavior was to have the robot move away from the robot while turning so as to point towards the cone. In addition, test cases where the cone moved were also tried. The desired behavior in this case was to have the robot continue following the cone as it was moved.
 
-#### Line Following
-TODO: eleanor?
+#### Line Following - Shannon Hwang
+Unfortunately, our robot developed some hardware issues that made the VESC controllers behave erratically as well as override highest-priority navigation commands to stop, so we were unable to physically tune and validate our approach for line following in the time given.
 
-### Results - Akhilan Boopathy
+### Results - Akhilan Boopathy, Shannon Hwang, Shiloh Curtis
 
 #### Cone Detecting
 TODO: tony?
 
 #### Locating the Cone – Shannon Hwang
-The cone could be successfully located in real life. The parking controller consistently pointed the car towards the cone (or given bright orange object) and moved towards it. However, if the cone was situated in a dark area, the detection algorithm often had trouble determining the distance between car and cone. We compensated for the lighting we expected in Stata and normal operation by illuminating the cone.
+The cone could be successfully located in real life. The robot could publish a bounding box bounding the cone (or any orange object, as shown in the picture) and rviz marker representing the cone in real life. 
+
+<center><img src="assets/images/bounding_box.jpg" width="300" ></center>
+<center>*Figure 3: The bounding box as calculated by color segmentation bounds any orange object*</center>
+<left><img src="assets/images/marker_video.gif" width="300" ></left>
+<left>*Figure 4: The robot can track the cone as an rviz marker*</left>
+<right><img src="assets/images/marker.jpg" width="300" ></right>
+<right>*Figure 5: The robot can visualize the rviz marker along with LaserScan data*</right>
+
+This was further shown as parking controller consistently pointed the car towards the cone (or given bright orange object) and moved towards it. However, if the cone was situated in a dark area, the detection algorithm often had trouble determining the distance between car and cone. We compensated for the lighting we expected during normal operation by illuminating cones in darker areas with mobile lighting. 
+
 
 #### Parking - Akhilan Boopathy
 Once the cone was properly located, we ran the parking controller on the real robot, setting the desired distance to 0.5 meters. With the set of parameters used in simulation, the robot moved too slowly, especially when backing away from the cone when it was too close. In particular, when the speed was small but still significantly away from zero, the robot would not move. The proportion factor for the proportional controller used to control the robot's speed was increased to make the robot move as desired, while not producing oscillations in the robot's movement. Other parameters were also tweaked to match the geometry of the real robot, such as the offset between the center of the rear axle and the reference frame of cone messages.
