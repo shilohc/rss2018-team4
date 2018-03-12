@@ -26,9 +26,9 @@ Since the camera publishes ROS Image messages, to access and extract meaningful 
 
 $$s = \begin{bmatrix} x \\ 
 y \\ 
-1 \end{bmatrix} = \begin{bmatrix}  h\_11 & h\_12 & h\_13 \\ 
-h\_21 & h\_22 & h\_23 \\ 
-h\_31 & h\_32 & h\_33 \\ \end{bmatrix} = \begin{bmatrix} u \\ 
+1 \end{bmatrix} = \begin{bmatrix}  h\_{11} & h\_{12} & h\_{13} \\ 
+h\_{21} & h\_{22} & h\_{23} \\ 
+h\_{31} & h\_{32} & h\_{33} \\ \end{bmatrix} = \begin{bmatrix} u \\ 
 v \\ 
 1 \end{bmatrix}$$
 
