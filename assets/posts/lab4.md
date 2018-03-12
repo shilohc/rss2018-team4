@@ -100,7 +100,7 @@ TODO: tony?
 TODO: RVIZ Marker, Cone detection visualization images
 
 #### Parking - Akhilan Boopathy
-TODO
+Once the cone was properly located, we ran the parking controller on the real robot, setting the desired distance to 0.5 meters. With the set of parameters used in simulation, the robot moved too slowly, especially when backing away from the cone when it was too close. In particular, when the speed was small but still significantly away from zero, the robot would not move. The proportion factor for the proportional controller used to control the robot's speed was increased to make the robot move as desired, while not producing oscillations in the robot's movement. Other parameters were also tweaked to match the geometry of the real robot, such as the offset between the center of the rear axle and the reference frame of cone messages.
 
 ## Lessons Learned - Akhilan Boopathy, Shannon Hwang, Shiloh Curtis
 The main new technical challenges in this lab were implementing the computer vision algorithms required for finding a cone or line and calibrating the camera to correctly convert bounding boxes into points in the real world.  
