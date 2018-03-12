@@ -34,8 +34,6 @@ v \\\
 1 \end{bmatrix}$$
 
 
-<center><img src="assets/images/coordinate_transform.jpg" width="300" ></center>
-
 We then combined the bounding box returned by the color space image segmentation algorithm and and the coordinate transformations mentioned above in order to properly localize a cone in a given image in 3D space with respect to the midpoint of the car's front edge. 
 
 #### Parking - Akhilan Boopathy
@@ -62,7 +60,6 @@ The speed of the robot is controlled proportionally to the remaining arc distanc
 
 #### Line Following - Eleanor Pence
 It turns out that it is possible to use an extremely similar algorithm for line-following as for cone-parking. The main difference is that, before any coordinate transforms occur but after the image is converted from a ROS Image message to a numpy-like array format, the input image should be cropped to only a small horizontal slice of the full image. This creates a situation where, whenever the line is visible to the camera within that slice, the robot perceives that there is always an orange patch at a certain fixed distance away. Using the parking algorithm, the robot will orient itself correctly and move towards that perceived orange patch, but since the patch is actually a line, the robot continues this process so long as there is line to follow. All that is needed, then, is a single parameter to determine if the robot should find a cone and park there, or if it should follow a line visible to it. 
-
 
 
 ### ROS Implementation - Akhilan Boopathy, Shiloh Curtis, Shannon Hwang, Eleanor Pence
@@ -115,12 +112,15 @@ TODO: tony?
 #### Locating the Cone – Shannon Hwang
 The cone could be successfully located in real life. The robot could publish a bounding box bounding the cone (or any orange object, as shown in the picture) and rviz marker representing the cone in real life. 
 
-<center><img src="assets/images/bounding_box.jpg" width="300" ></center>
+<right>Fig. 3 <img src="assets/images/bounding_box.jpg" width="300" ></right>
+<left>Fig. 4 <img src="assets/images/marker_video.gif" width="300" ></left>
+<right>Fig. 5 <img src="assets/images/marker.jpg" width="300" ></right>
+
 <center>*Figure 3: The bounding box as calculated by color segmentation bounds any orange object*</center>
-<left><img src="assets/images/marker_video.gif" width="300" ></left>
-<left>*Figure 4: The robot can track the cone as an rviz marker*</left>
-<right><img src="assets/images/marker.jpg" width="300" ></right>
-<right>*Figure 5: The robot can visualize the rviz marker along with LaserScan data*</right>
+
+<center>*Figure 4: The robot can track the cone as an rviz marker*</center>
+
+<center>*Figure 5: The robot can visualize the rviz marker along with LaserScan data*</center>
 
 This was further shown as parking controller consistently pointed the car towards the cone (or given bright orange object) and moved towards it. However, if the cone was situated in a dark area, the detection algorithm often had trouble determining the distance between car and cone. We compensated for the lighting we expected during normal operation by illuminating cones in darker areas with mobile lighting. 
 
