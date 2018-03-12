@@ -116,17 +116,17 @@ The cone could be successfully located in real life. The robot could publish a b
 <tr valign = "top">
 <td width = "33%">
    <img src="assets/images/bounding_box.jpg" width="300" >
-   <center>*Figure 3: The bounding box as calculated by color segmentation bounds any orange object*</center>
+   <center><i>Figure 3: The bounding box as calculated by color segmentation bounds any orange object</i></center>
 </td>
 	
 <td width = "33">
    <img src="assets/images/marker_video.gif" width="300" >
-   <center>*Figure 4: The robot can track the cone as an rviz marker*</center>
+   <center><i>Figure 4: The robot can track the cone as an rviz marker</i></center>
 </td>
 	
 <td width = "33%">
    <img src="assets/images/marker.jpg" width="300" >
-   <center>*Figure 5: The robot can visualize the rviz marker along with LaserScan data*</center>
+   <center><i>Figure 5: The robot can visualize the rviz marker along with LaserScan data</i></center>
 </td>
 </tr>
 </table>
