@@ -112,17 +112,27 @@ TODO: tony?
 #### Locating the Cone – Shannon Hwang
 The cone could be successfully located in real life. The robot could publish a bounding box bounding the cone (or any orange object, as shown in the picture) and rviz marker representing the cone in real life. 
 
-<div id="header">
-    <h2 style="float: left; width: 34%; text-align: left;"><img src="assets/images/bounding_box.jpg" width="300" ></h2>
-    <p style="float: left; width: 33%; text-align: center;"><img src="assets/images/marker_video.gif" width="300" ></p>
-    <p style="float: left; width: 33%; text-align: right;"><img src="assets/images/marker.jpg" width="300" ></p>
-</div>
+      <table width = "100%" border = "0">
+         
+         <tr valign = "top">
+            <td width = "33%">
+               <img src="assets/images/bounding_box.jpg" width="300" >
+               Fig. 3
+            </td>
+				
+            <td width = "33">
+               <img src="assets/images/marker_video.gif" width="300" >
+               Fig. 4
+            </td>
+				
+            <td width = "33%">
+               <img src="assets/images/marker.jpg" width="300" >
+               Fig. 5
+            </td>
+         </tr>
+         
+      <table>
 
-<div id="header">
-    <h2 style="float: left; width: 34%; text-align: left;">Fig. 3</h2>
-    <p style="float: left; width: 33%; text-align: center;">Fig. 4</p>
-    <p style="float: left; width: 33%; text-align: right;">Fig. 5</p>
-</div>
 
 <center>*Figure 3: The bounding box as calculated by color segmentation bounds any orange object*</center>
 
