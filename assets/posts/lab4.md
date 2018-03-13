@@ -17,7 +17,23 @@ We attempted to pipeline as much of the lab as possible. Team members were intia
 Parking and line-following controllers were written under the assumption that they would receive accurate coordinates for what to follow. Once the image transformations worked and computer vision algorithms worked passably, they were combined to create a cone detection and localization ndoe. That node was then used to implement the parking and line-following nodes on the real robot. 
 
 #### Cone Detection
-TODO: Computer Vision – tony?
+For this lab, the robot must be able to detect an orange cone, localize it, and drive to a parking position in front of it. This section is primarily concerned with the detection of the cone and crafting a bounding box around it. We tried out three different techniques which are color segmentation, SIFT + RANSAC, and template matching, and we outline the performance of each below in the results section. Ultimately, we concluded that color segmentation was the best method for cone detection, since the cone’s most unique feature is its bright orange color. 
+
+#### Color Segmentation
+
+The color segmentation approach consisted of applying color filtration on an OpenCV image array based on the Hue, Saturation, and Value (HSV) color scheme. The algorithm utilizes techniques such as erosion, dilation, and contour detection which are all available in the OpenCV library.
+
+#### SIFT + RANSAC
+
+The SIFT algorithm which was shown in class works by extracting points of interest from a training image, which creates a feature description of an object. The description can then be used to locate the desired object in a test image. It’s important to find points that are consistent across different lighting conditions, scale, and noise. Therefore, these points are usually in high-contrast regions of the object, often near object edges. This will be important later in the analysis of the algorithm’s performance. RANSAC provides an extra layer of noise filtration on top of the SIFT algorithm, and more information about SIFT and RANSAC can be found online. 
+
+In terms of algorithm implementation, we had a variable called MIN_MATCH, which specified the minimum number of matching features that should be detected between the template object and the potential object in the test image. This variable had a value of 10. A SIFT OpenCV object computes SIFT features and a brute force matcher detects matches. From that output, only close matches are accepted, and if the total number of good matches is greater than the minimum, then we find a homography matrix and use that matrix to try and determine the bounding box of any detected cone.
+
+#### Template Matching
+ 
+The template matching algorithm aims to detect an object by finding regions in the target image that are similar to a given template. It slides the template across the target image, compares the template and the slide window, and then updates the best match.
+
+
 
 #### Cone Localization - Shannon Hwang
 Given the ability to return the bounding box for an object from an image containing that object, we needed access images returned by the robot's ZED camera and relate them to real-world coordinates for the robot to navigate accordingly.
@@ -88,7 +104,23 @@ When possible, components of the lab were evaluated in isolation before multiple
 Different tests were used to verify each component of the lab and simulation was used when possible.
 
 #### Cone Detecting
-TODO: tony?
+Color Segmentation is the most stable method in this task. It is fast($<$1s), accurate(able to detect all the cones in the test images) and works well. The scores for color segmentation are shown in fig 1.1, they are scaled between 0 and 1. However, one obvious disadvantage for this method is its use of Hue value after converting images from RBG to HSV -- if there are other objects with the same color as the target object, it will be a mistake to segment all the objects rather than the target object. 
+
+<center><img src="assets/images/score_color.png" width="300" ></center>
+<center>*Figure 1.1: Score for Color Segmentation *</center>
+
+Template matching has several methods to choose from, namely, ccoeff, ccoeff_normed, ccorr, ccorr_normed, sqdiff, sqdiff_normed. sqdiff_normed works the best, able to match 15 test images with the template we are given, although this method is a little bit slow(around 5s). The scores for template matching using sqdiff_normed are shown in fig 1.2. There are three limitations for this method: 1. Object is inherently 3D, but the template given is 2D. So if there is a rotation between the template and the target image that shows some part of that object in the target image which are not present in the template image, it will make it difficult to match these two templates. 2. If the objects occupy too little pixels, it will be difficult to match. 
+
+<center><img src="assets/images/score_temp.png" width="300" ></center>
+<center>*Figure 1.2: Score for Template Matching*</center>
+
+SIFT+RANSAC does not work well given these test images. Problems for the cone detection: Background of the template and the images are very different. Features are not matched. 
+
+Also, there are four particular images that score low in color segmentation and the template matching method is not able to match them. They are shown below in fig 1.3. The first one and fourth one are blocked by some other objects. The second one has a rotation. The third one is too small.
+
+<center><img src="assets/images/hard_images.png" width="300" ></center>
+<center>*Figure 1.3: Difficult-To-Detect Images*</center>
+
 
 #### Locating the Cone - Shiloh Curtis
 The cone tracker was not tested in simulation, as the main point of difficulty was in real-world calibration of the homography matrix.  
