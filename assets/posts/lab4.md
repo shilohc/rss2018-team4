@@ -95,6 +95,12 @@ The cone tracker was not tested in simulation, as the main point of difficulty w
 
 The cone tracker was tested by placing the cone at various distances and angles from the robot and checking that the output coordinates and distance/angle data were correct.  Since the parking controller was already tested and working in simulation and in real life with fake cone data (artificial distance/angle values), the cone tracker was then tested by checking whether it produced the desired behavior when combined with the parking controller.  
 
+<center><img src="assets/images/cone_tracker_towards.gif" width="300" ></center>
+<center>*Figure 3: Robot driving towards and parking in front of cone*</center>
+
+<center><img src="assets/images/cone_tracker_away.gif" width="300" ></center>
+<center>*Figure 4: Robot driving backwards from cone since it was closer than the desired parking position*</center>
+
 #### Parking - Akhilan Boopathy
 The parking controller was tested both in simulation and real life using a number of cone positions. The parking controller was first tested in simulation before testing on the real robot. The simulation test cases were similar to the test cases on the physical robot desribed here. With the real robot, the cone was placed at a number of distances and angles from the camera. When the cone was placed away from the robot at an angle, the desired behavior was to have the robot turn in the direction of the cone. To test whether the robot could handle when the angle to the cone was small, the cone was placed directly in front of the robot, in which case the desired behavior was to have the robot point its wheels directly forward. Test cases where the cone was closer than intended to the robot was also tested, in which case the desired behavior was to have the robot move away from the robot while turning so as to point towards the cone. In addition, test cases where the cone moved were also tried. The desired behavior in this case was to have the robot continue following the cone as it was moved.
 
