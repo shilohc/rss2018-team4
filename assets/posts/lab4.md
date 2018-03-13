@@ -23,7 +23,7 @@ For this lab, the robot must be able to detect an orange cone, localize it, and 
 
 The color segmentation approach consisted of applying color filtration on an OpenCV image array based on the Hue, Saturation, and Value (HSV) color scheme. The algorithm utilizes techniques such as erosion, dilation, and contour detection which are all available in the OpenCV library.
 
-#### SIFT + RANSAC -- Chenxing Zhang
+#### SIFT + RANSAC -- Chenxing(Tony) Zhang
 
 The SIFT algorithm which was shown in class works by extracting points of interest from a training image, which creates a feature description of an object. The description can then be used to locate the desired object in a test image. It’s important to find points that are consistent across different lighting conditions, scale, and noise. Therefore, these points are usually in high-contrast regions of the object, often near object edges. This will be important later in the analysis of the algorithm’s performance. RANSAC provides an extra layer of noise filtration on top of the SIFT algorithm, and more information about SIFT and RANSAC can be found online. 
 
