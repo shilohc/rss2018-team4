@@ -19,15 +19,26 @@ Duis vel nunc sit amet risus consectetur dictum. Nulla mollis varius erat, vitae
 
 Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, suscipit lacus. Mauris vitae pretium libero, at dapibus massa. Curabitur eleifend bibendum pharetra. Nullam gravida viverra lacus eu blandit. Praesent nec odio ut magna scelerisque vulputate. Sed in libero porta, imperdiet magna maximus, efficitur urna.
 
-### Technical Approach - [Insert Author]
+### Technical Approach - Akhilan Boopathy
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligula. Aliquam erat volutpat. Cras iaculis diam vitae nunc ultricies, et egestas lorem eleifend. Ut sit amet leo vitae libero maximus molestie non ac nunc. Ut ac mi ante. Vivamus convallis convallis neque, sit amet sollicitudin arcu bibendum sit amet. Phasellus finibus dolor vitae leo cursus, eu lobortis nisl blandit. Quisque tincidunt et nisi a hendrerit. Sed et nunc quis neque egestas sollicitudin. Curabitur auctor bibendum odio. Proin aliquam cursus metus, at fermentum tellus luctus vel. Morbi ut mi id augue lacinia faucibus.
+#### Sensor Model
 
-	Duis vel nunc sit amet risus consectetur dictum. Nulla mollis varius erat.
 
-Curabitur auctor bibendum odio. Proin aliquam cursus metus, at fermentum tellus luctus vel. Morbi ut mi id augue lacinia faucibus.
+##### Slice of Sensor Model
+<center><img src="assets/images/SensorModelSlice.png" width="300" ></center>
+<center>*Figure 1: Slice of sensor model with four different components: a Gaussian component around the true distance, a linear component for short measurements, a spike at the maximum possible measurement for missed measurements, and a uniform compoment for random measurements.*</center>
 
-[Pictures]
+##### 3d plot of Complete Sensor Model
+<center><img src="assets/images/SensorModel3d.png" width="300" ></center>
+<center>*Figure 2: 3d plot of sensor model after normalization. The Gaussian component results in a ridge where the true distance equals the measured distance.*</center>
+
+
+#### Motion Model - Akhilan Boopathy
+
+##### Motion Model Illustration
+<center><img src="assets/images/MotionModelFig.png" width="300" ></center>
+<center>*Figure 3: Diagram showing motion model operating on an initial pose and producing several candidate output poses with noise added. The action is also displayed without noise.*</center>
+
 
 ### ROS Implementation - [Insert Author]
 
