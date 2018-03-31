@@ -23,7 +23,6 @@ Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, s
 
 #### Sensor Model
 
-
 ##### Slice of Sensor Model
 <center><img src="assets/images/SensorModelSlice.png" width="300" ></center>
 <center>*Figure 1: Slice of sensor model with four different components: a Gaussian component around the true distance, a linear component for short measurements, a spike at the maximum possible measurement for missed measurements, and a uniform compoment for random measurements.*</center>
@@ -34,6 +33,13 @@ Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, s
 
 
 #### Motion Model - Akhilan Boopathy
+The motion model updates the current particles representing robot positions using an action derived from the robot's odometry. The action is found by computing the difference between adjacent odometry messages. Then Gaussian noise is added to each component of the action. Finally the action is added to each particle by using the orientation of the particle.
+
+##### Sensor Model Update Equation
+<center><img src="assets/images/MotionModelEqn.png" width="300" ></center>
+<center>*Equation 1: The motion model has Gaussian noise added to all components.*</center>
+
+The variables $dx$, $dy$ and $d\theta$ represent the action. The variables $N_x, N_y, N_\theta$ represent Gaussian noise for each component. $x, y, \theta$ represents an old particle and $x', y', \theta'$ represents an updated particle.
 
 ##### Motion Model Illustration
 <center><img src="assets/images/MotionModelFig.png" width="300" ></center>
