@@ -15,7 +15,7 @@ We assigned each major unfinished component of the localization code (the MCL al
 ### Technical Approach - Akhilan Boopathy
 
 #### Motion Model - Akhilan Boopathy
-The motion model updates the current particles representing robot positions using an action derived from the robot's odometry. The action is found by computing the difference between adjacent odometry messages. Then Gaussian noise is added to each component of the action since the odometry is not necessarily accurate. Finally the action is added to each particle by using the orientation of the particle. A matrix is necessary to transform actions into the coordinate frame of the particles since actions are relative to the current robot pose.
+The motion model updates the current particles representing robot positions using an action derived from the robot's odometry. The action is found by computing the difference between adjacent odometry messages then transforming it so that it is relative to the robot's current position. Then Gaussian noise is added to each component of the action since the odometry is not necessarily accurate. The variance of the Gaussian noise added to each component is different since the odometry error for each of the components is not necessarily the same. Finally the action is added to each particle by using the orientation of the particle. A transformation matrix is necessary to transform actions into the coordinate frame of the particles since actions are relative to the current robot pose.
 
 ##### Motion Model Update Equation
 <center><img src="assets/images/MotionModelEqn.png" width="300" ></center>
