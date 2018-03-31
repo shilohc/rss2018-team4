@@ -84,9 +84,21 @@ Duis vel nunc sit amet risus consectetur dictum. Nulla mollis varius erat, vitae
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligula. Aliquam erat volutpat. Cras iaculis diam vitae nunc ultricies, et egestas lorem eleifend. Ut sit amet leo vitae libero maximus molestie non ac nunc. Ut ac mi ante. Vivamus convallis convallis neque, sit amet sollicitudin arcu bibendum sit amet. Phasellus finibus dolor vitae leo cursus, eu lobortis nisl blandit. Quisque tincidunt et nisi a hendrerit. Sed et nunc quis neque egestas sollicitudin. Curabitur auctor bibendum odio. Proin aliquam cursus metus, at fermentum tellus luctus vel. Morbi ut mi id augue lacinia faucibus.
 
-#### Simulation - [Insert Author]
+#### Simulation - Akhilan Boopathy
+The algorithm was verified both qualitatively and quantitiatively, and performed as expected with the inferred pose of the robot approximately tracking the true position. The intitial poses of the particles is clicked near the true position with some variance added. The particles then track the true pose of the robot using the motion model and sensor model. When the car turns, the particles spread out horizontally intially due to greater uncertainty in position, but the particles converge again as the sensor model increases the weights of the particles closer to the true position.
 
-Duis vel nunc sit amet risus consectetur dictum. Nulla mollis varius erat, vitae gravida est elementum a. Curabitur velit sapien, placerat ac scelerisque quis, ultricies at sem. Maecenas ut elit congue, condimentum lacus eu, scelerisque nunc. Curabitur mattis velit vitae sem placerat varius vel euismod leo. Cras quis elit quam. Proin scelerisque lobortis erat, eu euismod ex mattis ac. Curabitur non felis mauris. Integer mauris nisi, rutrum id finibus vel, ornare quis diam. Cras lectus nisi, pharetra ut elit at, porta auctor ex. Cras lobortis nisl leo, varius aliquet arcu sollicitudin vel. Aliquam quis nulla sapien. Donec porttitor, tortor vel iaculis vehicula, ipsum eros dictum eros, sit amet tempor orci felis vitae magna. Sed velit lacus, tincidunt sit amet quam sed, aliquam porttitor ex.
+<center><img src="assets/images/LocalizationSim.png" width="300" ></center>
+<center>*Figure 6: A video of the MCL algorithm running in simulation. White dots show a fake scan showing where the scan would be if the robot was at actually at the inferred position. The rainbow colored true scan coinciding with the actual walls of the map indicates that the algorithm is correctly localizing the robot.*</center>
+
+In order to quantitavively evaluate the performance of the algorithm in simulation, the odometry of the simulation was used as a ground truth since in simulation, the odometry is exactly accurate. The localization error was computed by taking the magnitude of the error between the true and inferred position. Since errors in orientation eventually result in errors in position, the orientation error was not evaluated seperately. A circular trajectory was chosen to standardize the evalutation metric. Since the trajectory is periodic and uniformly symmetric over the entire trajectory, a constant average steady state error can be computed.
+
+<center><img src="assets/images/LocalizationSimCircle.png" width="300" ></center>
+<center>*Figure 7: A video showing a circular trajectory used for quantiative evaluation of the MCL algorithm in simulation.*</center>
+
+The steady state error of the robot driving in circular paths was about 0.3 meters. This error was on the same order of magnitude as the size of the car.
+
+<center><img src="assets/images/LocalizationError.png" width="300" ></center>
+<center>*Figure 8: Plot of localization error over time when the robot is driving in circular paths. Different steering angles and speeds of trajectory were evaluated. The initial positions of the robot were different in each trajectory resulting in different times for convergence.*</center>
 
 #### Real Robot - [Insert Author]
 
