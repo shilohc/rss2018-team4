@@ -33,7 +33,7 @@ Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, s
 
 
 #### Motion Model - Akhilan Boopathy
-The motion model updates the current particles representing robot positions using an action derived from the robot's odometry. The action is found by computing the difference between adjacent odometry messages. Then Gaussian noise is added to each component of the action. Finally the action is added to each particle by using the orientation of the particle.
+The motion model updates the current particles representing robot positions using an action derived from the robot's odometry. The action is found by computing the difference between adjacent odometry messages. Then Gaussian noise is added to each component of the action since the odometry is not necessarily accurate. Finally the action is added to each particle by using the orientation of the particle. A matrix is necessary to transform actions into the coordinate frame of the particles since actions are relative to the current robot pose.
 
 ##### Sensor Model Update Equation
 <center><img src="assets/images/MotionModelEqn.png" width="300" ></center>
