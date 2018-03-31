@@ -40,9 +40,10 @@ The variables $dx$, $dy$ and $d\theta$ represent the action. The variables $N_x,
 
 ### ROS Implementation - Shannon Hwang
 
-The team built around the skeleton code given for the lab, inserting appropriate code for the motion model, sensor model, MCL update, and various helper and visualization functions as needed. 
+The team built around the skeleton code given for the lab, inserting appropriate code for the motion model, sensor model, MCL update, and various helper and visualization functions as needed. To reduce the runtime of the overall algorithm, operations were done in batch over all particles rather than over individual particles.
 
-#### Motion Model
+#### Motion Model - Akhilan Boopathy
+The motion model operated on the particles as a numpy array rather than looping over the particles. It computed the sines and cosines of the orientations of the current particles as numpy arrays. Then, as per equation 1, it calculated the new positions using actions with Gaussian noise added. 
 
 #### Sensor Model
 
