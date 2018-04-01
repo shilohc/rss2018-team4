@@ -47,7 +47,9 @@ The motion model operated on the particles as a numpy array rather than looping 
 
 #### Sensor Model
 
-#### MCL structure
+#### Overall structure – Shannon Hwang
+The code was structured to reduce the amount of memory allocations. When the particle filter initializes, it precomputes the sensor model once and initializes subscribers to LIDAR (`/scan`) and odometry data (`/odom`), publishers for various visualization topics, and a publisher to publish the inferred pose (`/pf/pose/odom`). 
+The first lidar and odometry callbacks trigger one-time initialization of arrays for downsampled scans and odometry that are updated on subsequent callbacks. Since the odometry topic publishes less frequently than the lidar, an MCL update is performed at the end of the callback. In the update, poses are randomly chosen from the existing particles (according to established weights) updated according to the motion model, then weighted accordingt to the sensor model. 
 
 #### Helper and visualization functions
 
@@ -110,15 +112,14 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligul
 
 > Duis vel nunc sit amet risus consectetur dictum. Nulla mollis varius erat, vitae gravida est elementum a. Curabitur velit sapien, placerat ac scelerisque quis, ultricies at sem. Maecenas ut elit congue, condimentum lacus eu, scelerisque nunc. Curabitur mattis velit vitae sem placerat varius vel euismod leo. Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, suscipit lacus. Mauris vitae pretium libero, at dapibus massa. Curabitur eleifend bibendum pharetra. Nullam gravida viverra lacus eu blandit. Praesent nec odio ut magna scelerisque vulputate. Sed in libero porta, imperdiet magna maximus, efficitur urna.
 
-### Technical Conclusions - [Insert Author]
+### Technical Conclusions - Shannon Hwang
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligula. Aliquam erat volutpat. Cras iaculis diam vitae nunc ultricies, et egestas lorem eleifend. Ut sit amet leo vitae libero maximus molestie non ac nunc. Ut ac mi ante. Vivamus convallis convallis neque, sit amet sollicitudin arcu bibendum sit amet. Phasellus finibus dolor vitae leo cursus, eu lobortis nisl blandit. Quisque tincidunt et nisi a hendrerit. Sed et nunc quis neque egestas sollicitudin. Curabitur auctor bibendum odio. Proin aliquam cursus metus, at fermentum tellus luctus vel. Morbi ut mi id augue lacinia faucibus.
+In this lab, we learned about the theory behind Monte Carlo localization and put it into practice. During implementation, we learned about a number of real-world considerations of the algorithm, such as how important it was to minimize the number of memory allocations, use numpy operations, and generally prioritize efficient code operation when processing large amounts of real-world data. In addition, we did learn that in some cases it was much easier to debug less efficient, but more clearly written code, and consider optimization later. We also utilized a lot more of ROS' graphing and visualization tools than in the past lab, which were extremely useful in debugging the sensor model and tuning the many parameters in the algorithm. 
 
-Duis vel nunc sit amet risus consectetur dictum. Nulla mollis varius erat, vitae gravida est elementum a. Curabitur velit sapien, placerat ac scelerisque quis, ultricies at sem. Maecenas ut elit congue, condimentum lacus eu, scelerisque nunc. Curabitur mattis velit vitae sem placerat varius vel euismod leo. Cras quis elit quam. Proin scelerisque lobortis erat, eu euismod ex mattis ac. Curabitur non felis mauris. Integer mauris nisi, rutrum id finibus vel, ornare quis diam. Cras lectus nisi, pharetra ut elit at, porta auctor ex. Cras lobortis nisl leo, varius aliquet arcu sollicitudin vel. Aliquam quis nulla sapien. Donec porttitor, tortor vel iaculis vehicula, ipsum eros dictum eros, sit amet tempor orci felis vitae magna. Sed velit lacus, tincidunt sit amet quam sed, aliquam porttitor ex.
-
-### CI Conclusions - Shiloh Curtis, 
+### CI Conclusions - Shiloh Curtis, Shannon Hwang
 
 1. We learned that it's important for team members to be proactive about finding new tasks to do if they finish the work they've been assigned.  We had planned to reassign tasks once everyone had finished their component of the localization code, but some team members were never explicitly assigned new tasks and thus used their time inefficiently during lab.  
 
-2. Student 2
+2. We also learned that setting concrete intermediate deadlines was an important and extremely useful step to take, but that team members should also ideally update the team on progress (or more importantly, any roadblocks) as internal deadlines approached. 
+
 3. Student 3
