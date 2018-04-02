@@ -113,7 +113,7 @@ Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, s
 
 ## Lessons Learned - Eleanor Pence
 
-Implementing the Monte Carlo Localization algorithm requires a firm grasp of both the theory and practical considerations of the algorithm, but dealing with such complexity also required excellent teamwork skills as well.  
+Implementing the Monte Carlo Localization algorithm requires a firm grasp of both the theory and practical considerations of the algorithm, but dealing with such complexity also required excellent teamwork skills.  
 
 ### Technical Conclusions - Shannon Hwang
 
