@@ -56,7 +56,7 @@ The team built around the skeleton code given for the lab, inserting appropriate
 #### Motion Model - Akhilan Boopathy
 The motion model operated on the particles as a numpy array rather than looping over the particles. It computed the sines and cosines of the orientations of the current particles as numpy arrays. Then, as per equation 1, it calculated the new positions using actions with Gaussian noise added. The numpy operations in the function were done in place so as to reduce the number of memory allocations per run of the function. The action necessary for the motion model computation was found by differencing consecutive odometry messages from `/vesc/odom` and transforming them relative to the robot's current odometry so that the action is with respect to the robot's current pose.
 
-#### Sensor Model - Chenxing(Tony) Zhang
+#### Sensor Model Precomputation - Chenxing(Tony) Zhang
 We used the precomputed sensor model to compute the probability of an observation ogiven a location and a heading angle - which we call a pose denoted by x as follows:
 
 $$ p(0|x\_i^t) = \Pi \_j \, p(o\_j|x\_i^t) \, \forall \, j \in \\{subsampled \; angles\\} $$
