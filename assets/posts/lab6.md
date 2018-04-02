@@ -21,7 +21,7 @@ The motion model updates the current particles representing robot positions usin
 <center><img src="assets/images/MotionModelEqn.JPG" width="300" ></center>
 <center>*Equation 1: The motion model has Gaussian noise added to all components.*</center>
 
-The variables $$dx$$, $$dy$$ and $$d\theta$$ represent the action. The variables $$N_x, N_y, N_\theta$$ represent Gaussian noise for each component. $$x, y, \theta$$ represents an old particle and $$x', y', \theta'$$ represents an updated particle.
+The variables $$dx$$, $$dy$$ and $$d\theta$$ represent the action. The variables $$N_x, N_y, N_\theta$$ represent Gaussian noise for each component. $$x, y, \theta$$ represents an old particle and $$x', y', \theta'$$ represents an updated particle. Note that in the motion model, each input particle results in a single output particle. In the figure below, multiple particles are shown for the single input to illustrate that the motion model adds random noise. Adding noise results in the output particles clustered around the pose if no noise was added. Due to different noise parameters per particle component, the variance of the output particles varies depending on the direction considered.
 
 ##### Motion Model Illustration
 <center><img src="assets/images/MotionModelFig.png" width="300" ></center>
