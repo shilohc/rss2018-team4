@@ -100,7 +100,7 @@ The algorithm was verified both qualitatively and quantitiatively, and performed
 In order to quantitavively evaluate the performance of the algorithm in simulation, the odometry of the simulation was used as a ground truth since in simulation, the odometry is exactly accurate. The localization error was computed by taking the magnitude of the error between the true and inferred position. Since errors in orientation eventually result in errors in position, the orientation error was not evaluated seperately. A circular trajectory was chosen to standardize the evalutation metric. Since the trajectory is periodic and uniformly symmetric over the entire trajectory, a constant average steady state error was expected. This steady state error is used as the evaluation metric.
 
 <center><img src="assets/images/LocalizationSimCircle.gif" width="300" ></center>
-<center>*Figure 7: A video showing a circular trajectory used for quantiative evaluation of the MCL algorithm in simulation.*</center>
+<center>*Figure 7: A video showing a circular trajectory used for quantiative evaluation of the MCL algorithm in simulation. The red dots represent the actual scan, and the white dots represent a fake scan showing the points where a scan would project if the robot was at the inferred position.*</center>
 
 The steady state error of the robot driving in circular paths was about 0.3 meters. This error was on the same order of magnitude as the size of the car and one order of magnitude less than the corridors that the real robot was driven in. Because the initial positions of the car in the tests differed, the convergence time changed from run to run.
 
