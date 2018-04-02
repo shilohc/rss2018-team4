@@ -116,7 +116,7 @@ The robot did not perform as well when not given an accurate initialization pose
 
 For good performance with SLAM, further parameter tuning to reduce error would be necessary.  However, for navigation using a pre-made map, our localization algorithm in its current state would work as long as the robot is not picked up and moved.  
 
-<center><img src="assets/images/split_screen_localization.gif" width="300" ></center>
+<center><img src="assets/images/split_screen_localization.gif" width="600" ></center>
 <center>*Figure 10: Localization running on the racecar in the Stata basement.  On the left is a video of the robot in the hallway; on the right, the corresponding rviz visualization.*</center>
 
 ## Lessons Learned - Eleanor Pence
