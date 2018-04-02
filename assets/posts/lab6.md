@@ -46,26 +46,26 @@ The team built around the skeleton code given for the lab, inserting appropriate
 The motion model operated on the particles as a numpy array rather than looping over the particles. It computed the sines and cosines of the orientations of the current particles as numpy arrays. Then, as per equation 1, it calculated the new positions using actions with Gaussian noise added. The numpy operations in the function were done in place so as to reduce the number of memory allocations per run of the function. The action necessary for the motion model computation was found by differencing consecutive odometry messages from `/vesc/odom` and transforming them relative to the robot's current odometry so that the action is with respect to the robot's current pose.
 
 #### Sensor Model
+TODO: tony?
 
 #### Overall structure – Shannon Hwang
 The code was structured to reduce the amount of memory allocations. When the particle filter initializes, it precomputes the sensor model once and initializes subscribers to LIDAR (`/scan`) and odometry data (`/vesc/odom`), publishers for various visualization topics, and a publisher to publish the inferred pose (`/pf/pose/odom`). 
 The first lidar and odometry callbacks trigger one-time initialization of arrays for downsampled scans and odometry that are updated on subsequent callbacks. Since the odometry topic publishes less frequently than the lidar, an MCL update is performed at the end of the callback. In the update, poses are randomly chosen from the existing particles (according to established weights) updated according to the motion model, then weighted according to the sensor model. 
 
-#### Helper and visualization functions - Eleanor Pence
+#### Helper and visualization functions - Eleanor Pence, Shiloh Curtis
 
 Once the MCL update is complete, the inferred pose is computed, so it can be used in visualization and to build transformations from the map frame to the robot's frame. Inferred pose is computed as a weighted average of the particles. The transform is built directly from that, though the angle included in that inferred pose must be converted to quanternion form by use of a built-in function, `Utils.angle_to_quaternion`, from the provided lab code. 
 
-Next we publish visualizations of the robot's position and the particle cloud. Visualizing the robot's position is simple, as the PoseStamped ROS message type contains all the same information as the inferred position. We then call np.random_choice on the array of particles to downsample the particle cloud and publish the position of the particles remaining - the goal is to publish sufficient particles so we can understand what the localization algorithm is doing, but not so many particles that RViz becomes overwhelmed trying to display them all. Finally, fake scan 
-
+Next we publish visualizations of the robot's position and the particle cloud. Visualizing the robot's position is simple, as the PoseStamped ROS message type contains all the same information as the inferred position. We then call np.random_choice on the array of particles to downsample the particle cloud and publish the position of the particles remaining - the goal is to publish sufficient particles so we can understand what the localization algorithm is doing, but not so many particles that RViz becomes overwhelmed trying to display them all. Finally, we publish a LaserScan message containing fake scan data created by casting rays from the robot's inferred position to obstacles on the map, which simulates what the scan data would look like if the inferred position were correct.  
 
 ## Experimental Evaluation - Shiloh Curtis
 
 As with previous labs, we initially tested and debugged our MCL code in simulation until it worked reliably before moving to the actual robot.  Testing with the real robot took place in the Stata basement environment for which a map was provided.  
 
-### Testing Procedure - Shannon Hwang
+### Testing Procedure - Shannon Hwang, Shiloh Curtis
 Testing in simulation utilized the provided autograder and headless simulator from previous labs; the robot's performance was evaluated qualitatively through rviz and quantitatively through plotting average localization error and noise.
 
-Testing on the real robot? 
+While the autograder was also run on the real robot to create a submission for Gradescope, most testing with the racecar took place in the Stata basement using sensor input collected in real time.  The scan processor node written in Lab 3 was used to adjust for the Velodyne angle offset.  The robot's performance was evaluated qualitatively using rviz.  
 
 #### Simulation - Shannon Hwang
 
@@ -83,13 +83,11 @@ In tuning overall parameters such as particle number, message publishing rates w
 <center><img src="assets/images/MotionSensorModelTime.png" width="300" ></center>
 <center>*Figure 5: Plot of the motion and sensor model publishing rates as a function of number of particles considered.*</center>
 
-#### Real Robot - [Insert Author]
+#### Real Robot - Shiloh Curtis
 
-Duis vel nunc sit amet risus consectetur dictum. Nulla mollis varius erat, vitae gravida est elementum a. Curabitur velit sapien, placerat ac scelerisque quis, ultricies at sem. Maecenas ut elit congue, condimentum lacus eu, scelerisque nunc. Curabitur mattis velit vitae sem placerat varius vel euismod leo. Cras quis elit quam. Proin scelerisque lobortis erat, eu euismod ex mattis ac. Curabitur non felis mauris. Integer mauris nisi, rutrum id finibus vel, ornare quis diam. Cras lectus nisi, pharetra ut elit at, porta auctor ex. Cras lobortis nisl leo, varius aliquet arcu sollicitudin vel. Aliquam quis nulla sapien. Donec porttitor, tortor vel iaculis vehicula, ipsum eros dictum eros, sit amet tempor orci felis vitae magna. Sed velit lacus, tincidunt sit amet quam sed, aliquam porttitor ex.
+Only once localization was working well in simulation did we test using the real racecar, so no additional parameter tuning was necessary to achieve reasonable results.  Performance was tested qualitatively, using real-time sensor input, by placing the robot in the Stata basement, starting rviz, and observing whether the resulting localization data approximated the correct position.  
 
-### Results - [Insert Author]
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligula. Aliquam erat volutpat. Cras iaculis diam vitae nunc ultricies, et egestas lorem eleifend. Ut sit amet leo vitae libero maximus molestie non ac nunc. Ut ac mi ante. Vivamus convallis convallis neque, sit amet sollicitudin arcu bibendum sit amet. Phasellus finibus dolor vitae leo cursus, eu lobortis nisl blandit. Quisque tincidunt et nisi a hendrerit. Sed et nunc quis neque egestas sollicitudin. Curabitur auctor bibendum odio. Proin aliquam cursus metus, at fermentum tellus luctus vel. Morbi ut mi id augue lacinia faucibus.
+### Results - Akhilan Boopathy, Shiloh Curtis
 
 #### Simulation - Akhilan Boopathy
 The algorithm was verified both qualitatively and quantitiatively, and performed as expected with the inferred pose of the robot approximately tracking the true position. The intitial poses of the particles is clicked near the true position with some variance added. The particles then track the true pose of the robot using the motion model and sensor model. When the car turns, the particles spread out horizontally intially due to greater uncertainty in position, but the particles converge again as the sensor model increases the weights of the particles closer to the true position.
@@ -107,9 +105,19 @@ The steady state error of the robot driving in circular paths was about 0.3 mete
 <center><img src="assets/images/LocalizationError.png" width="300" ></center>
 <center>*Figure 8: Plot of localization error over time when the robot is driving in circular paths. Different steering angles and speeds of trajectory were evaluated. The initial positions of the robot were different in each trajectory resulting in different times for convergence.*</center>
 
-#### Real Robot - [Insert Author]
+#### Real Robot - Shiloh Curtis
 
-Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, suscipit lacus. Mauris vitae pretium libero, at dapibus massa. Curabitur eleifend bibendum pharetra. Nullam gravida viverra lacus eu blandit. Praesent nec odio ut magna scelerisque vulputate. Sed in libero porta, imperdiet magna maximus, efficitur urna.
+On the racecar, localization was only verified qualitatively.  Given an initial pose it performed well; the error in the returned position remained less than 0.4 meters while the car was driven down a hallway, most of which was steady-state error.  (Unlike the simulator, the real world does not provide ground-truth odometry data, so it was difficult to quantitatively measure the localization error with more accuracy.)
+
+<center><img src="assets/images/LocalizationErrorReal.png" width="300" ></center>
+<center>*Figure 9: Screenshot of rviz showing localization error between map and laserscan data.  This error is relatively small in comparison to the size of features in the hallway, and an order of magnitude less than the hallway width.*</center>
+
+The robot did not perform as well when not given an accurate initialization pose or when kidnapped.  When not given an initialization pose, or when moved to a completely different part of the basement, it was unable to converge on the correct location.  However, if it was moved a short distance (on the order of 1 meter), it was usually able to correctly relocalize.  
+
+For good performance with SLAM, further parameter tuning to reduce error would be necessary.  However, for navigation using a pre-made map, our localization algorithm in its current state would work as long as the robot is not picked up and moved.  
+
+<center><img src="assets/images/split_screen_localization.gif" width="300" ></center>
+<center>*Figure 10: Localization running on the racecar in the Stata basement.  On the left, a video of the robot in the hallway; on the right, the corresponding rviz visualization.*</center>
 
 ## Lessons Learned - Eleanor Pence
 
@@ -125,4 +133,4 @@ In this lab, we learned about the theory behind Monte Carlo localization and put
 
 2. We also learned that setting concrete intermediate deadlines was an important and extremely useful step to take, but that team members should also ideally update the team on progress (or more importantly, any roadblocks) as internal deadlines approached. 
 
-3. Student 3
+3. Student 3 - TODO
