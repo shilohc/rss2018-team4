@@ -3,7 +3,7 @@ Lab 6
 
 ## Overview and Motivations - Shiloh Curtis
 
-In this lab, we implemented Monte Carlo localization (MCL).  Localization is an important problem in robotics, and Monte Carlo localization is a very popular method due to its ease of implementation and good performance.  For this lab we returned to using distance data from the LIDAR, together with a preexisting map of the Stata basement environment.  
+In this lab, we implemented Monte Carlo localization (MCL); localization is an important problem in robotics, and Monte Carlo localization is a very popular method due to its ease of implementation and good performance.  For this lab we returned to using distance data from the LIDAR, together with a preexisting map of the Stata basement environment.  
 
 ## Proposed Approach - Shannon Hwang
 The team met and discussed the lab collectively, split up to code different lab components, and came back together to debug and optimize code parameters in simulation and on the robot. Initially, each major coding component of the lab was  assigned to a different team member. We set an intermediate deadline in which all the code was to written and merged by, and spent the time after that debugging and optimizing parameters in simulation and on the robot. 
@@ -49,9 +49,14 @@ The motion model operated on the particles as a numpy array rather than looping 
 
 #### Overall structure – Shannon Hwang
 The code was structured to reduce the amount of memory allocations. When the particle filter initializes, it precomputes the sensor model once and initializes subscribers to LIDAR (`/scan`) and odometry data (`/odom`), publishers for various visualization topics, and a publisher to publish the inferred pose (`/pf/pose/odom`). 
-The first lidar and odometry callbacks trigger one-time initialization of arrays for downsampled scans and odometry that are updated on subsequent callbacks. Since the odometry topic publishes less frequently than the lidar, an MCL update is performed at the end of the callback. In the update, poses are randomly chosen from the existing particles (according to established weights) updated according to the motion model, then weighted accordingt to the sensor model. 
+The first lidar and odometry callbacks trigger one-time initialization of arrays for downsampled scans and odometry that are updated on subsequent callbacks. Since the odometry topic publishes less frequently than the lidar, an MCL update is performed at the end of the callback. In the update, poses are randomly chosen from the existing particles (according to established weights) updated according to the motion model, then weighted according to the sensor model. 
 
-#### Helper and visualization functions
+#### Helper and visualization functions - Eleanor Pence
+
+Once the MCL update is complete, the inferred pose is computed, so it can be used in visualization and to build transformations from the map frame to the robot's frame. Inferred pose is computed as a weighted average of the particles. The transform is built directly from that, though the angle included in that inferred pose must be converted to quanternion form by use of a built-in function, `Utils.angle_to_quaternion`, from the provided lab code. 
+
+Next we publish visualizations of the robot's position and the particle cloud. Visualizing the robot's position is simple, as the PoseStamped ROS message type contains all the same information as the inferred position. We then call np.random_choice on the array of particles to downsample the particle cloud and publish the position of the particles remaining - the goal is to publish sufficient particles so we can understand what the localization algorithm is doing, but not so many particles that RViz becomes overwhelmed trying to display them all. Finally, fake scan 
+
 
 ## Experimental Evaluation - Shiloh Curtis
 
@@ -106,7 +111,7 @@ The steady state error of the robot driving in circular paths was about 0.3 mete
 
 Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, suscipit lacus. Mauris vitae pretium libero, at dapibus massa. Curabitur eleifend bibendum pharetra. Nullam gravida viverra lacus eu blandit. Praesent nec odio ut magna scelerisque vulputate. Sed in libero porta, imperdiet magna maximus, efficitur urna.
 
-## Lessons Learned - [Insert Author]
+## Lessons Learned - Eleanor Pence
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligula. Aliquam erat volutpat. Cras iaculis diam vitae nunc ultricies, et egestas lorem eleifend. Ut sit amet leo vitae libero maximus molestie non ac nunc. Ut ac mi ante. Vivamus convallis convallis neque, sit amet sollicitudin arcu bibendum sit amet. Phasellus finibus dolor vitae leo cursus, eu lobortis nisl blandit. Quisque tincidunt et nisi a hendrerit. Sed et nunc quis neque egestas sollicitudin. Curabitur auctor bibendum odio. Proin aliquam cursus metus, at fermentum tellus luctus vel. Morbi ut mi id augue lacinia faucibus.
 
