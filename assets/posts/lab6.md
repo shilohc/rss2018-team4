@@ -97,12 +97,12 @@ The algorithm was verified both qualitatively and quantitiatively, and performed
 <center><img src="assets/images/LocalizationSim.png" width="300" ></center>
 <center>*Figure 6: A video of the MCL algorithm running in simulation. White dots show a fake scan showing where the scan would be if the robot was at actually at the inferred position. The rainbow colored true scan coinciding with the actual walls of the map indicates that the algorithm is correctly localizing the robot.*</center>
 
-In order to quantitavively evaluate the performance of the algorithm in simulation, the odometry of the simulation was used as a ground truth since in simulation, the odometry is exactly accurate. The localization error was computed by taking the magnitude of the error between the true and inferred position. Since errors in orientation eventually result in errors in position, the orientation error was not evaluated seperately. A circular trajectory was chosen to standardize the evalutation metric. Since the trajectory is periodic and uniformly symmetric over the entire trajectory, a constant average steady state error can be computed.
+In order to quantitavively evaluate the performance of the algorithm in simulation, the odometry of the simulation was used as a ground truth since in simulation, the odometry is exactly accurate. The localization error was computed by taking the magnitude of the error between the true and inferred position. Since errors in orientation eventually result in errors in position, the orientation error was not evaluated seperately. A circular trajectory was chosen to standardize the evalutation metric. Since the trajectory is periodic and uniformly symmetric over the entire trajectory, a constant average steady state error was expected. This steady state error is used as the evaluation metric.
 
 <center><img src="assets/images/LocalizationSimCircle.png" width="300" ></center>
 <center>*Figure 7: A video showing a circular trajectory used for quantiative evaluation of the MCL algorithm in simulation.*</center>
 
-The steady state error of the robot driving in circular paths was about 0.3 meters. This error was on the same order of magnitude as the size of the car.
+The steady state error of the robot driving in circular paths was about 0.3 meters. This error was on the same order of magnitude as the size of the car and one order of magnitude less than the corridors that the real robot was driven in. Because the initial positions of the car in the tests differed, the convergence time changed from run to run.
 
 <center><img src="assets/images/LocalizationError.png" width="300" ></center>
 <center>*Figure 8: Plot of localization error over time when the robot is driving in circular paths. Different steering angles and speeds of trajectory were evaluated. The initial positions of the robot were different in each trajectory resulting in different times for convergence.*</center>
