@@ -119,10 +119,10 @@ Implementing the Monte Carlo Localization algorithm requires a firm grasp of bot
 
 In this lab, we learned about the theory behind Monte Carlo localization and put it into practice. During implementation, we learned about a number of real-world considerations of the algorithm, such as how important it was to minimize the number of memory allocations, use numpy operations, and generally prioritize efficient code operation when processing large amounts of real-world data. In addition, we did learn that in some cases it was much easier to debug less efficient, but more clearly written code, and consider optimization later. We also utilized a lot more of ROS' graphing and visualization tools than in the past lab, which were extremely useful in debugging the sensor model and tuning the many parameters in the algorithm. 
 
-### CI Conclusions - Shiloh Curtis, Shannon Hwang
+### CI Conclusions - Shiloh Curtis, Shannon Hwang, Eleanor Pence
 
 1. We learned that it's important for team members to be proactive about finding new tasks to do if they finish the work they've been assigned.  We had planned to reassign tasks once everyone had finished their component of the localization code, but some team members were never explicitly assigned new tasks and thus used their time inefficiently during lab.  
 
 2. We also learned that setting concrete intermediate deadlines was an important and extremely useful step to take, but that team members should also ideally update the team on progress (or more importantly, any roadblocks) as internal deadlines approached. 
 
-3. Student 3
+3. In the same vein, even though debugging work is often difficult to parallelize, it was important to find ways to split up that work so that all team members' time could be fully utilized. 
