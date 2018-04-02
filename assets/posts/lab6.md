@@ -18,7 +18,7 @@ We assigned each major unfinished component of the localization code (the MCL al
 The motion model updates the current particles representing robot positions using an action derived from the robot's odometry. The action is found by computing the difference between adjacent odometry messages then transforming it so that it is relative to the robot's current position. Then Gaussian noise is added to each component of the action since the odometry is not necessarily accurate. The variance of the Gaussian noise added to each component is different since the odometry error for each of the components is not necessarily the same. Finally the action is added to each particle by using the orientation of the particle. A transformation matrix is necessary to transform actions into the coordinate frame of the particles since actions are relative to the current robot pose.
 
 ##### Motion Model Update Equation
-<center><img src="assets/images/MotionModelEqn.png" width="300" ></center>
+<center><img src="assets/images/MotionModelEqn.JPG" width="300" ></center>
 <center>*Equation 1: The motion model has Gaussian noise added to all components.*</center>
 
 The variables $dx$, $dy$ and $d\theta$ represent the action. The variables $N_x, N_y, N_\theta$ represent Gaussian noise for each component. $x, y, \theta$ represents an old particle and $x', y', \theta'$ represents an updated particle.
@@ -43,7 +43,7 @@ The variables $dx$, $dy$ and $d\theta$ represent the action. The variables $N_x,
 The team built around the skeleton code given for the lab, inserting appropriate code for the motion model, sensor model, MCL update, and various helper and visualization functions as needed. To reduce the runtime of the overall algorithm, operations were done in batch over all particles rather than over individual particles.
 
 #### Motion Model - Akhilan Boopathy
-The motion model operated on the particles as a numpy array rather than looping over the particles. It computed the sines and cosines of the orientations of the current particles as numpy arrays. Then, as per equation 1, it calculated the new positions using actions with Gaussian noise added. The numpy operations in the function were done in place so as to reduce the number of memory allocations per run of the function.
+The motion model operated on the particles as a numpy array rather than looping over the particles. It computed the sines and cosines of the orientations of the current particles as numpy arrays. Then, as per equation 1, it calculated the new positions using actions with Gaussian noise added. The numpy operations in the function were done in place so as to reduce the number of memory allocations per run of the function. The action necessary for the motion model computation was found by differencing consecutive odometry messages from `/vesc/odom` and transforming them relative to the robot's current odometry so that the action is with respect to the robot's current pose.
 
 #### Sensor Model
 
