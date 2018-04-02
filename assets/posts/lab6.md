@@ -27,7 +27,18 @@ The variables dx, dy and dtheta represent the action. The variables Nx, Ny, Nthe
 <center><img src="assets/images/MotionModelFig.png" width="300" ></center>
 <center>*Figure 1: Diagram showing motion model operating on an initial pose and producing several candidate output poses with noise added. The action is also displayed without noise.*</center>
 
-#### Sensor Model
+#### Sensor Model - Chenxing(Tony) Zhang
+The sensor model had four components corresponding to different types of error.
+
+The first error to consider is that something not accounted for in the given map, such as a person or chair, may be in between the robot and the nearest occupied space of the map. This error is modeled by the downward sloping linear part of the distribution between 0px and the given ground truth distance.
+
+The second error is that our LiDAR sensor may not be 100% accurate at measuring the distance from itself to another object. We used a gaussian distribution centered around the given ground truth distance to account for that inaccuracy as is shown in Figure 2.
+
+The third error is that the LiDAR may give random readings or have noise. Essentially this means that, given a ground truth distance, every distance has some probability of being the measured distance. No measured distance in FIgure 2 has a probability of zero.
+
+The fourth error is that the LiDAR sensor has a max range. If the ground truth distance is larger than the max range, the LiDAR will most likely return the max range value. In Figure 2, this is modeled by the large spike at the end of the distribution.
+
+Once we figured out how a cross section of the probability distribution should be modeled, creating the entire lookup table was just a matter of computing the cross section at each given ground truth distance and then normalizing the entire distribution. The final result is shown in Figure 2.
 
 ##### Slice of Sensor Model
 <center><img src="assets/images/SensorModelSlice.png" width="300" ></center>
@@ -45,8 +56,18 @@ The team built around the skeleton code given for the lab, inserting appropriate
 #### Motion Model - Akhilan Boopathy
 The motion model operated on the particles as a numpy array rather than looping over the particles. It computed the sines and cosines of the orientations of the current particles as numpy arrays. Then, as per equation 1, it calculated the new positions using actions with Gaussian noise added. The numpy operations in the function were done in place so as to reduce the number of memory allocations per run of the function. The action necessary for the motion model computation was found by differencing consecutive odometry messages from `/vesc/odom` and transforming them relative to the robot's current odometry so that the action is with respect to the robot's current pose.
 
-#### Sensor Model
-TODO: tony?
+#### Sensor Model - Chenxing(Tony) Zhang
+We used the precomputed sensor model to compute the probability of an observation ogiven a location and a heading angle - which we call a pose denoted by x as follows:
+
+$$ p(0|x\_i^t) = \Pi \_j \, p(o\_j|x\_i^t) \, \forall \, j \in \\{subsampled \; angles\\} $$
+
+Where the probability \\( p(o\_j|x\_i^t) \\) is essentially the value given by the precomputed probability distribution as described in the previous section and is computed for each particle in the map. The resulting probability \\(p(o|x\_i^t)\\) was then assigned as the weight of particle i at timestep t denoted as \\( w\_i^t \\). 
+
+After applying the sensor model update to the particles, we sampled from all of the new particles based on their weights meaning particles with higher weights were more likely to be chosen. We then updated our estimate based on these high probability particles and computed an expected pose estimate by using our sampled particles along with their weights.
+
+This portion of the code performed a lot of computation - seen by the fact that it accounted for close to 60% of the total time for the entire update step. In order to speed up computations, we exported all of the core components of this function to a C library - rangeLibC which was provided to us by Corey Walsh. This removed the need of python for loops which made our updates fast since all arrays were contiguous blocks of memory and allowed us to take advantage of caching since the arrays exhibited strong locality. This was a key reason we were able to obtain a high update rate without needing to use our car’s GPU.
+
+We first tested our sensor model by printing out the weight of a single particle at different poses to make sure that it had the desired results. This led to us discovering that we had an error in our precomputed sensor model that resulted in probabilities of zero. Once we were satisfied that the one particle was behaving correctly, we added more particles. We found that we were not properly resampling since the particles were not converging to the car. Once we fixed these problems, we tuned the standard deviation of the gaussian distribution in the precomputed model to achieve better results. 
 
 #### Overall structure – Shannon Hwang
 The code was structured to reduce the amount of memory allocations. When the particle filter initializes, it precomputes the sensor model once and initializes subscribers to LIDAR (`/scan`) and odometry data (`/vesc/odom`), publishers for various visualization topics, and a publisher to publish the inferred pose (`/pf/pose/odom`). 
