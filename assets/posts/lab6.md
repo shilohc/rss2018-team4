@@ -21,7 +21,7 @@ The motion model updates the current particles representing robot positions usin
 <center><img src="assets/images/MotionModelEqn.JPG" width="300" ></center>
 <center>*Equation 1: The motion model has Gaussian noise added to all components.*</center>
 
-The variables $dx$, $dy$ and $d\theta$ represent the action. The variables $N_x, N_y, N_\theta$ represent Gaussian noise for each component. $x, y, \theta$ represents an old particle and $x', y', \theta'$ represents an updated particle.
+The variables dx, dy and dtheta represent the action. The variables Nx, Ny, Ntheta represent Gaussian noise for each component. x, y, theta represent an old particle and x', y', theta' represent an updated particle. Note that in the motion model, each input particle results in a single output particle. In the figure below, multiple particles are shown for the single input to illustrate that the motion model adds random noise. Adding noise results in the output particles clustered around the pose if no noise was added. Due to different noise parameters per particle component, the variance of the output particles varies depending on the direction considered.
 
 ##### Motion Model Illustration
 <center><img src="assets/images/MotionModelFig.png" width="300" ></center>
@@ -48,7 +48,7 @@ The motion model operated on the particles as a numpy array rather than looping 
 #### Sensor Model
 
 #### Overall structure – Shannon Hwang
-The code was structured to reduce the amount of memory allocations. When the particle filter initializes, it precomputes the sensor model once and initializes subscribers to LIDAR (`/scan`) and odometry data (`/odom`), publishers for various visualization topics, and a publisher to publish the inferred pose (`/pf/pose/odom`). 
+The code was structured to reduce the amount of memory allocations. When the particle filter initializes, it precomputes the sensor model once and initializes subscribers to LIDAR (`/scan`) and odometry data (`/vesc/odom`), publishers for various visualization topics, and a publisher to publish the inferred pose (`/pf/pose/odom`). 
 The first lidar and odometry callbacks trigger one-time initialization of arrays for downsampled scans and odometry that are updated on subsequent callbacks. Since the odometry topic publishes less frequently than the lidar, an MCL update is performed at the end of the callback. In the update, poses are randomly chosen from the existing particles (according to established weights) updated according to the motion model, then weighted according to the sensor model. 
 
 #### Helper and visualization functions - Eleanor Pence
@@ -94,15 +94,15 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligul
 #### Simulation - Akhilan Boopathy
 The algorithm was verified both qualitatively and quantitiatively, and performed as expected with the inferred pose of the robot approximately tracking the true position. The intitial poses of the particles is clicked near the true position with some variance added. The particles then track the true pose of the robot using the motion model and sensor model. When the car turns, the particles spread out horizontally intially due to greater uncertainty in position, but the particles converge again as the sensor model increases the weights of the particles closer to the true position.
 
-<center><img src="assets/images/LocalizationSim.png" width="300" ></center>
+<center><img src="assets/images/LocalizationSim.gif" width="300" ></center>
 <center>*Figure 6: A video of the MCL algorithm running in simulation. White dots show a fake scan showing where the scan would be if the robot was at actually at the inferred position. The rainbow colored true scan coinciding with the actual walls of the map indicates that the algorithm is correctly localizing the robot.*</center>
 
-In order to quantitavively evaluate the performance of the algorithm in simulation, the odometry of the simulation was used as a ground truth since in simulation, the odometry is exactly accurate. The localization error was computed by taking the magnitude of the error between the true and inferred position. Since errors in orientation eventually result in errors in position, the orientation error was not evaluated seperately. A circular trajectory was chosen to standardize the evalutation metric. Since the trajectory is periodic and uniformly symmetric over the entire trajectory, a constant average steady state error can be computed.
+In order to quantitavively evaluate the performance of the algorithm in simulation, the odometry of the simulation was used as a ground truth since in simulation, the odometry is exactly accurate. The localization error was computed by taking the magnitude of the error between the true and inferred position. Since errors in orientation eventually result in errors in position, the orientation error was not evaluated seperately. A circular trajectory was chosen to standardize the evalutation metric. Since the trajectory is periodic and uniformly symmetric over the entire trajectory, a constant average steady state error was expected. This steady state error is used as the evaluation metric.
 
-<center><img src="assets/images/LocalizationSimCircle.png" width="300" ></center>
-<center>*Figure 7: A video showing a circular trajectory used for quantiative evaluation of the MCL algorithm in simulation.*</center>
+<center><img src="assets/images/LocalizationSimCircle.gif" width="300" ></center>
+<center>*Figure 7: A video showing a circular trajectory used for quantiative evaluation of the MCL algorithm in simulation. The red dots represent the actual scan, and the white dots represent a fake scan showing the points where a scan would project if the robot was at the inferred position.*</center>
 
-The steady state error of the robot driving in circular paths was about 0.3 meters. This error was on the same order of magnitude as the size of the car.
+The steady state error of the robot driving in circular paths was about 0.3 meters. This error was on the same order of magnitude as the size of the car and one order of magnitude less than the corridors that the real robot was driven in. Because the initial positions of the car in the tests differed, the convergence time changed from run to run.
 
 <center><img src="assets/images/LocalizationError.png" width="300" ></center>
 <center>*Figure 8: Plot of localization error over time when the robot is driving in circular paths. Different steering angles and speeds of trajectory were evaluated. The initial positions of the robot were different in each trajectory resulting in different times for convergence.*</center>
