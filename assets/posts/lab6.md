@@ -107,17 +107,17 @@ The steady state error of the robot driving in circular paths was about 0.3 mete
 
 #### Real Robot - Shiloh Curtis
 
-On the racecar, localization was only verified qualitatively.  Given an initial pose it performed well; the error in the returned position remained less than 0.4 meters while the car was driven down a hallway, most of which was steady-state error.  (Unlike the simulator, the real world does not provide ground-truth odometry data, so it was difficult to quantitatively measure the localization error with more accuracy.)
+On the racecar, localization was verified qualitatively.  Given an initial pose it performed well; the error in the returned position remained less than 0.4 meters while the car was driven down a hallway, most of which was steady-state error.  (Unlike the simulator, the real world does not provide ground-truth odometry data, so it was difficult to quantitatively measure the localization error with more accuracy.)
 
 <center><img src="assets/images/LocalizationErrorReal.png" width="300" ></center>
-<center>*Figure 9: Screenshot of rviz showing localization error between map and laserscan data.  This error is relatively small in comparison to the size of features in the hallway, and an order of magnitude less than the hallway width.*</center>
+<center>*Figure 9: Screenshot of rviz showing localization error between map and laserscan data.  This error is relatively small in comparison to the size of features in the hallway, and is an order of magnitude less than the hallway width.*</center>
 
 The robot did not perform as well when not given an accurate initialization pose or when kidnapped.  When not given an initialization pose, or when moved to a completely different part of the basement, it was unable to converge on the correct location.  However, if it was moved a short distance (on the order of 1 meter), it was usually able to correctly relocalize.  
 
 For good performance with SLAM, further parameter tuning to reduce error would be necessary.  However, for navigation using a pre-made map, our localization algorithm in its current state would work as long as the robot is not picked up and moved.  
 
 <center><img src="assets/images/split_screen_localization.gif" width="300" ></center>
-<center>*Figure 10: Localization running on the racecar in the Stata basement.  On the left, a video of the robot in the hallway; on the right, the corresponding rviz visualization.*</center>
+<center>*Figure 10: Localization running on the racecar in the Stata basement.  On the left is a video of the robot in the hallway; on the right, the corresponding rviz visualization.*</center>
 
 ## Lessons Learned - Eleanor Pence
 
