@@ -27,7 +27,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligul
 
 ##### Circle Space Search
 <center><img src="assets/images/Lab6CircleSpace.JPG" width="300" ></center>
-<center>*Figure 2: A diagram illustrating A* search through circle space. Circles are found in the space exploration step, then are used as part of the heuristic for heuristic search. Image from https://mediatum.ub.tum.de/doc/1283837/826052.pdf.*</center>
+<center>*Figure 2: A diagram illustrating A star search through circle space. Circles are found in the space exploration step, then are used as part of the heuristic for heuristic search. Image from https://mediatum.ub.tum.de/doc/1283837/826052.pdf.*</center>
 
 ##### Rough vs. Refined Trajectories
 <center><img src="assets/images/Lab6RoughRefined.png" width="300" ></center>
@@ -51,16 +51,18 @@ Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, s
 
 ### Results - [Insert Author]
 
-#### Simulation
+#### Simulation - Akhilan Boopathy
+The planner and pure pursuit controller worked as quantitiatively and qualitatively expected in simulation. As shown in figure 4, the planner planned an obstacle free path on a map of the basement of Stata from the current robot pose to the goal pose. Since the path planner took into account the motion constraints of the car, the trajectory was by design sufficiently smooth for the robot to follow. Once the trajectory was found, the robot followed the trajectory qualitatively correctly as seen in figure 4.
 
 ##### Pure Pursuit Simulation
 <center><img src="assets/images/Lab6PureSimAll.gif" width="300" ></center>
-<center>*Figure 4: The robot planning and following a trajectory in simulation. The goal point is clicked in rviz.*</center>
+<center>*Figure 4: The robot planning and following a trajectory in simulation. The goal point is clicked in rviz. The green polygon represents the found trajectory, with an additional line directly between the start and the goal.*</center>
+
+In addition, the robot's simulated position was quantitatively close to the true trajectory, as seen in figure 5. Depending on the initial pose of the robot, the time converge to the trajectory varied. Once converged, the robot followed the trajectory at an average error of 0.02 m.
 
 ##### Pure Pursuit Simulation Error
 <center><img src="assets/images/Lab6PurePursuitErrorSim.png" width="300" ></center>
-<center>*Figure 5: The distance to the trajectory as a simulated robot followed a trajectory using pure pursuit. The steady state error approaches 0.02 m.*</center>
-
+<center>*Figure 5: The distance to the trajectory as a simulated robot followed a trajectory using pure pursuit. The simulated robot starts at varying distances to the trajectory. The steady state error approaches 0.02 m regardless of initial possition.*</center>
 
 #### Real Roboot
 
