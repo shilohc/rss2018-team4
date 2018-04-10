@@ -54,7 +54,7 @@ Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, s
 #### Simulation
 
 ##### Pure Pursuit Simulation
-<center><img src="assets/images/Lab6PureSimAll.png" width="300" ></center>
+<center><img src="assets/images/Lab6PureSimAll.gif" width="300" ></center>
 <center>*Figure 4: The robot planning and following a trajectory in simulation. The goal point is clicked in rviz.*</center>
 
 ##### Pure Pursuit Simulation Error
