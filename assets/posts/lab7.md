@@ -17,7 +17,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligul
 
 ##### Pure Pursuit Equation
 <center><img src="assets/images/Lab6PurePursuitEqn.JPG" width="300" ></center>
-<center>*Equation 1: The equation for determining the steering angle via pure pursuit given a goal point (x,y) relative to the robot's current pose.*</center>
+<center>*Equation 1: The equation for determining the steering angle via pure pursuit given a goal point (x,y) relative to the robot's current pose, where L is the distance between axles on the robot.*</center>
 
 ##### Pure Pursuit Simulation
 <center><img src="assets/images/Lab6SimPurePursuit.gif" width="300" ></center>
