@@ -59,7 +59,7 @@ The planner and pure pursuit controller worked as quantitiatively and qualitativ
 
 ##### Pure Pursuit Simulation
 <center><img src="assets/images/Lab6PureSimAll.gif" width="300" ></center>
-<center>*Figure 4: The robot planning and following a trajectory in simulation. The goal point is clicked in rviz. The green polygon represents the found trajectory, with an additional line directly between the start and the goal.*</center>
+<center>*Figure 4: A video of the robot planning and following a trajectory in simulation. The goal point is clicked in rviz. The green polygon represents the found trajectory, with an additional line directly between the start and the goal.*</center>
 
 In addition, the robot's simulated position was quantitatively close to the true trajectory, as seen in figure 5. Depending on the initial pose of the robot, the time converge to the trajectory varied. Once converged, the robot followed the trajectory at an average error of 0.02 m.
 
@@ -67,7 +67,9 @@ In addition, the robot's simulated position was quantitatively close to the true
 <center><img src="assets/images/Lab6PurePursuitErrorSim.png" width="300" ></center>
 <center>*Figure 5: The distance to the trajectory as a simulated robot followed a trajectory using pure pursuit. The simulated robot starts at varying distances to the trajectory. The steady state error approaches 0.02 m regardless of initial possition.*</center>
 
-#### Real Roboot
+#### Real Robot
+
+The real robot planned and followed paths to a specified goal point as qualitatively expected. Once a goal point was manually set, the robot planned a trajectory from the robot's current position to the goal pose using the path planner. Next, the robot followed the planned trajectory using pure pursuit.
 
 ## Lessons Learned - [Insert Author]
 
