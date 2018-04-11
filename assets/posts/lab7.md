@@ -1,9 +1,10 @@
 Lab 6
 =====
 
-## Overview and Motivations - [Insert Author]
+## Overview and Motivations - Shannon Hwang
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligula. Aliquam erat volutpat. Cras iaculis diam vitae nunc ultricies, et egestas lorem eleifend. Ut sit amet leo vitae libero maximus molestie non ac nunc. Ut ac mi ante. Vivamus convallis convallis neque, sit amet sollicitudin arcu bibendum sit amet. Phasellus finibus dolor vitae leo cursus, eu lobortis nisl blandit. Quisque tincidunt et nisi a hendrerit. Sed et nunc quis neque egestas sollicitudin. Curabitur auctor bibendum odio. Proin aliquam cursus metus, at fermentum tellus luctus vel. Morbi ut mi id augue lacinia faucibus.
+In this lab, methods were implemented that allowed the car to plan and follow a path to a goal given a map of the Stata center basement, the car’s location (using the localization code from the previous lab) and a goal pose. Path planning is an important problem in robotics, and once a path is planned, the ability to follow that path with trajectory tracking is equally critical for a robot to navigate any environment effectively. There are a number of approaches – each with their own pros and cons – for tackling path planning; paths in this lab were planned using a variant of A* . A pure pursuit controller was implemented to track planned trajectories. 
+
 
 ## Proposed Approach - [Insert Author]
 
@@ -46,11 +47,13 @@ As the lookahead point changes, the robot moves continuously towards the current
 
 Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, suscipit lacus. Mauris vitae pretium libero, at dapibus massa. Curabitur eleifend bibendum pharetra. Nullam gravida viverra lacus eu blandit. Praesent nec odio ut magna scelerisque vulputate. Sed in libero porta, imperdiet magna maximus, efficitur urna.
 
-### Testing Procedure - [Insert Author]
+### Testing Procedure - Shannon Hwang
+Testing in simulation utilized the provided simulation launch file; the robot's performance was evaluated qualitatively through rviz and quantitatively by measuring the average distance between the robot's simulated pose to its correct position on its planned trajectory. Testing with the racecar took place in the Stata basement using real-time sensor input and a safety controller; the robot's performance was evaluated qualitatively through rviz by comparing its position to its visualized planned trajectory. 
 
 #### Simulation
 
-#### Real Robot
+#### Racecar – Shannon Hwang
+Testing with the racecar only took place after both trajectory tracking and path planning code had been tested in simulation, so no parameter tuning was necessary during testing.  The pure pursuit controller was tested by following a prescribed loop around the basement. To test other the pure pursuit controller's ability to follow other trajectories as well as the path planner, goal poses were set in rviz and sent to the path planner. The path planner's calculated path to the goal was then displayed in rviz, and the robot used pure pursuit to follow the planned path. The robot's performance was evaluated qualitatively by comparing its trajectories to those seen in rviz.  
 
 ### Results - [Insert Author]
 
@@ -65,9 +68,9 @@ In addition, the robot's simulated position was quantitatively close to the true
 
 ##### Pure Pursuit Simulation Error
 <center><img src="assets/images/Lab6PurePursuitErrorSim.png" width="300" ></center>
-<center>*Figure 5: The distance to the trajectory as a simulated robot followed a trajectory using pure pursuit. The simulated robot starts at varying distances to the trajectory. The steady state error approaches 0.02 m regardless of initial possition.*</center>
+<center>*Figure 5: The distance to the trajectory as a simulated robot followed a trajectory using pure pursuit. The simulated robot starts at varying distances to the trajectory. The steady state error approaches 0.02 m regardless of initial position.*</center>
 
-#### Real Robot
+#### Racecar
 
 The real robot planned and followed paths to a specified goal point as qualitatively expected. Once a goal point was manually set, the robot planned a trajectory from the robot's current position to the goal pose using the path planner. Next, the robot followed the planned trajectory using pure pursuit.
 
@@ -75,11 +78,14 @@ The real robot planned and followed paths to a specified goal point as qualitati
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligula. Aliquam erat volutpat. Cras iaculis diam vitae nunc ultricies, et egestas lorem eleifend. Ut sit amet leo vitae libero maximus molestie non ac nunc. Ut ac mi ante. Vivamus convallis convallis neque, sit amet sollicitudin arcu bibendum sit amet. Phasellus finibus dolor vitae leo cursus, eu lobortis nisl blandit. Quisque tincidunt et nisi a hendrerit. Sed et nunc quis neque egestas sollicitudin. Curabitur auctor bibendum odio. Proin aliquam cursus metus, at fermentum tellus luctus vel. Morbi ut mi id augue lacinia faucibus.
 
-### Technical Conclusions - [Insert Author]
+### Technical Conclusions - Shannon Hwang
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligula. Aliquam erat volutpat. Cras iaculis diam vitae nunc ultricies, et egestas lorem eleifend. Ut sit amet leo vitae libero maximus molestie non ac nunc. Ut ac mi ante. Vivamus convallis convallis neque, sit amet sollicitudin arcu bibendum sit amet. Phasellus finibus dolor vitae leo cursus, eu lobortis nisl blandit. Quisque tincidunt et nisi a hendrerit. Sed et nunc quis neque egestas sollicitudin. Curabitur auctor bibendum odio. Proin aliquam cursus metus, at fermentum tellus luctus vel. Morbi ut mi id augue lacinia faucibus.
-
-Duis vel nunc sit amet risus consectetur dictum. Nulla mollis varius erat, vitae gravida est elementum a. Curabitur velit sapien, placerat ac scelerisque quis, ultricies at sem. Maecenas ut elit congue, condimentum lacus eu, scelerisque nunc. Curabitur mattis velit vitae sem placerat varius vel euismod leo. Cras quis elit quam. Proin scelerisque lobortis erat, eu euismod ex mattis ac. Curabitur non felis mauris. Integer mauris nisi, rutrum id finibus vel, ornare quis diam. Cras lectus nisi, pharetra ut elit at, porta auctor ex. Cras lobortis nisl leo, varius aliquet arcu sollicitudin vel. Aliquam quis nulla sapien. Donec porttitor, tortor vel iaculis vehicula, ipsum eros dictum eros, sit amet tempor orci felis vitae magna. Sed velit lacus, tincidunt sit amet quam sed, aliquam porttitor ex.
+This lab provided insight into the theory and implementation of a pure pursuit trajectory tracker and a modified A* path planner. 
+Though A* is constrained by the fineness of discretization space in theory, it was worked fine for the RACECAR's needs. 
+Theory behind pure pursuit – lookahead distance, nearest distance 
+Theory behind circular discretization of A* path planner 
+Circular exploration, heuristic calculation
+Trajectories need to be refined to account for motion constraints of the car
 
 ### CI Conclusions - [Insert Author]
 
