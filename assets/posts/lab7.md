@@ -6,11 +6,17 @@ Lab 6
 In this lab, methods were implemented that allowed the car to plan and follow a path to a goal given a map of the Stata center basement, the car’s location (using the localization code from the previous lab) and a goal pose. Path planning is an important problem in robotics, and once a path is planned, the ability to follow that path with trajectory tracking is equally critical for a robot to navigate any environment effectively. There are a number of approaches – each with their own pros and cons – for tackling path planning; paths in this lab were planned using a variant of A* . A pure pursuit controller was implemented to track planned trajectories. 
 
 
-## Proposed Approach - [Insert Author]
+## Proposed Approach - Shiloh Curtis
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligula. Aliquam erat volutpat. Cras iaculis diam vitae nunc ultricies, et egestas lorem eleifend. Ut sit amet leo vitae libero maximus molestie non ac nunc. Ut ac mi ante. Vivamus convallis convallis neque, sit amet sollicitudin arcu bibendum sit amet. Phasellus finibus dolor vitae leo cursus, eu lobortis nisl blandit. Quisque tincidunt et nisi a hendrerit. Sed et nunc quis neque egestas sollicitudin. Curabitur auctor bibendum odio. Proin aliquam cursus metus, at fermentum tellus luctus vel. Morbi ut mi id augue lacinia faucibus.
+As in previous labs, the team met to discuss the lab and split the major code components among the team members.  Since design of the path planner depended on the trajectory format used by the trajectory follower, these two components were developed mostly in sequence: the whole team split up to complete the trajectory follower by an early intermediate deadline, then moved on to the path planner.  The path planner was tested in simulation first; once it produced paths that the trajectory follower could easily follow, it was run on the real robot.  
 
-### Initial Setup - [Insert Author]
+### Initial Setup - Shiloh Curtis
+
+The trajectory follower was designed and implemented first, so the path planner could be designed against the same trajectory format and tested by checking whether the trajectory follower could follow its paths; therefore, the trajectory follower was split among all team members, with an early deadline for finishing a first implementation pass at pure pursuit.  It was then debugged by a subset of the team while the other team members began work on the path planner.  
+
+The path planner was split among the remaining team members.  It was initially tested in simulation, first by visualizing the resulting trajectory and checking that it matched the expected trajectory, then using the trajectory follower.  
+
+Once the path planner and trajectory follower worked together in simulation, testing began on the robot.  The trajectory follower was tested both alone, using a pre-recorded trajectory of the basement loop, and in combination with the path planner.  
 
 ### Technical Approach
 
@@ -39,7 +45,9 @@ As the lookahead point changed, the robot moved continuously towards the current
 
 ### ROS Implementation - [Insert Author]
 
-#### Trajectory Follower
+#### Trajectory Follower - Shiloh Curtis
+
+TODO(shilohc)
 
 #### Path Planner
 
@@ -100,8 +108,9 @@ Completing this lab required both the technical skills to design and implement a
 
 This lab provided insight into the theory and practice behind a pure pursuit trajectory tracker and a modified A* path planner. Implementing the algorithms solidified an understanding of the theory – for example, the calculation of a lookahead point in pure pursuit – and spurred a number of real-world realizations. As another example, though the team was initially hesistant to use A* due to its computational intensity and reliance on discretization fineness, it worked well for planning paths for the racecar. It also became clear that "rough", initially calculated trajectories needed to be refined to account for the racecar's motions constraints. 
 
-### CI Conclusions - [Insert Author]
+### CI Conclusions - Shiloh Curtis
 
-1. Student 1
+1. The team found in this lab that it was especially important to keep team members aware of each other's progress in order to coordinate work and avoid duplicated effort.  However, the to-do system used in this lab, consisting of a separate Slack channel and a Google Doc which people could update with their progress, was too complicated in that it did not have a single location to update or check on the progress of a task.  (Thus the Google Doc often did not reflect reality.)  In future labs, the team will continue to experiment with to-do tracking systems.
+
 2. Student 2
 3. Student 3
