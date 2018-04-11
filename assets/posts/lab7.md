@@ -110,7 +110,7 @@ The performance of the path planner on the real robot was evaluated next. Once a
 
 ##### Visualization of Robot Following Planned Trajectory
 <center><img src="assets/images/Lab6ColumnRviz.gif" width="300" ></center>
-<center>*Figure 9: A video showing a robot in rviz planning and traveling along a planned trajectory. The start pose is the robot's current position and the goal pose is manually selected. The red arrows represent the pose estimates of the robot using a particle filter to localize the robot on the map. The blue dot represents the lookahead point on the trajectory that the robot follows. The green line represents the trajectory. Note that in the visualization, the trajectory is slightly offset from the true position.*</center>
+<center>*Figure 9: A video showing a robot in rviz planning and traveling along a planned trajectory. The start pose is the robot's current position and the goal pose is manually selected. The red arrows represent the pose estimates of the robot using a particle filter to localize the robot on the map. The blue dot represents the lookahead point on the trajectory that the robot follows. The green line represents the trajectory, with an additional line directly between the start and goal. Note that in the visualization, the trajectory is slightly offset from the true position.*</center>
 
 ## Lessons Learned - Akhilan Boopathy
 
