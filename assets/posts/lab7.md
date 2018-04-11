@@ -71,6 +71,9 @@ In addition, the robot's simulated position was quantitatively close to the true
 
 The real robot planned and followed paths to a specified goal point as qualitatively expected. Once a goal point was manually set, the robot planned a trajectory from the robot's current position to the goal pose using the path planner. Next, the robot followed the planned trajectory using pure pursuit.
 
+#### Two Corners Real Robot
+<video src="two corners rl.mp4" width="320" height="200" controls preload></video>
+
 ## Lessons Learned - Akhilan Boopathy
 
 Completing this lab required both the technical skills to design and implement a trajectory follower and path planner, as well as the communication skills necessary to effectively coordinate with team members.
