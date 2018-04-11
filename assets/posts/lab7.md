@@ -33,7 +33,16 @@ As the lookahead point changed, the robot moved continuously towards the current
 <center><img src="assets/images/Lab6SimPurePursuit.gif" width="300" ></center>
 <center>*Figure 1: A video showing a simulated car following a lookahead point via pure pursuit. The blue dot represents the moving lookahead point.*</center>
 
-#### Path Planner
+#### Path Planner - Tony Zhang
+We used two levels of A\* search algorithm for path planning. A\* is an informed search algorithm which checks the available state space for all possible paths to goal and chooses the path that provides the minimal cost. In A\*, cost is calculated by summing the cost to move in that direction plus the estimated cost of the path between the current node and goal.
+
+The implementation of A\* relies on python’s Priority Queue structure to be able to order nodes based on their priority (or estimated cost). While there remain unexplored nodes, the algorithm iterates at looking at the neighbors of the lowest priority node, which is the node with the lowest cost path at the moment. The algorithm either updates the node’s costs and parent node if it has been seen before and is cheaper using this path. Otherwise, the algorithm will add the node and its current parent and cost to the set of explored nodes. This iteration continues until the goal state has been seen. Once the goal state is reached, the algorithm backtracks through the search tree and determines the path by looking at each node parent, which is stored and updated within the algorithm’s loop. 
+
+For the algorithm to function properly, it requires accurate movement cost estimations and heuristic cost estimations to goal. To find the shortest solution, the heuristic must be admissible: never overestimates of the cost of the path to the goal node. Our algorithm initially implements two different options for heuristics.
+
+In addition to the heuristic calculation, the other component of the priority calculation is the cost of moving to the next node. We weight the cost based on whether the next node is in the direction of the goal or not. We determined this cost by comparing the angle between vectors (current node, next node) and (current node, goal) and the angle between vectors (current node, next node) and (current node, start). If the angle to goal is less than or equal to the angle to start, then that next node is moving in the correct direction and is given a low weighted cost. Otherwise, the cost of movement is weighted extremely high such that this potential path will be lower in the priority queue. In the experimental evaluation section, we discuss how the optimal heuristic values and cost values were determined for A\* path planning.
+
+In addition to a rough trajectory produced by the first level of A\* searching, we added a second level of A\* searching to smooth the trajetory, which takes in additional cost and heuristic to adjust the trajectory and make it smoother. This will allow the car to move faster and turn more smootherly.
 
 ##### Circle Space Search
 <center><img src="assets/images/Lab6CircleSpace.JPG" width="300" ></center>
@@ -49,7 +58,8 @@ As the lookahead point changed, the robot moved continuously towards the current
 
 TODO(shilohc)
 
-#### Path Planner
+#### Path Planner - Tony Zhang
+The path planning node develops the optimal path for the racecar to follow when using pure pursuit. To develop a functioning path, the A\* algorithm require a map which is converted to an occupancy grid representing whether the obstacles exist or not. The node uses a service proxy to get the map metadata and represent it as a numpy array of dimensions width by height, in pixels, with each pixel’s grayscale values stored in it’s index of the array. Furthermore, it uses scipy morphology’s binary erosion function to convert all white cells, which are unoccupied in the map, to True. The function also adds a border by buffering out the walls along the map so that the robot will not consider state spaces directly near the wall as a viable option. The path planning node also subscribes to the map topic to get the map resolution, which is used in the subscription to the Odometry topic, published by particle filter, to determine the inferred pose in map coordinates. Once the two path planning algorithms complete, the paths -- represented as a list of tuples -- are published to a trajectory file, which can be used as the input to load trajectory.
 
 ## Experimental Evaluation - [Insert Author]
 
