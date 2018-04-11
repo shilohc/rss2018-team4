@@ -3,7 +3,7 @@ Lab 6
 
 ## Overview and Motivations - Shannon Hwang
 
-In this lab, methods were implemented that allowed the car to plan and follow a path to a goal given a map of the Stata center basement, the car’s location (using the localization code from the previous lab) and a goal pose. Path planning is an important problem in robotics, and once a path is planned, the ability to follow that path with trajectory tracking is equally critical for a robot to navigate any environment effectively. There are a number of approaches – each with their own pros and cons – for tackling path planning; paths in this lab were planned using a variant of A* . A pure pursuit controller was implemented to track planned trajectories. 
+In this lab, methods were implemented that allowed the car to plan and follow a path to a goal given a map, the car’s location (using the localization code from the previous lab) and a goal pose. Path planning is an important problem in robotics, and once a path is planned, the ability to follow that path with trajectory tracking is equally critical for a robot to navigate any environment effectively. There are a number of approaches – each with their own pros and cons – for tackling path planning; paths in this lab were planned using a variant of A* search. A pure pursuit controller was implemented to track planned trajectories. 
 
 
 ## Proposed Approach - Shiloh Curtis
@@ -42,7 +42,7 @@ For the algorithm to function properly, it requires accurate movement cost estim
 
 In addition to the heuristic calculation, the other component of the priority calculation is the cost of moving to the next node. We weight the cost based on whether the next node is in the direction of the goal or not. We determined this cost by comparing the angle between vectors (current node, next node) and (current node, goal) and the angle between vectors (current node, next node) and (current node, start). If the angle to goal is less than or equal to the angle to start, then that next node is moving in the correct direction and is given a low weighted cost. Otherwise, the cost of movement is weighted extremely high such that this potential path will be lower in the priority queue. In the experimental evaluation section, we discuss how the optimal heuristic values and cost values were determined for A\* path planning.
 
-In addition to a rough trajectory produced by the first level of A\* searching, we added a second level of A\* searching to smooth the trajetory, which takes in additional cost and heuristic to adjust the trajectory and make it smoother. This will allow the car to move faster and turn more smootherly.
+In addition to a rough trajectory produced by the first level of A\* searching, a second level of A\* search was added to smooth the trajetory, which takes in additional cost and heuristic to adjust the trajectory and make it smoother. This will allow the car to move faster and turn more smootherly.
 
 ##### Circle Space Search
 <center><img src="assets/images/Lab6CircleSpace.JPG" width="300" ></center>
@@ -63,14 +63,16 @@ The trajectory follower is implemented as a single ROS node, which subscribes to
 #### Path Planner - Tony Zhang
 The path planning node develops the optimal path for the racecar to follow when using pure pursuit. To develop a functioning path, the A\* algorithm require a map which is converted to an occupancy grid representing whether the obstacles exist or not. The node uses a service proxy to get the map metadata and represent it as a numpy array of dimensions width by height, in pixels, with each pixel’s grayscale values stored in it’s index of the array. Furthermore, it uses scipy morphology’s binary erosion function to convert all white cells, which are unoccupied in the map, to True. The function also adds a border by buffering out the walls along the map so that the robot will not consider state spaces directly near the wall as a viable option. The path planning node also subscribes to the map topic to get the map resolution, which is used in the subscription to the Odometry topic, published by particle filter, to determine the inferred pose in map coordinates. Once the two path planning algorithms complete, the paths -- represented as a list of tuples -- are published to a trajectory file, which can be used as the input to load trajectory.
 
-## Experimental Evaluation - TODO
+## Experimental Evaluation - Eleanor Pence
 
-Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, suscipit lacus. Mauris vitae pretium libero, at dapibus massa. Curabitur eleifend bibendum pharetra. Nullam gravida viverra lacus eu blandit. Praesent nec odio ut magna scelerisque vulputate. Sed in libero porta, imperdiet magna maximus, efficitur urna.
+In the interest of quantifying the performance of our chosen algorithms and implementations, said algorithms were tested in simulation before moving on to more detailed testing in real life, in the Stata Center basement. 
 
 ### Testing Procedure - Shannon Hwang
-Testing in simulation utilized the provided simulation launch file; the robot's performance was evaluated qualitatively through rviz and quantitatively by measuring the average distance between the robot's simulated pose to its correct position on its planned trajectory. Testing with the racecar took place in the Stata basement using real-time sensor input and a safety controller; the robot's performance was evaluated qualitatively through rviz by comparing its position to its visualized planned trajectory. 
+In simulation, the robot's performance was evaluated qualitatively through rviz and quantitatively by measuring the average distance between the robot's simulated pose to its correct position on its planned trajectory. Testing with the racecar took place in the Stata basement using real-time sensor input and a safety controller; the robot's performance was evaluated qualitatively through rviz by comparing its position to its visualized planned trajectory. 
 
-#### Simulation
+#### Simulation - Eleanor Pence
+The pure pursuit algorithm was tested in simulation by running it on a predefined trajectory around the Stata center basement, which included turns of various degrees of tightness, while the trajectory planning algorithm was tested in simulation by creating various "problems" for the planning algorithm to solve, including avoiding known obstacles like posts in the Stata basement. The main metric used to evaluate the pure pursuit algorithm was distance from the closest segment of the input trajectory; this metric was calculated at intervals of 1/10th of a second, using the pose published by our Monte Carlo localization algorithm, the Polygon message published by trajectory loader, and a simple distance from line to point equation calculated for the pose with each trajectory segment. 
+
 
 #### Racecar – Shannon Hwang
 Testing with the racecar only took place after both trajectory tracking and path planning code had been tested in simulation, so no parameter tuning was necessary during testing.  The pure pursuit controller was tested by following a prescribed loop around the basement. To test other the pure pursuit controller's ability to follow other trajectories as well as the path planner, goal poses were set in rviz and sent to the path planner. The path planner's calculated path to the goal was then displayed in rviz, and the robot used pure pursuit to follow the planned path. The robot's performance was evaluated qualitatively by comparing its trajectories to those seen in rviz.  
@@ -84,7 +86,7 @@ The planner and pure pursuit controller planned and followed trajectories as ver
 <center><img src="assets/images/Lab6SimAll.gif" width="300" ></center>
 <center>*Figure 4: A video of the robot planning and following a trajectory in simulation. The goal point is clicked in rviz. The green polygon represents the found trajectory, with an additional line directly between the start and the goal.*</center>
 
-In addition, the robot's simulated position was quantitatively close to the true trajectory. Depending on the initial pose of the robot, the time to converge to the trajectory varied, with greater time needed for convergence for larger initial distances to the trajectory. Once converged, the robot followed the trajectory at an average distance to trajectory of 0.02 m as seen in figure 5.
+In addition, the robot's simulated position was quantitatively close to the true trajectory. Depending on the initial pose of the robot, the time to converge to the trajectory varied, with greater time needed for convergence for larger initial distances to the trajectory. Once converged, the robot followed the trajectory at an average distance to trajectory of only 0.02 m as seen in figure 5.
 
 ##### Pure Pursuit Simulation Error
 <center><img src="assets/images/Lab6PurePursuitErrorSim.png" width="400" ></center>
@@ -120,9 +122,10 @@ Completing this lab required both the technical skills to design and implement a
 
 This lab provided insight into the theory and practice behind a pure pursuit trajectory tracker and a modified A* path planner. Implementing the algorithms solidified an understanding of the theory – for example, the calculation of a lookahead point in pure pursuit – and spurred a number of real-world realizations. As another example, though the team was initially hesistant to use A* due to its computational intensity and reliance on discretization fineness, it worked well for planning paths for the racecar. It also became clear that "rough", initially calculated trajectories needed to be refined to account for the racecar's motions constraints. 
 
-### CI Conclusions - Shiloh Curtis
+### CI Conclusions - Shiloh Curtis, Eleanor Pence, Tony Zhang
 
 1. The team found in this lab that it was especially important to keep team members aware of each other's progress in order to coordinate work and avoid duplicated effort.  However, the to-do system used in this lab, consisting of a separate Slack channel and a Google Doc which people could update with their progress, was too complicated in that it did not have a single location to update or check on the progress of a task.  (Thus the Google Doc often did not reflect reality.)  In future labs, the team will continue to experiment with to-do tracking systems.
 
-2. Student 2
-3. Student 3
+2. A related difficulty that was encountered was long-term to-do tracking, especially with respect to documenting our labs. In the future, the team hopes to consider who will ensure necessary data and diagrams will be generated, and when those data and diagrams should be complete, at the same time that we decide who should be responsible for various aspects of implementation. 
+
+3. 
