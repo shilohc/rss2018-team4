@@ -98,12 +98,7 @@ Completing this lab required both the technical skills to design and implement a
 
 ### Technical Conclusions - Shannon Hwang
 
-This lab provided insight into the theory and implementation of a pure pursuit trajectory tracker and a modified A* path planner. 
-Though A* is constrained by the fineness of discretization space in theory, it was worked fine for the RACECAR's needs. 
-Theory behind pure pursuit – lookahead distance, nearest distance 
-Theory behind circular discretization of A* path planner 
-Circular exploration, heuristic calculation
-Trajectories need to be refined to account for motion constraints of the car
+This lab provided insight into the theory and practice behind a pure pursuit trajectory tracker and a modified A* path planner. Implementing the algorithms solidified an understanding of the theory – for example, the calculation of a lookahead point in pure pursuit – and spurred a number of real-world realizations. As another example, though the team was initially hesistant to use A* due to its computational intensity and reliance on discretization fineness, it worked well for planning paths for the racecar. It also became clear that "rough", initially calculated trajectories needed to be refined to account for the racecar's motions constraints. 
 
 ### CI Conclusions - [Insert Author]
 
