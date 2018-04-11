@@ -72,10 +72,25 @@ In addition, the robot's simulated position was quantitatively close to the true
 
 #### Racecar
 
-The real robot planned and followed paths to a specified goal point as qualitatively expected. Once a goal point was manually set, the robot planned a trajectory from the robot's current position to the goal pose using the path planner. Next, the robot followed the planned trajectory using pure pursuit.
+The real robot planned and followed paths to a specified goal point as qualitatively expected. First, the qualitative performance of the real robot on a predetermined trajectory was evaluated.
 
-#### Two Corners Real Robot
-<video src="two corners rl.mp4" width="320" height="200" controls preload></video>
+##### Robot Following Loop Trajectory Video
+<center><img src="assets/images/Lab6RealRobotLoop.gif" width="300" ></center>
+<center>*Figure 6: *</center>
+
+##### Robot Following Loop Trajectory Visualization
+<center><img src="assets/images/Lab6LoopRviz.gif" width="300" ></center>
+<center>*Figure 7: *</center>
+
+Once a goal point was manually set, the robot planned a trajectory from the robot's current position to the goal pose using the path planner. Next, the robot followed the planned trajectory using pure pursuit. In the figures below, the goal pose is set on the other side of an obstacle, so the robot plans and follows a trajectory around the obstacle.
+
+##### Robot Following Planned Trajectory Visualization
+<center><img src="assets/images/Lab6ColumnReal.gif" width="300" ></center>
+<center>*Figure 8: *</center>
+
+##### Robot Following Loop Trajectory Visualization
+<center><img src="assets/images/Lab6ColumnRviz.gif" width="300" ></center>
+<center>*Figure 9: *</center>
 
 ## Lessons Learned - Akhilan Boopathy
 
