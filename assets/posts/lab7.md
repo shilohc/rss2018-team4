@@ -55,16 +55,16 @@ Testing in simulation utilized the provided simulation launch file; the robot's 
 #### Racecar – Shannon Hwang
 Testing with the racecar only took place after both trajectory tracking and path planning code had been tested in simulation, so no parameter tuning was necessary during testing.  The pure pursuit controller was tested by following a prescribed loop around the basement. To test other the pure pursuit controller's ability to follow other trajectories as well as the path planner, goal poses were set in rviz and sent to the path planner. The path planner's calculated path to the goal was then displayed in rviz, and the robot used pure pursuit to follow the planned path. The robot's performance was evaluated qualitatively by comparing its trajectories to those seen in rviz.  
 
-### Results - [Insert Author]
+### Results
 
 #### Simulation - Akhilan Boopathy
 The planner and pure pursuit controller worked as quantitiatively and qualitatively expected in simulation. As shown in figure 4, the planner planned an obstacle free path on a map of the basement of Stata from the current robot pose to the goal pose. Since the path planner took into account the motion constraints of the car, the trajectory was by design sufficiently smooth for the robot to follow. Once the trajectory was found, the robot followed the trajectory qualitatively correctly as seen in figure 4.
 
 ##### Pure Pursuit Simulation
-<center><img src="assets/images/Lab6PureSimAll.gif" width="300" ></center>
+<center><img src="assets/images/Lab6SimAll.gif" width="300" ></center>
 <center>*Figure 4: A video of the robot planning and following a trajectory in simulation. The goal point is clicked in rviz. The green polygon represents the found trajectory, with an additional line directly between the start and the goal.*</center>
 
-In addition, the robot's simulated position was quantitatively close to the true trajectory, as seen in figure 5. Depending on the initial pose of the robot, the time converge to the trajectory varied. Once converged, the robot followed the trajectory at an average error of 0.02 m.
+In addition, the robot's simulated position was quantitatively close to the true trajectory, as seen in figure 5. Depending on the initial pose of the robot, the time to converge to the trajectory varied, with greater time needed for convergence for larger initial distances to the trajectory. Once converged, the robot followed the trajectory at an average distance to trajectory of 0.02 m.
 
 ##### Pure Pursuit Simulation Error
 <center><img src="assets/images/Lab6PurePursuitErrorSim.png" width="300" ></center>
@@ -74,9 +74,12 @@ In addition, the robot's simulated position was quantitatively close to the true
 
 The real robot planned and followed paths to a specified goal point as qualitatively expected. Once a goal point was manually set, the robot planned a trajectory from the robot's current position to the goal pose using the path planner. Next, the robot followed the planned trajectory using pure pursuit.
 
-## Lessons Learned - [Insert Author]
+#### Two Corners Real Robot
+<video src="two corners rl.mp4" width="320" height="200" controls preload></video>
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligula. Aliquam erat volutpat. Cras iaculis diam vitae nunc ultricies, et egestas lorem eleifend. Ut sit amet leo vitae libero maximus molestie non ac nunc. Ut ac mi ante. Vivamus convallis convallis neque, sit amet sollicitudin arcu bibendum sit amet. Phasellus finibus dolor vitae leo cursus, eu lobortis nisl blandit. Quisque tincidunt et nisi a hendrerit. Sed et nunc quis neque egestas sollicitudin. Curabitur auctor bibendum odio. Proin aliquam cursus metus, at fermentum tellus luctus vel. Morbi ut mi id augue lacinia faucibus.
+## Lessons Learned - Akhilan Boopathy
+
+Completing this lab required both the technical skills to design and implement a trajectory follower and path planner, as well as the communication skills necessary to effectively coordinate with team members.
 
 ### Technical Conclusions - Shannon Hwang
 
