@@ -12,20 +12,20 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligul
 
 ### Initial Setup - [Insert Author]
 
-### Technical Approach - [Insert Author]
+### Technical Approach
 
-#### Trajectory Follower
-The robot followed trajectories provided to it by pure pursuit of a lookahead point on the trajectory. The lookahead point was found by locating the point on the trajectory closest to it. Starting from this point, the next point on the trajectory that is a specified lookahead distance away from the robot is picked to be the lookahead point. This is done to ensure that the robot follows the trajectory rather than just reaching it. Next, to move the robot towards the lookahead point, pure pursuit control is applied to the robot. The speed of the robot is set to a constant, and the robot's steering angle is calculated with equation 1 using the lookahead point as an input. Before applying equation 1, the lookahead point is converted to be relative to the robot's current pose. 
+#### Trajectory Follower - Akhilan Boopathy
+The robot followed trajectories provided to it by pure pursuit of a lookahead point on the trajectory. The lookahead point was found by locating the point on the trajectory closest to it. Starting from this point, the next point on the trajectory that is a specified lookahead distance away from the robot was picked to be the lookahead point. This was done to ensure that the robot follows the trajectory rather than reaching it and stopping. Next, to move the robot towards the lookahead point, pure pursuit control was applied to the robot. The speed of the robot was set to a constant, and the robot's steering angle was calculated with equation 1 using the lookahead point as an input. Before applying equation 1, the lookahead point was converted to be relative to the robot's current pose. 
 
 ##### Pure Pursuit Steering Angle Equation
 <center><img src="assets/images/Lab6PurePursuitEqn.JPG" width="300" ></center>
 <center>*Equation 1: The equation for determining the steering angle via pure pursuit given a goal point (x,y) relative to the robot's current pose, where L is the distance between axles on the robot.*</center>
 
-As the lookahead point changes, the robot moves continuously towards the current lookahead point as illustrated in figure 1. By selecting lookahead points along a trajectory that are sufficiently ahead of the robot's current position, the robot can be made to follow the trajectory.
+As the lookahead point changed, the robot moved continuously towards the current lookahead point as illustrated in figure 1. When the lookahead point moved around a corner, the robot followed it. By selecting lookahead points along a trajectory that are sufficiently ahead of the robot's current position, the robot can be made to follow the trajectory.
 
 ##### Pure Pursuit Illustration
 <center><img src="assets/images/Lab6SimPurePursuit.gif" width="300" ></center>
-<center>*Figure 1: A video showing a simulated car following a lookahead point via pure pursuit.*</center>
+<center>*Figure 1: A video showing a simulated car following a lookahead point via pure pursuit. The blue dot represents the moving lookahead point.*</center>
 
 #### Path Planner
 
