@@ -52,7 +52,7 @@ In addition to a rough trajectory produced by the first level of A\* searching, 
 <center><img src="assets/images/Lab6RoughRefined.png" width="300" ></center>
 <center>*Figure 3: Length of rough trajectories versus refined trajectories. After trajectories are refined to account for car's motion constraints, they become longer.*</center>
 
-### ROS Implementation - [Insert Author]
+### ROS Implementation - Shiloh Curtis, Tony Zhang
 
 #### Trajectory Follower - Shiloh Curtis
 
