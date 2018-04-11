@@ -70,27 +70,27 @@ In addition, the robot's simulated position was quantitatively close to the true
 <center><img src="assets/images/Lab6PurePursuitErrorSim.png" width="300" ></center>
 <center>*Figure 5: The distance to the trajectory as a simulated robot followed a trajectory using pure pursuit. The simulated robot starts at varying distances to the trajectory. The steady state error approaches 0.02 m regardless of initial position.*</center>
 
-#### Racecar
+#### Racecar - Akhilan Boopathy
 
-The real robot planned and followed paths to a specified goal point as qualitatively expected. First, the qualitative performance of the real robot on a predetermined trajectory was evaluated.
+The real robot planned and followed paths to a specified goal point as qualitatively expected. First, the qualitative performance of the real robot on a predetermined trajectory was evaluated to verify the real life performance of trajectory following. A predefined trajectory around the basement of Stata was used as a target for trajectory following. As shown in the figures below, the robot accurately followed the loop trajectory.
 
-##### Robot Following Loop Trajectory Video
+##### Video of Robot Following Loop Trajectory
 <center><img src="assets/images/Lab6RealRobotLoop.gif" width="300" ></center>
-<center>*Figure 6: *</center>
+<center>*Figure 6: A video showing a robot traveling in a loop in the Stata basement. The trajectory it is following is predefined so as to avoid walls.*</center>
 
-##### Robot Following Loop Trajectory Visualization
+##### Visualization of Robot Following Loop Trajectory
 <center><img src="assets/images/Lab6LoopRviz.gif" width="300" ></center>
-<center>*Figure 7: *</center>
+<center>*Figure 7: A video showing a robot in rviz traveling along a predefined trajectory. The red arrows represent the pose estimates of the robot using a particle filter to localize the robot on the map. The blue dot represents the lookahead point on the trajectory that the robot follows. The green line represents the trajectory. Note that in the visualization, the trajectory is slightly offset from the true position.*</center>
 
-Once a goal point was manually set, the robot planned a trajectory from the robot's current position to the goal pose using the path planner. Next, the robot followed the planned trajectory using pure pursuit. In the figures below, the goal pose is set on the other side of an obstacle, so the robot plans and follows a trajectory around the obstacle.
+The performance of the path planner on the real robot was evaluated next. Once a goal point was manually set, the robot planned a trajectory from the robot's current position to the goal pose using the path planner. The robot then followed the planned trajectory using pure pursuit. In the figures below, the goal pose was set on the other side of an obstacle, so the robot planned and followed a trajectory around the obstacle.
 
-##### Robot Following Planned Trajectory Visualization
+##### Video of Robot Following Planned Trajectory
 <center><img src="assets/images/Lab6ColumnReal.gif" width="300" ></center>
-<center>*Figure 8: *</center>
+<center>*Figure 8: A video showing a robot moving around a column in the Stata basement. The trajectory it is following is planned so as to avoid the obstacle.*</center>
 
-##### Robot Following Loop Trajectory Visualization
+##### Visualization of Robot Following Planned Trajectory
 <center><img src="assets/images/Lab6ColumnRviz.gif" width="300" ></center>
-<center>*Figure 9: *</center>
+<center>*Figure 9: A video showing a robot in rviz planning and traveling along a planned trajectory. The start pose is the robot's current position and the goal pose is manually selected. The red arrows represent the pose estimates of the robot using a particle filter to localize the robot on the map. The blue dot represents the lookahead point on the trajectory that the robot follows. The green line represents the trajectory. Note that in the visualization, the trajectory is slightly offset from the true position.*</center>
 
 ## Lessons Learned - Akhilan Boopathy
 
