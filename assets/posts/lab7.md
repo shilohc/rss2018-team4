@@ -56,7 +56,9 @@ In addition to a rough trajectory produced by the first level of A\* searching, 
 
 #### Trajectory Follower - Shiloh Curtis
 
-TODO(shilohc)
+Trajectories are represented piecewise as a list of (x, y) points.  This representation was chosen due to its simplicity and ease of use.  
+
+The trajectory follower is implemented as a single ROS node, which subscribes to `/vesc/odom` for odometry data and `/trajectory/current` for the trajectory to follow and publishes driving commands.  Each time the odometry callback is called, the steering angle is recalculated and applied based on the new odometry data, and the latest lookahead point is visualized.  (For convenience, topic names, speed and lookahead distance are all parameterized.)  If the robot has finished following the given trajectory (there are no remaining points in the trajectory to use as navigation targets), the robot is stopped.  
 
 #### Path Planner - Tony Zhang
 The path planning node develops the optimal path for the racecar to follow when using pure pursuit. To develop a functioning path, the A\* algorithm require a map which is converted to an occupancy grid representing whether the obstacles exist or not. The node uses a service proxy to get the map metadata and represent it as a numpy array of dimensions width by height, in pixels, with each pixel’s grayscale values stored in it’s index of the array. Furthermore, it uses scipy morphology’s binary erosion function to convert all white cells, which are unoccupied in the map, to True. The function also adds a border by buffering out the walls along the map so that the robot will not consider state spaces directly near the wall as a viable option. The path planning node also subscribes to the map topic to get the map resolution, which is used in the subscription to the Odometry topic, published by particle filter, to determine the inferred pose in map coordinates. Once the two path planning algorithms complete, the paths -- represented as a list of tuples -- are published to a trajectory file, which can be used as the input to load trajectory.
