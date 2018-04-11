@@ -58,17 +58,17 @@ Testing with the racecar only took place after both trajectory tracking and path
 ### Results
 
 #### Simulation - Akhilan Boopathy
-The planner and pure pursuit controller worked as quantitiatively and qualitatively expected in simulation. As shown in figure 4, the planner planned an obstacle free path on a map of the basement of Stata from the current robot pose to the goal pose. Since the path planner took into account the motion constraints of the car, the trajectory was by design sufficiently smooth for the robot to follow. Once the trajectory was found, the robot followed the trajectory qualitatively correctly as seen in figure 4.
+The planner and pure pursuit controller planned and followed trajectories as verified quantitiatively and qualitatively in simulation. Given a goal pose, the planner planned an obstacle free path to the goal as illustrated in figure 4. Since the path planner took into account the motion constraints of the car, the trajectory was by design sufficiently smooth for the robot to follow. Once the trajectory was found, the robot followed the trajectory qualitatively correctly as seen in figure 4.
 
 ##### Pure Pursuit Simulation
 <center><img src="assets/images/Lab6SimAll.gif" width="300" ></center>
 <center>*Figure 4: A video of the robot planning and following a trajectory in simulation. The goal point is clicked in rviz. The green polygon represents the found trajectory, with an additional line directly between the start and the goal.*</center>
 
-In addition, the robot's simulated position was quantitatively close to the true trajectory, as seen in figure 5. Depending on the initial pose of the robot, the time to converge to the trajectory varied, with greater time needed for convergence for larger initial distances to the trajectory. Once converged, the robot followed the trajectory at an average distance to trajectory of 0.02 m.
+In addition, the robot's simulated position was quantitatively close to the true trajectory. Depending on the initial pose of the robot, the time to converge to the trajectory varied, with greater time needed for convergence for larger initial distances to the trajectory. Once converged, the robot followed the trajectory at an average distance to trajectory of 0.02 m as seen in figure 5.
 
 ##### Pure Pursuit Simulation Error
 <center><img src="assets/images/Lab6PurePursuitErrorSim.png" width="300" ></center>
-<center>*Figure 5: The distance to the trajectory as a simulated robot followed a trajectory using pure pursuit. The simulated robot starts at varying distances to the trajectory. The steady state error approaches 0.02 m regardless of initial position.*</center>
+<center>*Figure 5: The distance to a trajectory as a simulated robot followed the trajectory using pure pursuit. The simulated robot starts at varying distances to the trajectory. The steady state error approaches 0.02 m regardless of initial position. The trajectory used here is a loop around the basement of Stata.*</center>
 
 #### Racecar - Akhilan Boopathy
 
