@@ -61,7 +61,7 @@ TODO(shilohc)
 #### Path Planner - Tony Zhang
 The path planning node develops the optimal path for the racecar to follow when using pure pursuit. To develop a functioning path, the A\* algorithm require a map which is converted to an occupancy grid representing whether the obstacles exist or not. The node uses a service proxy to get the map metadata and represent it as a numpy array of dimensions width by height, in pixels, with each pixel’s grayscale values stored in it’s index of the array. Furthermore, it uses scipy morphology’s binary erosion function to convert all white cells, which are unoccupied in the map, to True. The function also adds a border by buffering out the walls along the map so that the robot will not consider state spaces directly near the wall as a viable option. The path planning node also subscribes to the map topic to get the map resolution, which is used in the subscription to the Odometry topic, published by particle filter, to determine the inferred pose in map coordinates. Once the two path planning algorithms complete, the paths -- represented as a list of tuples -- are published to a trajectory file, which can be used as the input to load trajectory.
 
-## Experimental Evaluation - [Insert Author]
+## Experimental Evaluation - TODO
 
 Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, suscipit lacus. Mauris vitae pretium libero, at dapibus massa. Curabitur eleifend bibendum pharetra. Nullam gravida viverra lacus eu blandit. Praesent nec odio ut magna scelerisque vulputate. Sed in libero porta, imperdiet magna maximus, efficitur urna.
 
