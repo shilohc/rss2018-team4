@@ -71,9 +71,9 @@ In addition, the robot's simulated position was quantitatively close to the true
 
 The real robot planned and followed paths to a specified goal point as qualitatively expected. Once a goal point was manually set, the robot planned a trajectory from the robot's current position to the goal pose using the path planner. Next, the robot followed the planned trajectory using pure pursuit.
 
-## Lessons Learned - [Insert Author]
+## Lessons Learned - Akhilan Boopathy
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligula. Aliquam erat volutpat. Cras iaculis diam vitae nunc ultricies, et egestas lorem eleifend. Ut sit amet leo vitae libero maximus molestie non ac nunc. Ut ac mi ante. Vivamus convallis convallis neque, sit amet sollicitudin arcu bibendum sit amet. Phasellus finibus dolor vitae leo cursus, eu lobortis nisl blandit. Quisque tincidunt et nisi a hendrerit. Sed et nunc quis neque egestas sollicitudin. Curabitur auctor bibendum odio. Proin aliquam cursus metus, at fermentum tellus luctus vel. Morbi ut mi id augue lacinia faucibus.
+Completing this lab required both the technical skills to design and implement a trajectory follower and path planner, as well as the communication skills necessary to effectively coordinate with team members.
 
 ### Technical Conclusions - [Insert Author]
 
