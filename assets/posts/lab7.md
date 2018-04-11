@@ -58,7 +58,7 @@ Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, s
 The planner and pure pursuit controller worked as quantitiatively and qualitatively expected in simulation. As shown in figure 4, the planner planned an obstacle free path on a map of the basement of Stata from the current robot pose to the goal pose. Since the path planner took into account the motion constraints of the car, the trajectory was by design sufficiently smooth for the robot to follow. Once the trajectory was found, the robot followed the trajectory qualitatively correctly as seen in figure 4.
 
 ##### Pure Pursuit Simulation
-<center><img src="assets/images/Lab6PureSimAll.gif" width="300" ></center>
+<center><img src="assets/images/Lab6SimAll.gif" width="300" ></center>
 <center>*Figure 4: A video of the robot planning and following a trajectory in simulation. The goal point is clicked in rviz. The green polygon represents the found trajectory, with an additional line directly between the start and the goal.*</center>
 
 In addition, the robot's simulated position was quantitatively close to the true trajectory, as seen in figure 5. Depending on the initial pose of the robot, the time converge to the trajectory varied. Once converged, the robot followed the trajectory at an average error of 0.02 m.
