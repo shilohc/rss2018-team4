@@ -21,7 +21,7 @@ Once the path planner and trajectory follower worked together in simulation, tes
 ### Technical Approach
 
 #### Trajectory Follower - Akhilan Boopathy
-The robot followed trajectories provided to it by pure pursuit of a lookahead point on the trajectory. The lookahead point was found by locating the point on the trajectory closest to it. Starting from this point, the next point on the trajectory that is a specified lookahead distance away from the robot was picked to be the lookahead point. This was done to ensure that the robot follows the trajectory rather than reaching it and stopping. Next, to move the robot towards the lookahead point, pure pursuit control was applied to the robot. The speed of the robot was set to a constant, and the robot's steering angle was calculated with equation 1 using the lookahead point as an input. Before applying equation 1, the lookahead point was converted to be relative to the robot's current pose. 
+The robot followed trajectories provided to it by pure pursuit of a lookahead point on the trajectory. The lookahead point was found by first locating the point on the trajectory closest to it. Starting from this point, the next point on the trajectory a specified lookahead distance away from the robot was picked to be the lookahead point. This was done to ensure that the robot followed the trajectory rather than reaching it and stopping. Next, to move the robot towards the lookahead point, pure pursuit control was applied to the robot. The speed of the robot was set to a constant, and the robot's steering angle was calculated with equation 1 using the lookahead point as an input. Before applying equation 1, the lookahead point was transformed to be relative to the robot's current pose. 
 
 ##### Pure Pursuit Steering Angle Equation
 <center><img src="assets/images/Lab6PurePursuitEqn.JPG" width="300" ></center>
@@ -78,21 +78,21 @@ Testing with the racecar only took place after both trajectory tracking and path
 ### Results
 
 #### Simulation - Akhilan Boopathy
-The planner and pure pursuit controller planned and followed trajectories as verified quantitiatively and qualitatively in simulation. Given a goal pose, the planner planned an obstacle free path to the goal as illustrated in figure 4. Since the path planner took into account the motion constraints of the car, the trajectory was by design sufficiently smooth for the robot to follow. Once the trajectory was found, the robot followed the trajectory qualitatively correctly as seen in figure 4.
+The planner and pure pursuit controller planned and followed trajectories to a goal as verified quantitiatively and qualitatively in simulation. Given a goal pose, the planner planned an obstacle free path to the goal as illustrated in figure 4. Since the path planner took into account the motion constraints of the car, the trajectory was by design sufficiently smooth for the robot to follow. Once the trajectory was found, the robot followed the trajectory qualitatively correctly as seen in figure 4.
 
 ##### Pure Pursuit Simulation
 <center><img src="assets/images/Lab6SimAll.gif" width="300" ></center>
 <center>*Figure 4: A video of the robot planning and following a trajectory in simulation. The goal point is clicked in rviz. The green polygon represents the found trajectory, with an additional line directly between the start and the goal.*</center>
 
-In addition, the robot's simulated position was quantitatively close to the true trajectory. Depending on the initial pose of the robot, the time to converge to the trajectory varied, with greater time needed for convergence for larger initial distances to the trajectory. Once converged, the robot followed the trajectory at an average distance to trajectory of 0.02 m as seen in figure 5.
+In addition, the robot's simulated position was quantitatively close to the true trajectory. The error of the pure pursuit controller was evaluated on a loop trajectory in the basement of Stata. of the Depending on the initial pose of the robot, the time to converge to the trajectory varied, with greater time needed for convergence for larger initial distances to the trajectory as seen in figure 5. Once converged, the robot followed the trajectory at an average distance to trajectory of 0.02 m, about one order of magitude less than the size of the robot.
 
 ##### Pure Pursuit Simulation Error
 <center><img src="assets/images/Lab6PurePursuitErrorSim.png" width="400" ></center>
-<center>*Figure 5: The distance to a trajectory as a simulated robot followed the trajectory using pure pursuit. The simulated robot starts at varying distances to the trajectory. The steady state error approaches 0.02 m regardless of initial position. The trajectory used here is a loop around the basement of Stata.*</center>
+<center>*Figure 5: The distance to a trajectory as a simulated robot followed the trajectory using pure pursuit. The simulated robot starts at varying distances to the trajectory. The average steady state error approaches 0.02 m regardless of initial position. The trajectory used here is a loop around the basement of Stata.*</center>
 
 #### Racecar - Akhilan Boopathy
 
-The real robot planned and followed paths to a specified goal point as qualitatively expected. First, the qualitative performance of the real robot on a predetermined trajectory was evaluated to verify the real life performance of trajectory following. A predefined trajectory around the basement of Stata was used as a target for trajectory following. As shown in the figures below, the robot accurately followed the loop trajectory.
+The real robot planned and followed paths to a specified goal point as qualitatively expected. First, the performance of the real robot on a predetermined trajectory was evaluated to verify the real life performance of trajectory following. A predefined trajectory around the basement of Stata was used as a target for trajectory following. As shown in the figures below, the robot accurately followed the loop trajectory.
 
 ##### Video of Robot Following Loop Trajectory
 <center><img src="assets/images/Lab6RealRobotLoop.gif" width="300" ></center>
@@ -102,7 +102,7 @@ The real robot planned and followed paths to a specified goal point as qualitati
 <center><img src="assets/images/Lab6LoopRviz.gif" width="300" ></center>
 <center>*Figure 7: A video showing a robot in rviz traveling along a predefined trajectory. The red arrows represent the pose estimates of the robot using a particle filter to localize the robot on the map. The blue dot represents the lookahead point on the trajectory that the robot follows. The green line represents the trajectory. Note that in the visualization, the trajectory is slightly offset from the true position.*</center>
 
-The performance of the path planner on the real robot was evaluated next. Once a goal point was manually set, the robot planned a trajectory from the robot's current position to the goal pose using the path planner. The robot then followed the planned trajectory using pure pursuit. In the figures below, the goal pose was set on the other side of an obstacle, so the robot planned and followed a trajectory around the obstacle.
+The performance of the path planner on the real robot was evaluated next. Once a goal point was manually set, the robot planned a trajectory from the robot's current position to the goal pose using the path planner. The robot then followed the planned trajectory using pure pursuit. In the figures below, the goal pose was set on the other side of an obstacle, so the robot planned and followed a trajectory around the obstacle to reach the goal pose.
 
 ##### Video of Robot Following Planned Trajectory
 <center><img src="assets/images/Lab6ColumnReal.gif" width="300" ></center>
@@ -120,9 +120,9 @@ Completing this lab required both the technical skills to design and implement a
 
 This lab provided insight into the theory and practice behind a pure pursuit trajectory tracker and a modified A* path planner. Implementing the algorithms solidified an understanding of the theory – for example, the calculation of a lookahead point in pure pursuit – and spurred a number of real-world realizations. As another example, though the team was initially hesistant to use A* due to its computational intensity and reliance on discretization fineness, it worked well for planning paths for the racecar. It also became clear that "rough", initially calculated trajectories needed to be refined to account for the racecar's motions constraints. 
 
-### CI Conclusions - Shiloh Curtis, Tony Zhang
+### CI Conclusions - Shiloh Curtis
 
 1. The team found in this lab that it was especially important to keep team members aware of each other's progress in order to coordinate work and avoid duplicated effort.  However, the to-do system used in this lab, consisting of a separate Slack channel and a Google Doc which people could update with their progress, was too complicated in that it did not have a single location to update or check on the progress of a task.  (Thus the Google Doc often did not reflect reality.)  In future labs, the team will continue to experiment with to-do tracking systems.
 
-2. Setting up skeleton code can reduce the time for integration when the team is collaborating.
+2. Student 2
 3. Student 3
