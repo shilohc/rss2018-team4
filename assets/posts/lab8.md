@@ -35,10 +35,13 @@ Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, s
 #### Image Labeling -
 
 #### Neural Network Verification - Akhilan Boopathy
+The neural network was verified using a validation set before evaluating the neural network's performance on the robot. The neural network's performance was evaluated by computing the accuracy and loss values on a validation set. Accuracy is the fraction of the time that the action with the lowest probability of collision corresponds to a label without a collision. Loss is an L2 loss computed by summing the squared differences between labels and probabilities of collision for each action. As seen in figure 1, the training accuracy roughly always increased with the number of iterations. The validation accuracy initially increased until about 1000 epochs. After about 1000 epochs, the validation accuracy decreased.
 
 ##### Neural Network Accuracy
 <center><img src="assets/images/Accuracy.png" width="300" ></center>
 <center>*Figure 1: The training and validation accuracy of a neural network while training. The blue curve represents the training accuracy and the orange curve represents the validation accuracy.*</center>
+
+As seen in figure 2, the training loss roughly always decreased with the number of iterations. The validation loss decreased until about 1000 epochs, after which the validation loss increased. The neural network was overfitting to the training set after about 1000 epochs, after which the training loss decreased dramatically while the validation loss did not decrease.
 
 ##### Neural Network Loss
 <center><img src="assets/images/Loss.png" width="300" ></center>
