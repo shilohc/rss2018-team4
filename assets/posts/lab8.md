@@ -7,9 +7,8 @@ Throughout the course, planning and control algorithms were implemented to auton
 
 ### Hypothesis/Goal - A deep neural network can be trained such that it is capable of autonomously driving a robot through an unknown environment using only camera images of the environment. 
 
-## Proposed Approach - [Insert Author]
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligula. Aliquam erat volutpat. Cras iaculis diam vitae nunc ultricies, et egestas lorem eleifend. Ut sit amet leo vitae libero maximus molestie non ac nunc. Ut ac mi ante. Vivamus convallis convallis neque, sit amet sollicitudin arcu bibendum sit amet. Phasellus finibus dolor vitae leo cursus, eu lobortis nisl blandit. Quisque tincidunt et nisi a hendrerit. Sed et nunc quis neque egestas sollicitudin. Curabitur auctor bibendum odio. Proin aliquam cursus metus, at fermentum tellus luctus vel. Morbi ut mi id augue lacinia faucibus.
+## Proposed Approach - Akhilan Boopathy
+The overall approach to determine naviation from images taken from the robot's camera was to preprocess images, run the data through a neural network and determine how to control the car from the neural network output. In order to do this, the neural network had to be trained using image and lidar data collected from the robot. Lidar scans were used to label whether particular steering angles at each robot pose led to collisions or not. The labeled data was then used to train the network. Finally, the output of the neural network was used to select the best steering angle on the robot.
 
 ### Initial Setup - [Insert Author]
 #### Code Pipeline - Eleanor Pence
