@@ -37,7 +37,9 @@ The neural network architecture we used was relatively simple. The layers of the
 
 The neural network was trained using a subset of the labeled images. The data was split into a training and validation set, with 95% of the data randomly selected as the training set. For each epoch of training, the training set was split into batches of size 1000, and the network was trained with each batch. Training was performed using stochastic gradient descent with a learning rate of 0.01 and momentum of 0.9. After each epoch of training, which constitutes one full pass through the training set, the loss and accuracy on the validation set were evaluated. Training was performed for sets of 1000 epochs each, until validation loss started increasing, indicating overfitting.
 
-### ROS Implementation - [Insert Author]
+### ROS Implementation - Shannon Hwang
+
+Image transforming, data labeling, network training, and robot steering were implemented as separate ROS nodes and Python scripts. The image transformation node took camera data from previously recorded rosbag files, and published transformed images. Data labeling involved calculating probabilities of collision for given steering angles given transformed images and laser scan data from the rosbag files and storing probabilities, alongside images, in pickle files. Network training utilized TensorFlow to train a specified network architecture from the pickle files. Finally, a robot steering node fed real-time camera input on the robot to a trained network model, and output steering commands to the robot.
 
 #### Image Labeling - Shiloh Curtis
 
@@ -45,9 +47,9 @@ The training dataset consisted initially of a collection of bagfiles containing 
 
 #### Driving Using NN Output - [Insert Author]
 
-## Experimental Evaluation - [Insert Author]
+## Experimental Evaluation - Shannon Hwang
 
-Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, suscipit lacus. Mauris vitae pretium libero, at dapibus massa. Curabitur eleifend bibendum pharetra. Nullam gravida viverra lacus eu blandit. Praesent nec odio ut magna scelerisque vulputate. Sed in libero porta, imperdiet magna maximus, efficitur urna.
+Correctness of images via visual inspection of transformed images and predicted probabilities of collision; accuracy of the nerual network was verified by computing accuracy and loss on a validation data set.
 
 ### Testing Procedure - [Insert Author]
 
