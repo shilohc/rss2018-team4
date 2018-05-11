@@ -1,9 +1,12 @@
 Final Project
 =====
 
-## Overview and Motivations - [Insert Author]
+## Overview and Motivations - Shannon Hwang
+Throughout the course, planning and control algorithms were implemented to autonomously drive a robotic RC car; however, they were largely implemented under the assumption that a LIDAR capable of accurately determining distances to obstacles was available. However, lidars are expensive and relatively inaccessible; it would be optimal to devise some sort of navigation policy capable of directing the robot given only images from relatively inexpensive cameras. Thus, our hypothesis for this lab was as follows:
 
-### Hypothesis/Goal -
+
+
+### Hypothesis/Goal - A deep neural network can be trained such that it is capable of autonomously driving a robot through an unknown environment using only camera images. 
 
 ## Proposed Approach - [Insert Author]
 
@@ -32,7 +35,8 @@ Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, s
 
 ### Testing Procedure - [Insert Author]
 
-#### Image Labeling -
+#### Image Labeling - Shannon Hwang
+Images were transformed to be 45x80 grayscale images. This was verified by subscribing to the publisher feeding grayscale, resized images to the neural network and visualizing said images. 
 
 #### Neural Network Verification - Akhilan Boopathy
 The neural network was verified using a validation set before evaluating the neural network's performance on the robot. The neural network's performance was evaluated by computing the accuracy and loss values on a validation set. Accuracy is the fraction of the time that the action with the lowest probability of collision corresponds to a label without a collision. Loss is an L2 loss computed by summing the squared differences between labels and probabilities of collision for each action. As seen in figure 1, the training accuracy roughly always increased with the number of iterations. The validation accuracy initially increased until about 1000 epochs. After about 1000 epochs, the validation accuracy decreased.
@@ -58,8 +62,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligul
 ### Technical Conclusions - Akhilan Boopathy
 The final project allowed the team to understand the theoretical and practical considerations behind end to end training and usage of deep neural networks for controlling a robot. The team found that accurately labeling the image data was necessary so that the neural network could find structure in the training data and generalize to the test data. Finding ways to validate the data labels before training was a useful way to ensure the quality of the data passed to the neural network. The team also found that the neural network was prone to overfitting with too little or poorly labeled data.
 
-### CI Conclusions - Akhilan Boopathy, 
+### CI Conclusions - Akhilan Boopathy, Shannon Hwang
 
 1. The team found that planning for delays and uncertainty in when tasks would be accomplished allowed team members to be more productive. While some team members were waiting for certain tasks to be completed, they could plan ahead and work on future tasks. The team found that even when it was not possible to fully test certain code without having completed an earlier piece of the pipeline, it was still possible to verify it in limited ways.
-2. Student 2
+2. The team found that careful specification of architecture and methodology was critical to parallelizing code writing efficiently. 
 3. Student 3
