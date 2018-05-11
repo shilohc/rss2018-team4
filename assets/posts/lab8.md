@@ -5,18 +5,18 @@ Final Project
 
 Throughout the course, planning and control algorithms were implemented to autonomously drive a robotic RC car; however, they were largely implemented under the assumption that a LIDAR capable of accurately determining distances to obstacles was available. However, lidars are expensive and relatively inaccessible; it would be optimal to devise some sort of navigation policy capable of directing the robot given only images from relatively inexpensive cameras. Thus, our hypothesis for this lab was as follows:
 
-### Hypothesis/Goal - A deep neural network can be trained such that it is capable of autonomously driving a robot through an unknown environment using only camera images. 
+### Hypothesis/Goal - A deep neural network can be trained such that it is capable of autonomously driving a robot through an unknown environment using only camera images of the environment. 
 
 ## Proposed Approach - [Insert Author]
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligula. Aliquam erat volutpat. Cras iaculis diam vitae nunc ultricies, et egestas lorem eleifend. Ut sit amet leo vitae libero maximus molestie non ac nunc. Ut ac mi ante. Vivamus convallis convallis neque, sit amet sollicitudin arcu bibendum sit amet. Phasellus finibus dolor vitae leo cursus, eu lobortis nisl blandit. Quisque tincidunt et nisi a hendrerit. Sed et nunc quis neque egestas sollicitudin. Curabitur auctor bibendum odio. Proin aliquam cursus metus, at fermentum tellus luctus vel. Morbi ut mi id augue lacinia faucibus.
 
 ### Initial Setup - [Insert Author]
-#### Division of Work/Pipeline - Eleanor Pence
+#### Code Pipeline - Eleanor Pence
 
 The first step in the process of training the DNN to drive with camera input only was to design the labeling algorithm. This work was done during an all-group brainstorming session in lab. Once a labeling method had been decided on, Shiloh and Shannon began the implementation of the labeling algorithm, while Eleanor and Akhilan worked on prototyping the DNN and writing scripts for training and inference. 
 
-After that, the team entered a phase in which the labeling scheme and training were repeatedly refined. In each case, Shiloh would typically make modifications to the labeling code, and a team member would re-label the data. This resulted in a pickled version of several numpy arrays, which included the newly labeled data, being added to the git repository, which Akhilan would use to re-train the DNN. Real-world testing and further discussion with the whole team in the Stata center basement would typically yield further potential ideas for improvements, which would then be implemented in much the same way before, until desired performance was achieved.  
+After that, the team entered a phase in which the labeling scheme and training were repeatedly refined. In each case, the labeling code was modified, and a team member would re-label the data. This resulted in a pickled version of several numpy arrays, which included the newly labeled data, being added to the git repository, which was to re-train the DNN. Real-world testing and further discussion with the team would typically yield further potential ideas for improvements, which would then be implemented in much the same way before, until desired performance was achieved.  
 
 ### Technical Approach - [Insert Author]
 
@@ -53,7 +53,10 @@ Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, s
 
 #### Image Labeling - Shannon Hwang
 
-Images were transformed to be 45x80 grayscale images; this was verified by subscribing to the publisher feeding grayscale, resized images to the neural network and visualizing said images. 
+<center><img src="assets/images/image_transform.gif" width="300" ></center>
+<center>*Figure 1: The transformed images used as neural network input (left) versus original camera feed images (right).*</center>
+
+Images were transformed to be 45x80 grayscale images; this was verified by subscribing to the publisher feeding grayscale, resized images to the neural network and comparing a video of said images to the full camera feed. 
 
 #### Neural Network Verification - Akhilan Boopathy
 The neural network was verified using a validation set before evaluating the neural network's performance on the robot. The neural network's performance was evaluated by computing the accuracy and loss values on a validation set. Accuracy is the fraction of the time that the action with the lowest probability of collision corresponds to a label without a collision. Loss is an L2 loss computed by summing the squared differences between labels and probabilities of collision for each action. As seen in figure 1, the training accuracy roughly always increased with the number of iterations. The validation accuracy initially increased until about 1000 epochs. After about 1000 epochs, the validation accuracy decreased.
@@ -61,14 +64,14 @@ The neural network was verified using a validation set before evaluating the neu
 ##### Neural Network Accuracy
 
 <center><img src="assets/images/Accuracy.png" width="300" ></center>
-<center>*Figure 1: The training and validation accuracy of a neural network while training. The blue curve represents the training accuracy and the orange curve represents the validation accuracy.*</center>
+<center>*Figure 2: The training and validation accuracy of a neural network while training. The blue curve represents the training accuracy and the orange curve represents the validation accuracy.*</center>
 
 As seen in figure 2, the training loss roughly always decreased with the number of iterations. The validation loss decreased until about 1000 epochs, after which the validation loss increased. The neural network was overfitting to the training set after about 1000 epochs, after which the training loss decreased dramatically while the validation loss did not decrease.
 
 ##### Neural Network Loss
 
 <center><img src="assets/images/Loss.png" width="300" ></center>
-<center>*Figure 2: The training and validation loss of a neural network while training. The blue curve represents the training loss and the orange curve represents the validation loss.*</center>
+<center>*Figure 3: The training and validation loss of a neural network while training. The blue curve represents the training loss and the orange curve represents the validation loss.*</center>
 
 ### Results - [Insert Author]
 
