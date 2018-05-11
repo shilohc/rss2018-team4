@@ -12,7 +12,11 @@ Throughout the course, planning and control algorithms were implemented to auton
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligula. Aliquam erat volutpat. Cras iaculis diam vitae nunc ultricies, et egestas lorem eleifend. Ut sit amet leo vitae libero maximus molestie non ac nunc. Ut ac mi ante. Vivamus convallis convallis neque, sit amet sollicitudin arcu bibendum sit amet. Phasellus finibus dolor vitae leo cursus, eu lobortis nisl blandit. Quisque tincidunt et nisi a hendrerit. Sed et nunc quis neque egestas sollicitudin. Curabitur auctor bibendum odio. Proin aliquam cursus metus, at fermentum tellus luctus vel. Morbi ut mi id augue lacinia faucibus.
 
 ### Initial Setup - [Insert Author]
-#### Division of Work/Pipeline -
+#### Division of Work/Pipeline - Eleanor Pence
+
+The first step in the process of training the DNN to drive with camera input only was to design the labeling algorithm. This work was done during an all-group brainstorming session in lab. Once a labeling method had been decided on, Shiloh and Shannon began the implementation of the labeling algorithm, while Eleanor and Akhilan worked on prototyping the DNN and writing scripts for training and inference. 
+
+After that, the team entered a phase in which the labeling scheme and training were repeatedly refined. In each case, Shiloh would typically make modifications to the labeling code, and a team member would re-label the data. This resulted in a pickled version of several numpy arrays, which included the newly labeled data, being added to the git repository, which Akhilan would use to re-train the DNN. Real-world testing and further discussion with the whole team in the Stata center basement would typically yield further potential ideas for improvements, which would then be implemented in much the same way before, until desired performance was achieved.  
 
 ### Technical Approach - [Insert Author]
 
@@ -22,7 +26,12 @@ Images were labeled with actions (driving commands) and the minimum distance bet
 
 The action definition consists of a steering angle; the speed and distance along the trajectory are pre-defined, so this completely defines a simple trajectory.  Images were then labeled by sampling points from the trajectory and finding the minimum distance to any obstacle, then taking the overall minimum distance along the trajectory.  Robot size was accounted for in the postprocessing step, which models the robot as a circle and checks if the obstacle distance threshold is larger than the robot "radius".  
 
-#### Neural Network Architecture -
+#### Image Preprocessing - Eleanor Pence
+Before they could be used in either training or real-time inference, images underwent a preprocessing step. Images were resized to 45x80 and transformed into grayscale, and then the image data was normalized.  Resizing of the images improved the speed and memory usage of the network at inference time, but during training, it also allowed the entire dataset of approximately 20,000 images to be loaded into memory at once, which made training much simpler.  
+
+#### Neural Network Architecture - Eleanor Pence
+
+The neural network architecture we used was relatively simple. The layers of the network were fully connected; the first three layers had 300 units each and used rectified linear units (ReLU) as an activation function, and the last layer, a "logits" layer that gave the actual classifications, had 20 units (equivalent to the number of actions the robot could take), and used a sigmoid activation function. 
 
 #### Neural Network Training - Akhilan Boopathy
 
@@ -44,7 +53,7 @@ Nulla tempus tempor sollicitudin. Sed id tortor vestibulum, tincidunt lorem a, s
 
 #### Image Labeling - Shannon Hwang
 
-Images were transformed to be 45x80 grayscale images. This was verified by subscribing to the publisher feeding grayscale, resized images to the neural network and visualizing said images. 
+Images were transformed to be 45x80 grayscale images; this was verified by subscribing to the publisher feeding grayscale, resized images to the neural network and visualizing said images. 
 
 #### Neural Network Verification - Akhilan Boopathy
 The neural network was verified using a validation set before evaluating the neural network's performance on the robot. The neural network's performance was evaluated by computing the accuracy and loss values on a validation set. Accuracy is the fraction of the time that the action with the lowest probability of collision corresponds to a label without a collision. Loss is an L2 loss computed by summing the squared differences between labels and probabilities of collision for each action. As seen in figure 1, the training accuracy roughly always increased with the number of iterations. The validation accuracy initially increased until about 1000 epochs. After about 1000 epochs, the validation accuracy decreased.
