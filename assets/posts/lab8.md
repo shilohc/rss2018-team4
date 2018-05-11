@@ -20,6 +20,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligul
 
 #### Neural Network Training - Akhilan Boopathy
 
+The neural network was trained using a subset of the labeled images. The data was split into a training and validation set, with 95% of the data randomly selected as the training set. For each epoch of training, the training set was split into batches of size 1000, and the network was trained with each batch. Training was performed using stochastic gradient descent with a learning rate of 0.01 and momentum of 0.9. After each epoch of training, which constitutes one full pass through the training set, the loss and accuracy on the validation set were evaluated. Training was performed for sets of 1000 epochs each, until validation loss started increasing, indicating overfitting.
+
 ### ROS Implementation - [Insert Author]
 
 #### Image Labeling -
