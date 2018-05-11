@@ -7,9 +7,8 @@ Throughout the course, planning and control algorithms were implemented to auton
 
 ### Hypothesis/Goal - A deep neural network can be trained such that it is capable of autonomously driving a robot through an unknown environment using only camera images of the environment. 
 
-## Proposed Approach - [Insert Author]
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed consequat ligula. Aliquam erat volutpat. Cras iaculis diam vitae nunc ultricies, et egestas lorem eleifend. Ut sit amet leo vitae libero maximus molestie non ac nunc. Ut ac mi ante. Vivamus convallis convallis neque, sit amet sollicitudin arcu bibendum sit amet. Phasellus finibus dolor vitae leo cursus, eu lobortis nisl blandit. Quisque tincidunt et nisi a hendrerit. Sed et nunc quis neque egestas sollicitudin. Curabitur auctor bibendum odio. Proin aliquam cursus metus, at fermentum tellus luctus vel. Morbi ut mi id augue lacinia faucibus.
+## Proposed Approach - Akhilan Boopathy
+The overall approach to determine naviation from images taken from the robot's camera was to preprocess images, run the data through a neural network and determine how to control the car from the neural network output. The first step was to decide the specifics of the pipeline used to train and test the neural network. This involved deciding how to represent actions in the neural network, how to label actions, and how to train and validate the neural network.
 
 ### Initial Setup - [Insert Author]
 #### Code Pipeline - Eleanor Pence
@@ -18,7 +17,9 @@ The first step in the process of training the DNN to drive with camera input onl
 
 After that, the team entered a phase in which the labeling scheme and training were repeatedly refined. In each case, the labeling code was modified, and a team member would re-label the data. This resulted in a pickled version of several numpy arrays, which included the newly labeled data, being added to the git repository, which was to re-train the DNN. Real-world testing and further discussion with the team would typically yield further potential ideas for improvements, which would then be implemented in much the same way before, until desired performance was achieved.  
 
-### Technical Approach - [Insert Author]
+### Technical Approach - Akhilan Boopathy
+In order to use the pipeline on the car, the neural network had to be trained using image and lidar data collected from the robot. Lidar scans were used to label whether particular steering angles at each robot pose led to collisions or not. The labeled data was then used to train the network. Finally, the output of the neural network was used to select the best steering angle on the robot.
+
 
 #### Image Labeling - Shiloh Curtis
 
