@@ -5,7 +5,7 @@ Final Project
 
 Throughout the course, planning and control algorithms were implemented to autonomously drive a robotic RC car; however, they were largely implemented under the assumption that a LIDAR capable of accurately determining distances to obstacles was available. However, lidars are expensive and relatively inaccessible; it would be optimal to devise some sort of navigation policy capable of directing the robot given only images from relatively inexpensive cameras. Thus, our hypothesis for this lab was as follows:
 
-### Hypothesis/Goal - A deep neural network can be trained such that it is capable of autonomously driving a robot through an unknown environment using only camera images of the environment. 
+### Hypothesis/Goal - A deep neural network can be trained such that it is capable of autonomously driving a robot using only camera images of the environment. 
 
 ## Proposed Approach - Akhilan Boopathy
 The overall approach to determine naviation from images taken from the robot's camera was to preprocess images, run the data through a neural network and determine how to control the car from the neural network output. The first step was to decide the specifics of the pipeline used to train and test the neural network. This involved deciding how to represent actions in the neural network, how to label actions, and how to train and validate the neural network.
@@ -32,7 +32,9 @@ Before they could be used in either training or real-time inference, images unde
 
 #### Neural Network Architecture - Eleanor Pence
 
-The neural network architecture we used was relatively simple. The layers of the network were fully connected; the first three layers had 300 units each and used rectified linear units (ReLU) as an activation function, and the last layer, a "logits" layer that gave the actual classifications, had 20 units (equivalent to the number of actions the robot could take), and used a sigmoid activation function. 
+<center><img src="assets/images/network.png" width="300" ></center>
+
+The neural network architecture we used was relatively simple. The layers of the network were fully connected; the first three layers had 200 units each and used rectified linear units (ReLU) as an activation function, and the last layer, a "logits" layer that gave the actual classifications, had 25 units (equivalent to the number of actions the robot could take), and used a sigmoid activation function. 
 
 #### Neural Network Training - Akhilan Boopathy
 
@@ -91,5 +93,5 @@ The final project allowed the team to understand the theoretical and practical c
 ### CI Conclusions - Akhilan Boopathy, Shannon Hwang, Shiloh Curtis
 
 1. The team found that planning for delays and uncertainty in when tasks would be accomplished allowed team members to be more productive. While some team members were waiting for certain tasks to be completed, they could plan ahead and work on future tasks. The team found that even when it was not possible to fully test certain code without having completed an earlier piece of the pipeline, it was still possible to verify it in limited ways.
-2. The team found that careful specification of architecture and methodology was critical to parallelizing code writing efficiently. 
+2. The team found that careful specification of architecture and methodology was critical to parallelizing code-writing efficiently. 
 3. The team learned that when progress is behind schedule, it's particularly important to provide frequent and detailed status updates, both so the team has an opportunity to replan and so other members of the team can provide any ideas they might have about the issue.  
