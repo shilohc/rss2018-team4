@@ -50,7 +50,7 @@ Hyperparameters were selected to maximize validation accuracy while minimizing t
 ##### Training Time vs. Number of Layers
 
 <center><img src="assets/images/LayersTime.png" width="300" ></center>
-<center>*Figure 3: The training time for training a neural network to predict steering angle collision labels while varying the number of layers. The number of units per layer remained fixed at 200 units. Each neural network was trained for 50 epochs.*</center>
+<center>*Figure 3: The training time for training a neural network to predict steering angle collision labels while varying the number of layers. The number of units per layer remained fixed at 200 units. Each neural network was trained for 50 epochs. The training time increases roughly linearly with the number of layers. Variation is due to random fluctuations in the training speed.*</center>
 
 ##### Accuracy vs. Number of Units
 
@@ -60,7 +60,7 @@ Hyperparameters were selected to maximize validation accuracy while minimizing t
 ##### Training Time vs. Number of Units
 
 <center><img src="assets/images/UnitsTime.png" width="300" ></center>
-<center>*Figure 5: The training time for training a neural network to predict steering angle collision labels while varying the number of layers. The number of layers remained fixed at 3. Each neural network was trained for 50 epochs.*</center>
+<center>*Figure 5: The training time for training a neural network to predict steering angle collision labels while varying the number of layers. The number of layers remained fixed at 3. Each neural network was trained for 50 epochs. The training time increases roughly linearly with the number of units. Variation is due to random fluctuations in the training speed.*</center>
 
 
 #### Neural Network Training - Akhilan Boopathy
