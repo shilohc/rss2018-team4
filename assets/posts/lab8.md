@@ -137,7 +137,7 @@ As seen in figure 10, the training loss roughly always decreased with the number
 ##### Wall Distance vs. Time
 
 <center><img src="assets/images/SteeringAngle.png" width="300" ></center>
-<center>*Figure 13: The robot's distance to the wall over time over three trials of the robot in a zig-zag hallway. The distance to the wall was found by using laser scans to localize the robot in a known map. The starting position of the robot in the three runs differs within a 1 meter radius. The distance to the wall averages approximately 0.8 m in all three trials, with an average minimum distance to wall of approximately 0.4 m.*</center>
+<center>*Figure 13: The robot's distance to the wall over time over three trials of the robot in a zig-zag hallway. The distance to the wall was found by using laser scans to localize the robot in a known map. Distances are measured from the center of the robot's rear axle. The starting position of the robot in the three runs differs within a 1 meter radius. The distance to the wall averages approximately 0.8 m in all three trials, with an average minimum distance to wall of approximately 0.4 m.*</center>
 
 ## Lessons Learned - [Insert Author]
 
