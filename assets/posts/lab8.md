@@ -78,7 +78,7 @@ The training dataset consisted initially of a collection of bagfiles containing 
 ##### Fraction of Collisions by Angle
 
 <center><img src="assets/images/LabeledCollisionAverages.png" width="300" ></center>
-<center>*Figure 6: The fraction of labeled images resulting in a collision for each action in the labeled dataset. Probabilities of collision are lower for angles near zero because in much of the dataset, the robot is parallel to a straight hallway. Probabilities of collision for positive angles are higher than for negative angles, indicating a bias in the dataset towards left turns.*</center>
+<center>*Figure 6: The fraction of labeled images resulting in a collision for each action in the labeled dataset. Probabilities of collision are lower for angles near zero because in much of the dataset, the robot is parallel to a straight hallway. Probabilities of collision for positive angles are higher than for negative angles, indicating a bias in the dataset towards right turns.*</center>
 
 
 #### Driving Using NN Output - [Insert Author]
@@ -86,7 +86,7 @@ The training dataset consisted initially of a collection of bagfiles containing 
 ##### Probability of Collision vs. Steering Angle
 
 <center><img src="assets/images/TestSetProbabilities.png" width="300" ></center>
-<center>*Figure 7: Probabilities of collision for a neural network trained to output probabilities of collision for each steering angle action a robot could take. Collision probabilities are taken by running random sample images from a test set through the trained neural network. Near 0 degrees, there are few points with a very high probability of collision because in the dataset, the robot is often parallel to a straight hallway. For high angles, there are few points with a low probability of collision because of a bias in the dataset towards left turns.*</center>
+<center>*Figure 7: Probabilities of collision for a neural network trained to output probabilities of collision for each steering angle action a robot could take. Collision probabilities are taken by running random sample images from a test set through the trained neural network. Near 0 degrees, there are few points with a very high probability of collision because in the dataset, the robot is often parallel to a straight hallway. For high angles, there are few points with a low probability of collision because of a bias in the dataset towards right turns.*</center>
 
 ##### Multiplicative Bias
 
