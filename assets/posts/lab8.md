@@ -112,14 +112,14 @@ The neural network was verified using a validation set before evaluating the neu
 ##### Neural Network Accuracy
 
 <center><img src="assets/images/Accuracy_0.1.png" width="300" ></center>
-<center>*Figure 10: The training and validation accuracy of a neural network while training. The validation accuracy stops increasing after approximately 150 epochs, indicating overfitting.*</center>
+<center>*Figure 10: The training and validation accuracy of a neural network while training. The validation accuracy stops increasing after approximately 150 epochs, indicating overfitting. Accuracy values fluctuate due to randomness in selecting batches of the training set for training.*</center>
 
 As seen in figure 10, the training loss roughly always decreased with the number of iterations. The validation loss decreased until about 150 epochs, after which the validation loss stopped decreasing. The neural network was overfitting to the training set after about 150 epochs, after which the training loss continued decreasing while the validation loss did not decrease.
 
 ##### Neural Network Loss
 
 <center><img src="assets/images/Loss_0.1.png" width="300" ></center>
-<center>*Figure 11: The training and validation loss of a neural network while training. The validation loss stops decreasing after approximately 150 epochs, indicating overfitting.*</center>
+<center>*Figure 11: The training and validation loss of a neural network while training. The validation loss stops decreasing after approximately 150 epochs, indicating overfitting. Loss values fluctuate due to randomness in selecting batches of the training set for training.*</center>
 
 ### Results - [Insert Author]
 
