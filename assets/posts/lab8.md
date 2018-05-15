@@ -34,7 +34,7 @@ Before they could be used in either training or real-time inference, images unde
 
 <center><img src="assets/images/network.png" width="300" ></center>
 
-The neural network architecture we used was relatively simple. The layers of the network were fully connected; the first three layers had 200 units each and used rectified linear units (ReLU) as an activation function, and the last layer, a "logits" layer that gave the actual classifications, had 25 units (equivalent to the number of actions the robot could take), and used a sigmoid activation function. 
+The neural network architecture we used was relatively simple. The layers of the network were fully connected; the first three layers had 300 units each and used rectified linear units (ReLU) as an activation function, and the last layer, a "logits" layer that gave the actual classifications, had 25 units (equivalent to the number of actions the robot could take), and used a sigmoid activation function. 
 
 #### Neural Network Training - Akhilan Boopathy
 
