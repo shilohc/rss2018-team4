@@ -27,14 +27,44 @@ Images were labeled with actions (driving commands) and the minimum distance bet
 
 The action definition consists of a steering angle; the speed and distance along the trajectory are pre-defined, so this completely defines a simple trajectory.  Images were then labeled by sampling points from the trajectory and finding the minimum distance to any obstacle, then taking the overall minimum distance along the trajectory.  Robot size was accounted for in the postprocessing step, which models the robot as a circle and checks if the obstacle distance threshold is larger than the robot "radius".  
 
+##### Robot Actions and Laser Scan
+
+<center><img src="assets/images/SteeringAngleLaserScan.png" width="300" ></center>
+<center>*Figure 1: A visualization of 25 circular arcs corresponding to possible steering angles the robot could take. Each arc represents to the robot moving 1.5 m with the steering angle. The robot's current position is where all the circular arcs intersect. The blue dots represent the laser scan. During labeling, the arcs which are sufficiently close the laser scan are labeled as being in collision.*</center>
+
 #### Image Preprocessing - Eleanor Pence
 Before they could be used in either training or real-time inference, images underwent a preprocessing step. Images were resized to 45x80 and transformed into grayscale, and then the image data was normalized.  Resizing of the images improved the speed and memory usage of the network at inference time, but during training, it also allowed the entire dataset of approximately 20,000 images to be loaded into memory at once, which made training much simpler.  
 
 #### Neural Network Architecture - Eleanor Pence
 
+
 <center><img src="assets/images/network.png" width="300" ></center>
 
 The neural network architecture we used was relatively simple. The layers of the network were fully connected; the first three layers had 300 units each and used rectified linear units (ReLU) as an activation function, and the last layer, a "logits" layer that gave the actual classifications, had 25 units (equivalent to the number of actions the robot could take), and used a sigmoid activation function. 
+
+
+#### Hyperparameter Selection - Akhilan Boopathy
+Hyperparameters were selected to maximize validation accuracy while minimizing training time.
+
+##### Accuracy vs. Number of Layers
+
+<center><img src="assets/images/LayersAccuracy.png" width="300" ></center>
+<center>*Figure 2: The validation accuracy resulting from training a neural network to predict steering angle collision labels while varying the number of layers. The number of units per layer remained fixed at 200 units. Each neural network was trained for 50 epochs.*</center>
+
+##### Training Time vs. Number of Layers
+
+<center><img src="assets/images/LayersTime.png" width="300" ></center>
+<center>*Figure 3: The training time for training a neural network to predict steering angle collision labels while varying the number of layers. The number of units per layer remained fixed at 200 units. Each neural network was trained for 50 epochs. The training time increases roughly linearly with the number of layers. Variation is due to random fluctuations in the training speed.*</center>
+
+##### Accuracy vs. Number of Units
+
+<center><img src="assets/images/UnitsAccuracy.png" width="300" ></center>
+<center>*Figure 4: The validation accuracy resulting from training a neural network to predict steering angle collision labels while varying the number of layers. The number of layers remained fixed at 3. Each neural network was trained for 50 epochs.*</center>
+
+##### Training Time vs. Number of Units
+
+<center><img src="assets/images/UnitsTime.png" width="300" ></center>
+<center>*Figure 5: The training time for training a neural network to predict steering angle collision labels while varying the number of layers. The number of layers remained fixed at 3. Each neural network was trained for 50 epochs. The training time increases roughly linearly with the number of units. Variation is due to random fluctuations in the training speed.*</center>
 
 #### Neural Network Training - Akhilan Boopathy
 
@@ -48,7 +78,23 @@ Image transforming, data labeling, network training, and robot steering were imp
 
 The training dataset consisted initially of a collection of bagfiles containing image and lidar data.  Data were collected from these bagfiles using the rosbag API; the lidar data was used to determine which trajectories were safe for the robot to traverse, and thereby label the images.  
 
+##### Fraction of Collisions by Angle
+
+<center><img src="assets/images/LabeledCollisionAverages.png" width="300" ></center>
+<center>*Figure 6: The fraction of labeled images resulting in a collision for each action in the labeled dataset. Probabilities of collision are lower for angles near zero because in much of the dataset, the robot is parallel to a straight hallway. Probabilities of collision for positive angles are higher than for negative angles, indicating a bias in the dataset towards right turns.*</center>
+
+
 #### Driving Using NN Output - [Insert Author]
+
+##### Probability of Collision vs. Steering Angle
+
+<center><img src="assets/images/TestSetProbabilities.png" width="300" ></center>
+<center>*Figure 7: Probabilities of collision for a neural network trained to output probabilities of collision for each steering angle action a robot could take. Collision probabilities are taken by running random sample images from a test set through the trained neural network. Near 0 degrees, there are few points with a very high probability of collision because in the dataset, the robot is often parallel to a straight hallway. For high angles, there are few points with a low probability of collision because of a bias in the dataset towards right turns.*</center>
+
+##### Multiplicative Bias
+
+<center><img src="assets/images/Bias.png" width="300" ></center>
+<center>*Figure 8: A bias multiplied by the outputs of a neural network that outputs probabilities of collision for each steering angle action. The biases are lower for angles closer to 0, making selected actions more likely to be drive the robot straight.*</center>
 
 ## Experimental Evaluation - Shannon Hwang
 
@@ -59,26 +105,42 @@ Correctness of images via visual inspection of transformed images and predicted 
 #### Image Labeling - Shannon Hwang
 
 <center><img src="assets/images/image_transform.gif" width="300" ></center>
-<center>*Figure 1: The transformed images used as neural network input (left) versus original camera feed images (right).*</center>
+<center>*Figure 9: The transformed images used as neural network input (left) versus original camera feed images (right).*</center>
 
 Images were transformed to be 45x80 grayscale images; this was verified by subscribing to the publisher feeding grayscale, resized images to the neural network and comparing a video of said images to the full camera feed. 
 
 #### Neural Network Verification - Akhilan Boopathy
-The neural network was verified using a validation set before evaluating the neural network's performance on the robot. The neural network's performance was evaluated by computing the accuracy and loss values on a validation set. Accuracy is the fraction of the time that the action with the lowest probability of collision corresponds to a label without a collision. Loss is an L2 loss computed by summing the squared differences between labels and probabilities of collision for each action. As seen in figure 1, the training accuracy roughly always increased with the number of iterations. The validation accuracy initially increased until about 1000 epochs. After about 1000 epochs, the validation accuracy decreased.
+The neural network was verified using a validation set before evaluating the neural network's performance on the robot. The neural network's performance was evaluated by computing the accuracy and loss values on a validation set. Accuracy is the fraction of the time that the action with the lowest probability of collision corresponds to a label without a collision. Loss is an L2 loss computed by summing the squared differences between labels and probabilities of collision for each action. As seen in figure 1, the training accuracy roughly always increased with the number of iterations. The validation accuracy initially increased until about 150 epochs. After about 150 epochs, the validation accuracy stayed roughly constant.
 
 ##### Neural Network Accuracy
 
-<center><img src="assets/images/Accuracy.png" width="300" ></center>
-<center>*Figure 2: The training and validation accuracy of a neural network while training. The blue curve represents the training accuracy and the orange curve represents the validation accuracy.*</center>
+<center><img src="assets/images/Accuracy_0.1.png" width="300" ></center>
+<center>*Figure 10: The training and validation accuracy of a neural network while training. The validation accuracy stops increasing after approximately 150 epochs, indicating overfitting. Accuracy values fluctuate due to randomness in selecting batches of the training set for training.*</center>
 
-As seen in figure 2, the training loss roughly always decreased with the number of iterations. The validation loss decreased until about 1000 epochs, after which the validation loss increased. The neural network was overfitting to the training set after about 1000 epochs, after which the training loss decreased dramatically while the validation loss did not decrease.
+As seen in figure 10, the training loss roughly always decreased with the number of iterations. The validation loss decreased until about 150 epochs, after which the validation loss stopped decreasing. The neural network was overfitting to the training set after about 150 epochs, after which the training loss continued decreasing while the validation loss did not decrease.
 
 ##### Neural Network Loss
 
-<center><img src="assets/images/Loss.png" width="300" ></center>
-<center>*Figure 3: The training and validation loss of a neural network while training. The blue curve represents the training loss and the orange curve represents the validation loss.*</center>
+<center><img src="assets/images/Loss_0.1.png" width="300" ></center>
+<center>*Figure 11: The training and validation loss of a neural network while training. The validation loss stops decreasing after approximately 150 epochs, indicating overfitting. Loss values fluctuate due to randomness in selecting batches of the training set for training.*</center>
 
 ### Results - [Insert Author]
+
+##### Visualization of Robot in Hallway
+
+<center><img src="assets/images/RosbagRvizActions.gif" width="500" ></center>
+<center>*Figure 12: A video of the robot navigating a zig-zag hallway using a neural network to select the steering angle from only camera data. Laser scan data from a real trial of the robot was used to localize the robot in a known map to produce this visualization. The green arrow represents the pose of the robot inferred from localization. The green curve represents the car's selected steering angle arc for a length of 1.5 m. The white dots represent laser scans projected from the inferred pose used to localize the robot.*</center>
+
+
+##### Steering Angle vs. Time
+
+<center><img src="assets/images/SteeringAngle.png" width="300" ></center>
+<center>*Figure 2: The steering angle of the robot over time over three trials of the robot in a zig-zag hallway. The starting position of the robot in the three runs differs within a 1 meter radius. The steering angle is time averaged over a period of 2 seconds to better illustrate commonalities between the trials. The robot's steering angle decreases sharply around 10-15 seconds, and increases sharply between 15-20 seconds in all three trials.*</center>
+
+##### Wall Distance vs. Time
+
+<center><img src="assets/images/SteeringAngle.png" width="300" ></center>
+<center>*Figure 13: The robot's distance to the wall over time over three trials of the robot in a zig-zag hallway. The distance to the wall was found by using laser scans to localize the robot in a known map. Distances are measured from the center of the robot's rear axle. The starting position of the robot in the three runs differs within a 1 meter radius. The distance to the wall averages approximately 0.8 m in all three trials, with an average minimum distance to wall of approximately 0.4 m.*</center>
 
 ## Lessons Learned - [Insert Author]
 
