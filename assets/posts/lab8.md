@@ -27,6 +27,11 @@ Images were labeled with actions (driving commands) and the minimum distance bet
 
 The action definition consists of a steering angle; the speed and distance along the trajectory are pre-defined, so this completely defines a simple trajectory.  Images were then labeled by sampling points from the trajectory and finding the minimum distance to any obstacle, then taking the overall minimum distance along the trajectory.  Robot size was accounted for in the postprocessing step, which models the robot as a circle and checks if the obstacle distance threshold is larger than the robot "radius".  
 
+##### Robot Actions and Laser Scan
+
+<center><img src="assets/images/SteeringAngleLaserScan.png" width="300" ></center>
+<center>*Figure 2: A visualization of 25 circular arcs corresponding to possible steering angles the robot could take. Each arc represents to the robot moving 1.5 m with the steering angle. The robot's current position is where all the circular arcs intersect. The blue dots represent the laser scan. During labeling, the arcs which are sufficiently close the laser scan are labeled as being in collision.*</center>
+
 #### Image Preprocessing - Eleanor Pence
 Before they could be used in either training or real-time inference, images underwent a preprocessing step. Images were resized to 45x80 and transformed into grayscale, and then the image data was normalized.  Resizing of the images improved the speed and memory usage of the network at inference time, but during training, it also allowed the entire dataset of approximately 20,000 images to be loaded into memory at once, which made training much simpler.  
 
@@ -77,6 +82,11 @@ The training dataset consisted initially of a collection of bagfiles containing 
 
 
 #### Driving Using NN Output - [Insert Author]
+
+##### Probability of Collision vs. Steering Angle
+
+<center><img src="assets/images/TestSetProbabilities.png" width="300" ></center>
+<center>*Figure 2: Probabilities of collision for a neural network trained to output probabilities of collision for each steering angle action a robot could take. Collision probabilities are taken by running random sample images from a test set through the trained neural network. Near 0 degrees, there are few points with a very high probability of collision because in the dataset, the robot is often parallel to a straight hallway. For high angles, there are few points with a low probability of collision because of a bias in the dataset towards left turns.*</center>
 
 ##### Multiplicative Bias
 
