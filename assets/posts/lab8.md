@@ -89,12 +89,15 @@ The training dataset consisted initially of a collection of bagfiles containing 
 <center>*Figure 6: The fraction of labeled images resulting in a collision for each action in the labeled dataset. Probabilities of collision are lower for angles near zero because in much of the dataset, the robot is parallel to a straight hallway. Probabilities of collision for positive angles are higher than for negative angles, indicating a bias in the dataset towards right turns.*</center>
 
 
-#### Driving Using NN Output - [Insert Author]
+#### Driving Using Neural Network Output - Akhilan Boopathy
+Once images from the camera were input to the neural network, the outputs from the neural network had to be further processed into a drive command on the robot. The neural network output probabilities of collision for each of the 25 possible steering angle actions that the robot could take. The distribution of output probabilities over the 25 possible actions was examined by sampling images from the test set and running them through a trained neural network. As illustrated in figure 7, the distribution over output probabilities was nearly uniform over all actions, with higher concentrations of points near probabilities of 0 or 1. Therefore, when the robot is presented with a scenario where many possible steering angles are collision free, a properly trained neural network may assign minimum collision probability to a large magnitude steering angle. As a result, the robot may have highly variable steering angles if the output with the minimum collision probability is directly selected.
 
 ##### Probability of Collision vs. Steering Angle
 
 <center><img src="assets/images/TestSetProbabilities.png" width="300" ></center>
 <center>*Figure 7: Probabilities of collision for a neural network trained to output probabilities of collision for each steering angle action a robot could take. Collision probabilities are taken by running random sample images from a test set through the trained neural network. Near 0 degrees, there are few points with a very high probability of collision because in the dataset, the robot is often parallel to a straight hallway. For high angles, there are few points with a low probability of collision because of a bias in the dataset towards right turns.*</center>
+
+In order to make it more likely for the robot to drive to straight when possible rather than turn excessively, a bias was multiplied to the collision probabilities before selecting the steering angle. In order to bias the robot towards steering angles near 0, lower bias values were chosen for low magnitude steering angles so that the product of collision probability with bias was relatively low. Higher bias values were chosen for higher steering angles. As illustrated in figure 8, the bias was chosen to be piecewise linear in the steering angle, with the bias taking a minimum value at a steering angle of 0 and increasing linearly in either direction. At the maximum magnitude steering angles, the bias takes 3 times the value at an angle of 0. Note that uniform scaling of the bias does not affect the selected steering angles. The slope of the bias was chosen empirically to decrease variation in steering angles selected by the robot.
 
 ##### Multiplicative Bias
 
