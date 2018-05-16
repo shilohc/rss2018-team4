@@ -18,8 +18,7 @@ The first step in the process of training the DNN to drive with camera input onl
 After that, the team entered a phase in which the labeling scheme and training were repeatedly refined. In each case, the labeling code was modified, and a team member would re-label the data. This resulted in a pickled version of several numpy arrays, which included the newly labeled data, being added to the git repository, which was to re-train the DNN. Real-world testing and further discussion with the team would typically yield further potential ideas for improvements, which would then be implemented in much the same way before, until desired performance was achieved.  
 
 ### Technical Approach - Akhilan Boopathy
-In order to use the pipeline on the car, the neural network had to be trained using image and lidar data collected from the robot. Lidar scans were used to label whether particular steering angles at each robot pose led to collisions or not. The labeled data was then used to train the network. Finally, the output of the neural network was used to select the best steering angle on the robot.
-
+Image and lidar data collected from the robot were processed and labeled, and then used to train the neural network to output actions. Lidar scans were used to label images with whether particular steering angles led to collisions or not. The labeled images were then used to train the network. Finally, the output of the neural network was used to select the best steering angle on the robot.
 
 #### Image Labeling - Shiloh Curtis
 
@@ -40,31 +39,37 @@ Before they could be used in either training or real-time inference, images unde
 
 <center><img src="assets/images/network.png" width="300" ></center>
 
-The neural network architecture we used was relatively simple. The layers of the network were fully connected; the first three layers had 300 units each and used rectified linear units (ReLU) as an activation function, and the last layer, a "logits" layer that gave the actual classifications, had 25 units (equivalent to the number of actions the robot could take), and used a sigmoid activation function. 
+The neural network architecture we used was relatively simple. The layers of the network were fully connected; the first three layers had 200 units each and used rectified linear units (ReLU) as an activation function, and the last layer, a "logits" layer that gave the actual classifications, had 25 units (equivalent to the number of actions the robot could take), and used a sigmoid activation function. 
 
 
 #### Hyperparameter Selection - Akhilan Boopathy
-Hyperparameters were selected to maximize validation accuracy while minimizing training time.
+Hyperparameters were selected to maximize validation accuracy while minimizing training time. One hyperparameter associated with the architecture of the neural network was the number of hidden layers. In order to optimize the number of hidden layers, multiple neural networks were trained with different numbers of layers, and their accuracies on a validation set was evaluated. The number of units per hidden layer was fixed at 200 units, and training occured for 50 epochs at a learning rate of 0.1. As illustrated in figure 2, the validation accuracy increased until there were 4 hidden layers, after which the accuracy decreased.
 
 ##### Accuracy vs. Number of Layers
 
 <center><img src="assets/images/LayersAccuracy.png" width="300" ></center>
-<center>*Figure 2: The validation accuracy resulting from training a neural network to predict steering angle collision labels while varying the number of layers. The number of units per layer remained fixed at 200 units. Each neural network was trained for 50 epochs.*</center>
+<center>*Figure 2: The validation accuracy resulting from training a neural network to predict steering angle collision labels while varying the number of layers. The number of units per layer remained fixed at 200 units. Each neural network was trained for 50 epochs at a learning rate of 0.1.*</center>
+
+The training time was also evaluated while varying the number of layers. Other hyperparameters remained fixed. As illustrated in figure 3, the training time roughly linearly increased with the number of layers, with additional random fluctations in training time. In order to balance having a high validation accuracy while maintaining a low training time, the number of layers was chosen to be 3.
 
 ##### Training Time vs. Number of Layers
 
 <center><img src="assets/images/LayersTime.png" width="300" ></center>
-<center>*Figure 3: The training time for training a neural network to predict steering angle collision labels while varying the number of layers. The number of units per layer remained fixed at 200 units. Each neural network was trained for 50 epochs. The training time increases roughly linearly with the number of layers. Variation is due to random fluctuations in the training speed.*</center>
+<center>*Figure 3: The training time for training a neural network to predict steering angle collision labels while varying the number of layers. The number of units per layer remained fixed at 200 units. Each neural network was trained for 50 epochs at a learning rate of 0.1. The training time increases roughly linearly with the number of layers. Variation is due to random fluctuations in the training speed.*</center>
+
+Similarly, the number of units per hidden layer was optimized by evaluating accuracy on a validation set. The number of layers was fixed at 3, and all other hyperparameters remained fixed. As illustrated in figure 4, the accuracy does not monotonically increase or decrease with the number of units, but 200 and 300 units per hidden layer yield particularly high accuracy values.
 
 ##### Accuracy vs. Number of Units
 
 <center><img src="assets/images/UnitsAccuracy.png" width="300" ></center>
-<center>*Figure 4: The validation accuracy resulting from training a neural network to predict steering angle collision labels while varying the number of layers. The number of layers remained fixed at 3. Each neural network was trained for 50 epochs.*</center>
+<center>*Figure 4: The validation accuracy resulting from training a neural network to predict steering angle collision labels while varying the number of layers. The number of layers remained fixed at 3. Each neural network was trained for 50 epochs at a learning rate of 0.1.*</center>
+
+The training time was also evaluated with the number of units per hidden layer. As illustrated in figure 5, the training time increased approximately linearly with the number of units. To maximize validation performance while minimizing training time, the number of units per layer was chosen to be 200.
 
 ##### Training Time vs. Number of Units
 
 <center><img src="assets/images/UnitsTime.png" width="300" ></center>
-<center>*Figure 5: The training time for training a neural network to predict steering angle collision labels while varying the number of layers. The number of layers remained fixed at 3. Each neural network was trained for 50 epochs. The training time increases roughly linearly with the number of units. Variation is due to random fluctuations in the training speed.*</center>
+<center>*Figure 5: The training time for training a neural network to predict steering angle collision labels while varying the number of layers. The number of layers remained fixed at 3. Each neural network was trained for 50 epochs at a learning rate of 0.1. The training time increases roughly linearly with the number of units. Variation is due to random fluctuations in the training speed.*</center>
 
 #### Neural Network Training - Akhilan Boopathy
 
@@ -84,12 +89,15 @@ The training dataset consisted initially of a collection of bagfiles containing 
 <center>*Figure 6: The fraction of labeled images resulting in a collision for each action in the labeled dataset. Probabilities of collision are lower for angles near zero because in much of the dataset, the robot is parallel to a straight hallway. Probabilities of collision for positive angles are higher than for negative angles, indicating a bias in the dataset towards right turns.*</center>
 
 
-#### Driving Using NN Output - [Insert Author]
+#### Driving Using Neural Network Output - Akhilan Boopathy
+Once images from the camera were input to the neural network, the outputs from the neural network had to be further processed into a drive command on the robot. The neural network output probabilities of collision for each of the 25 possible steering angle actions that the robot could take. The distribution of output probabilities over the 25 possible actions was examined by sampling images from the test set and running them through a trained neural network. As illustrated in figure 7, the distribution over output probabilities was nearly uniform over all actions, with higher concentrations of points near probabilities of 0 or 1. Therefore, when the robot is presented with a scenario where many possible steering angles are collision free, a properly trained neural network may assign minimum collision probability to a large magnitude steering angle. As a result, the robot may have highly variable steering angles if the output with the minimum collision probability is directly selected.
 
 ##### Probability of Collision vs. Steering Angle
 
 <center><img src="assets/images/TestSetProbabilities.png" width="300" ></center>
 <center>*Figure 7: Probabilities of collision for a neural network trained to output probabilities of collision for each steering angle action a robot could take. Collision probabilities are taken by running random sample images from a test set through the trained neural network. Near 0 degrees, there are few points with a very high probability of collision because in the dataset, the robot is often parallel to a straight hallway. For high angles, there are few points with a low probability of collision because of a bias in the dataset towards right turns.*</center>
+
+In order to make it more likely for the robot to drive to straight when possible rather than turn excessively, a bias was multiplied to the collision probabilities before selecting the steering angle. In order to bias the robot towards steering angles near 0, lower bias values were chosen for low magnitude steering angles so that the product of collision probability with bias was relatively low. Higher bias values were chosen for higher steering angles. As illustrated in figure 8, the bias was chosen to be piecewise linear in the steering angle, with the bias taking a minimum value at a steering angle of 0 and increasing linearly in either direction. At the maximum magnitude steering angles, the bias takes 3 times the value at an angle of 0. Note that uniform scaling of the bias does not affect the selected steering angles. The slope of the bias was chosen empirically to decrease variation in steering angles selected by the robot.
 
 ##### Multiplicative Bias
 
