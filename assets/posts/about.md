@@ -29,19 +29,3 @@ Team Four consists of five MIT undergraduates, who are individually described in
 
 **Eleanor Pence '19** is from Plymouth, Michigan. She is a junior in course 6-3 interested in artificial intelligence. Outside of class, she can be found doing digital painting and rock climbing. 
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<span class="image left about">![](assets/images/about/TonyZhang.JPG)</span>
-
-**Chenxing(Tony) Zhang** is currently a junior in EECS. He is originally from Hangzhou, China. He is interested in Machine Learning and robotics, and plan to go into automative industry after he graduates.
-
-<br>
-<br>
-<br>
-
-
